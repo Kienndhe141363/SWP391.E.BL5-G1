@@ -40,51 +40,35 @@ public class User extends HttpServlet {
         response.setCharacterEncoding("UTF-8");
         response.setContentType("text/html; charset=UTF-8");
         String action = request.getParameter("action");
-        if (action.equals("login")) {
-            request.getRequestDispatcher("login.jsp").forward(request, response);
-        }
-        if (action.equals("checkLogin")) {
-            String user_email = request.getParameter("user_email");
-            String user_pass = request.getParameter("user_pass");
-            String remember = request.getParameter("remember");
-            userDAO dao = new userDAO();
-            model.User user = dao.checkUser(user_email, user_pass);
-            if (user == null) {
-                HttpSession session = request.getSession();
-                session.setAttribute("error_exist", "Tài khoản không tồn tại !");
-                request.getRequestDispatcher("user?action=login").forward(request, response);
-            } else if (user.isBanned() == true) {
-                HttpSession session = request.getSession();
-                session.setAttribute("error_ban", "Tài khoản của bạn đã bị khóa. Vui lòng liên hệ quản trị viên.");
-                request.getRequestDispatcher("user?action=login").forward(request, response);
-            } else {
-                HttpSession session = request.getSession();
-                session.setAttribute("user", user);
-                session.setAttribute("loginMessage", "Đăng nhập thành công!");
-                Cookie email = new Cookie("email", user_email);
-                Cookie pass = new Cookie("pass", user_pass);
-                Cookie rem = new Cookie("remember", remember);
-                if (remember != null) {
-                    email.setMaxAge(60 * 60 * 24 * 30);
-                    pass.setMaxAge(60 * 60 * 24 * 30);
-                    rem.setMaxAge(60 * 60 * 24 * 30);
-                } else {
-                    email.setMaxAge(0);
-                    pass.setMaxAge(0);
-                    rem.setMaxAge(0);
-                }
-                response.addCookie(email);
-                response.addCookie(pass);
-                response.addCookie(rem);
-                response.sendRedirect("home");
-            }
-        }
-
-        if (action.equals("logout")) {
+        
+        
+        if (action.equals("signup")) {
             HttpSession session = request.getSession();
-            session.removeAttribute("user");
-            session.setAttribute("logoutMessage", "Đăng xuất thành công!");
-            response.sendRedirect("home");
+            userDAO da = new userDAO();
+            String email = request.getParameter("user_email");
+            String pass = request.getParameter("user_pass");
+            String repass = request.getParameter("re_pass");         
+            String passwordRegex = "^(?=.*[A-Z])(?=.*\\d)[A-Za-z\\d]{6,}$";
+            if (!pass.matches(passwordRegex)) {
+                session.setAttribute("error_match", "Mật khẩu phải có ít nhất 6 ký tự, bao gồm ít nhất một chữ cái viết hoa và một chữ số");
+                request.getRequestDispatcher("login.jsp").forward(request, response);
+                return;
+            }
+           
+
+            if (!pass.equals(repass)) {
+                session.setAttribute("error_rePass", "Vui lòng nhập lại mật khẩu cho đúng");
+                request.getRequestDispatcher("login.jsp").forward(request, response);
+                return;
+            } 
+             try {
+            da.signup(email, pass); // Lưu người dùng vào cơ sở dữ liệu
+            session.setAttribute("success_signup", "Đăng ký thành công! Vui lòng đăng nhập.");
+            response.sendRedirect("login.jsp");
+        } catch (Exception e) {
+            session.setAttribute("error_signup", "Đã xảy ra lỗi trong quá trình đăng ký. Vui lòng thử lại.");
+            request.getRequestDispatcher("signup.jsp").forward(request, response);
+        }
         }
 
 

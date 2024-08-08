@@ -1,0 +1,101 @@
+/*
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css to edit this template
+*/
+/* 
+    Created on : Aug 8, 2024, 10:52:36 PM
+    Author     : hieupham
+*/
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    background-color: #f0f0f0;
+}
+
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+}
+
+.col-lg-6.col-md-6 {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+}
+
+.account_form {
+    width: 100%;
+    max-width: 500px; /* Giới hạn chiều rộng form */
+    padding: 20px;
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.account_form h2 {
+    margin-bottom: 20px;
+    color: black;
+    font-size: 30px;
+    font-weight: bold;
+    text-align: center; /* Căn giữa thẻ "Đăng ký" */
+}
+.account_form p {
+    display: flex;
+    align-items: center;
+    margin: 0 0 15px 0;
+}
+
+.account_form label {
+    width: 30%; /* Chiếm 30% chiều rộng của dòng */
+    color: orange;
+    font-weight: 600;
+}
+
+.account_form input[type="email"],
+.account_form input[type="password"] {
+    width: 70%; /* Chiếm 70% chiều rộng của dòng */
+    padding: 10px;
+    border: 1px solid #bdbdbd;
+    border-radius: 5px;
+    box-sizing: border-box;
+    transition: border-color 0.3s ease;
+}
+
+.account_form input[type="email"]:focus,
+.account_form input[type="password"]:focus {
+    border-color: #00796b;
+    outline: none;
+}
+
+account_form {
+    width: 100%;
+    max-width: 400px;
+    padding: 30px;
+    background-color: #ffffff;
+    border-radius: 15px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    text-align: center; /* Căn giữa toàn bộ nội dung văn bản trong form */
+}
+
+.account_form button[type="submit"] {
+    width: 100%; /* Nút chiếm toàn bộ chiều rộng của form */
+    max-width: 150px; /* Đặt chiều rộng tối đa cho nút */
+    padding: 15px;
+    background-color: orange;
+    color: white;
+    font-size: 18px;
+    font-weight: bold;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+    margin-top: 20px; /* Khoảng cách từ nút đến phần trên */
+}
