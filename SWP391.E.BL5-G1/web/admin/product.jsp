@@ -16,7 +16,7 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <!-- Main CSS-->
-        <link rel="stylesheet" type="text/css" href="css/">
+        <link rel="stylesheet" type="text/css" href="../admin/css/main.css">
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css">
         <!-- or -->
         <link rel="stylesheet" href="https://unpkg.com/boxicons@latest/css/boxicons.min.css">
@@ -46,7 +46,7 @@
         <div class="app-sidebar__overlay" data-toggle="sidebar"></div>
         <aside class="app-sidebar">
             <div class="app-sidebar__user">
-                <img class="app-sidebar__user-avatar" src="admin/images/user.png" width="50px" alt="User Image">
+                <img class="app-sidebar__user-avatar" src="../admin/images/user.png" width="50px" alt="User Image">
                 <div>
                     <p class="app-sidebar__user-name"><b>${sessionScope.user.user_name}</b></p>
                     <p class="app-sidebar__user-designation">Chào mừng bạn trở lại</p>
@@ -85,7 +85,6 @@
                                     <a class="btn btn-add btn-sm" href="productmanager?action=insert" title="Thêm"><i class="fas fa-plus"></i>
                                         Tạo mới sản phẩm</a>
                                 </div>
-
                                 <!-- UploadExcelBtn -->
                                 <!-- UploadExcelBtn -->
                                 <!-- UploadExcelBtn -->

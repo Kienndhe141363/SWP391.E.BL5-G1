@@ -22,7 +22,7 @@ public class DBContext {
         return DriverManager.getConnection(url, userID, password);
     }
     private final String serverName = "localhost";
-    private final String dbName = "ShopYouAndMeVersionFinal_1";
+    private final String dbName = "ShopYouAndMeVersionFinal";
     private final String portNumber = "1433";
     private final String instance = "";//LEAVE THIS ONE EMPTY IF YOUR SQL IS A SINGLE INSTANCE
     private final String userID = "sa";
