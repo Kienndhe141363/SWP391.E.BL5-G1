@@ -12,8 +12,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>About Us</title>
     <link rel="stylesheet" href="css/about.css">
+    <link rel="stylesheet" href="assets/css/plugins.css">
+    <link rel="stylesheet" href="assets/css/style.css">
 </head>
 <body>
+    <jsp:include page="menu.jsp"/>
     <header>
         <h1>Giới Thiệu</h1>
     </header>
@@ -41,7 +44,7 @@
     </div>
 
     <footer>
-        <p>&copy; 2024 Cửa Hàng Thời Trang.</p>
+        <jsp:include page="footer.jsp"/>
     </footer>
 </body>
 </html>
