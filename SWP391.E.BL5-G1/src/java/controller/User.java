@@ -53,10 +53,6 @@ public class User extends HttpServlet {
                 HttpSession session = request.getSession();
                 session.setAttribute("error_exist", "Tài khoản không tồn tại !");
                 request.getRequestDispatcher("user?action=login").forward(request, response);
-            } else if (user.isBanned() == true) {
-                HttpSession session = request.getSession();
-                session.setAttribute("error_ban", "Tài khoản của bạn đã bị khóa. Vui lòng liên hệ quản trị viên.");
-                request.getRequestDispatcher("user?action=login").forward(request, response);
             } else {
                 HttpSession session = request.getSession();
                 session.setAttribute("user", user);
@@ -87,9 +83,6 @@ public class User extends HttpServlet {
             response.sendRedirect("home");
         }
 
-
-
-        
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
