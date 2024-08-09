@@ -228,12 +228,12 @@
                                     <label class="control-label">Mô tả sản phẩm</label>
                                     <textarea class="ckeditor" name="describe" id="describe"></textarea>
                                     <script>
-//                                        CKEDITOR.replace('describe');
+                                        CKEDITOR.replace('describe');
                                     </script>
                                 </div>
                                 <button class="btn btn-save" type="submit">Lưu lại</button>
                                 &nbsp;
-                                <a class="btn btn-cancel" href="productmanager">Hủy bỏ</a>
+                                <a class="btn btn-cancel" href="product">Hủy bỏ</a>
                             </form>
                         </div>
 
