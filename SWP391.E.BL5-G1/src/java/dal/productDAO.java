@@ -25,7 +25,7 @@ public class productDAO extends DBContext {
     ResultSet rs = null;
 
     //namnthe140786
-      public List<Category> getCategory() {
+    public List<Category> getCategory() {
         List<Category> list = new ArrayList<>();
         String sql = "select * from category";
         try {
@@ -39,6 +39,7 @@ public class productDAO extends DBContext {
         }
         return list;
     }
+
     public void insertProduct(Product product) {
         String sql = "insert into product (product_id,category_id,product_name,product_price,product_describe,quantity,img) values(?,?,?,?,?,?,?)";
         try {
@@ -80,15 +81,80 @@ public class productDAO extends DBContext {
         String sql3 = "INSERT INTO product_active (product_id,active) VALUES(?,?)";
         try {
             conn = new DBContext().getConnection();
-            Product_Active i =product.getActive();
-                ps = conn.prepareStatement(sql3);
-                ps.setString(1, product.getProduct_id());
-                ps.setString(2, i.getAcitve());
-                ps.executeUpdate();
-        }catch(Exception e){
+            Product_Active i = product.getActive();
+            ps = conn.prepareStatement(sql3);
+            ps.setString(1, product.getProduct_id());
+            ps.setString(2, i.getAcitve());
+            ps.executeUpdate();
+        } catch (Exception e) {
         }
     }
 
+    public List<Product> getProduct() {
+        List<Product> list = new ArrayList<>();
+        String sql = """
+                     select c.category_name ,  p.product_id , p.product_name, p.product_price, p.product_describe, p.quantity,p.img, p.category_id from  
+                     product p inner join category c on p.category_id = c.category_id""";
+        try {
+            conn = new DBContext().getConnection();
+            ps = conn.prepareStatement(sql);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                Category c = new Category(rs.getInt(8), rs.getString(1));
+                list.add(new Product(c, rs.getString(2), rs.getString(3), rs.getFloat(4), rs.getString(5), rs.getInt(6), rs.getString(7)));
+            }
+
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        return list;
+    }
+    
+    public List<Size> getSize() {
+        List<Size> list = new ArrayList<>();
+        String sql = "select * from product_size";
+        try {
+            conn = new DBContext().getConnection();
+            ps = conn.prepareStatement(sql);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                list.add(new Size(rs.getString(1), rs.getString(2)));
+            }
+        } catch (Exception e) {
+        }
+        return list;
+    }
+    
+    public List<Color> getColor() {
+        List<Color> list = new ArrayList<>();
+        String sql = "select * from product_color";
+        try {
+            conn = new DBContext().getConnection();
+            ps = conn.prepareStatement(sql);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                list.add(new Color(rs.getString(1), rs.getString(2)));
+            }
+        } catch (Exception e) {
+        }
+        return list;
+    }
+    
+    public List<Product_Active> getActive(){
+        List<Product_Active> list = new ArrayList<>();
+         String sql = "select * from product_active";
+        try {
+            conn = new DBContext().getConnection();
+            ps = conn.prepareStatement(sql);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                list.add(new Product_Active(rs.getString(1), rs.getString(2)));
+            }
+        } catch (Exception e) {
+        }
+        return list;
+    }
+    ////
 
     public List<Product> getTop10Product() {
         List<Product> list = new ArrayList<>();
@@ -108,7 +174,7 @@ public class productDAO extends DBContext {
 
     public List<Product> getTrendProduct() {
         List<Product> list = new ArrayList<>();
-         String sql = "SELECT TOP 5 p.product_id , p.product_name, p.product_price, p.product_describe, p.quantity,p.img FROM product p inner join bill_detail bd on p.product_id = bd.product_id inner join product_active pa on pa.product_id = p.product_id Where pa.active ='True' \n"
+        String sql = "SELECT TOP 5 p.product_id , p.product_name, p.product_price, p.product_describe, p.quantity,p.img FROM product p inner join bill_detail bd on p.product_id = bd.product_id inner join product_active pa on pa.product_id = p.product_id Where pa.active ='True' \n"
                 + "ORDER BY bd.quantity DESC";
         try {
             conn = new DBContext().getConnection();
@@ -141,6 +207,7 @@ public class productDAO extends DBContext {
         }
         return list;
     }
+
     public static void main(String[] args) {
         productDAO dao = new productDAO();
 

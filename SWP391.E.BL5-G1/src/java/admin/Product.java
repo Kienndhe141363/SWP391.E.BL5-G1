@@ -11,11 +11,9 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import java.util.ArrayList;
 import java.util.List;
 import model.Category;
 import model.Color;
-import model.Product;
 import model.Product_Active;
 import model.Size;
 
@@ -23,7 +21,7 @@ import model.Size;
  *
  * @author ADMIN
  */
-public class ProductInsert extends HttpServlet {
+public class Product extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -42,10 +40,10 @@ public class ProductInsert extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet test</title>");
+            out.println("<title>Servlet Product</title>");            
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet test at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet Product at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -64,9 +62,15 @@ public class ProductInsert extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         productDAO c = new productDAO();
-        List<Category> category = c.getCategory();
-        request.setAttribute("CategoryData", category);
-        request.getRequestDispatcher("productinsert.jsp").forward(request, response);
+        List<model.Product> product = c.getProduct();
+        List<Size> size = c.getSize();
+        List<Color> color = c.getColor();
+        List<Product_Active> active = c.getActive();
+        request.setAttribute("SizeData", size);        
+        request.setAttribute("ColorData", color);
+        request.setAttribute("ProductData", product);
+        request.setAttribute("ActiveData", c.getActive());
+        request.getRequestDispatcher("product.jsp").forward(request, response);
     }
 
     /**
@@ -80,46 +84,7 @@ public class ProductInsert extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String product_id = request.getParameter("product_id");
-        String category_id = request.getParameter("category_id");
-        String product_name = request.getParameter("product_name");
-        String product_price = request.getParameter("price");
-        String product_size = request.getParameter("size");
-        String product_color = request.getParameter("color");
-        String product_quantity = request.getParameter("quantity");
-        String product_img = "images/" + request.getParameter("product_img");
-        String product_describe = request.getParameter("describe");
-//        String active = request.getParameter("permission");       
-        String active = "true";
-        int quantity = Integer.parseInt(product_quantity);
-        Float price = Float.valueOf(product_price);
-        int cid = Integer.parseInt(category_id);
-        productDAO dao = new productDAO();
-        Category cate = new Category(cid);
-        String[] size_rw = product_size.split("\\s*,\\s*");
-        String[] color_rw = product_color.split("\\s*,\\s*");
-        List<Size> list = new ArrayList<>();
-        for (String s : size_rw) {
-            list.add(new Size(product_id, s));
-        }
-        List<Color> list2 = new ArrayList<>();
-        for (String c : color_rw) {
-            list2.add(new Color(product_id, c));
-        }
-        Product product = new Product();
-        Product_Active Pa = new Product_Active(product_id, active);
-        product.setCate(cate);
-        product.setProduct_id(product_id);
-        product.setProduct_name(product_name);
-        product.setProduct_price(price);
-        product.setProduct_describe(product_describe);
-        product.setQuantity(quantity);
-        product.setImg(product_img);
-        product.setSize(list);
-        product.setColor(list2);
-        product.setActive(Pa);
-        dao.insertProduct(product);
-        request.getRequestDispatcher("productinsert.jsp").forward(request, response);
+        processRequest(request, response);
     }
 
     /**

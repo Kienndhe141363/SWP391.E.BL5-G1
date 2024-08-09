@@ -16,7 +16,7 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <!-- Main CSS-->
-        <link rel="stylesheet" type="text/css" href="../admin/css/main.css">
+        <link rel="stylesheet" type="text/css" href="css/mainAdmin.css">
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css">
         <!-- or -->
         <link rel="stylesheet" href="https://unpkg.com/boxicons@latest/css/boxicons.min.css">
@@ -82,7 +82,7 @@
                         <div class="tile-body">
                             <div class="row element-button">
                                 <div class="col-sm-2">
-                                    <a class="btn btn-add btn-sm" href="productmanager?action=insert" title="Thêm"><i class="fas fa-plus"></i>
+                                    <a class="btn btn-add btn-sm" href="productinsert" title="Thêm"><i class="fas fa-plus"></i>
                                         Tạo mới sản phẩm</a>
                                 </div>
                                 <!-- UploadExcelBtn -->
