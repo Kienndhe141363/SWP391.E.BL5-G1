@@ -67,4 +67,41 @@ public class aboutDAO extends DBContext {
             System.out.println(e);
         }
     }
+    
+    public void updateAbout(About about) {
+        try {
+            // Update product details
+            String sql = "UPDATE About SET Title=?,Content=?" + (!about.getImg().equalsIgnoreCase("images/") ? ", ImageURL=?" : "") + " WHERE AboutId=? ";
+            conn = new DBContext().getConnection();
+            ps = conn.prepareStatement(sql);
+            ps.setString(1, about.getTitle());
+            ps.setString(2, about.getContent());
+            if (!about.getImg().isEmpty()) {
+                ps.setString(3, about.getImg());
+            }
+            ps.setString(!about.getImg().equalsIgnoreCase("images/") ? 4 : 3, about.getAboutId());
+            ps.executeUpdate();
+            conn.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+      public About getAboutById(String aboutId) {
+        About about = null;
+        String sql = "SELECT * FROM about WHERE AboutId = ?";
+        
+        try {
+            conn = new DBContext().getConnection();
+            ps = conn.prepareStatement(sql);
+            ps.setString(1, aboutId);
+            rs = ps.executeQuery();
+            if (rs.next()) {
+                about = new About(rs.getString(1), rs.getString(2), rs.getString(3), rs.getString(4));
+            }
+
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        return about;
+    }
 }
