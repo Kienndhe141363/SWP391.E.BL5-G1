@@ -9,7 +9,7 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <!-- Main CSS-->
-        <link rel="stylesheet" type="text/css" href="./css/mainAdmin.css">
+        <link rel="stylesheet" type="text/css" href="admin/css/main.css">
         <!-- Font-icon css-->
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css">
         <!-- or -->
@@ -21,9 +21,6 @@
               href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
         <script src="http://code.jquery.com/jquery.min.js" type="text/javascript"></script>
         <script src="https://cdn.ckeditor.com/4.16.2/standard/ckeditor.js"></script>
-    </head>
-
-    <body class="app sidebar-mini rtl">
         <script>
 
             function readURL(input, thumbimage) {
@@ -63,6 +60,9 @@
                 });
             })
         </script>
+    </head>
+
+    <body class="app sidebar-mini rtl">
         <style>
             .Choicefile {
                 display: block;
@@ -135,15 +135,24 @@
         </style>
         <!-- Navbar-->
         <header class="app-header">
-            <a class="app-sidebar__toggle" href="#" data-toggle="sidebar"aria-label="Hide Sidebar"></a>
+            <!-- Sidebar toggle button--><a class="app-sidebar__toggle" href="#" data-toggle="sidebar"
+                                            aria-label="Hide Sidebar"></a>
+            <!-- Navbar Right Menu-->
             <ul class="app-nav">
+
+
+                <!-- User Menu-->
                 <li><a class="app-nav__item" href="dashboard"><i class='bx bx-log-out bx-rotate-180'></i> </a>
+
                 </li>
             </ul>
         </header>
+        <!-- Sidebar menu-->
+        <!-- Sidebar menu-->
         <div class="app-sidebar__overlay" data-toggle="sidebar"></div>
         <aside class="app-sidebar">
-            <div class="app-sidebar__user"><img class="app-sidebar__user-avatar" src="../admin/images/user.png" width="50px" alt="User Image">
+            <div class="app-sidebar__user"><img class="app-sidebar__user-avatar" src="admin/images/user.png" width="50px"
+                                                alt="User Image">
                 <div>
                     <p class="app-sidebar__user-name"><b>${sessionScope.user.user_name}</b></p>
                     <p class="app-sidebar__user-designation">Chào mừng bạn trở lại</p>
@@ -157,6 +166,13 @@
                 <li><a class="app-menu__item" href="ordermanager"><i class='app-menu__icon bx bx-task'></i><span class="app-menu__label">Quản lý đơn hàng</span></a></li>
 
                 <!-- Conditionally Display Menu Items -->
+                <c:if test="${sessionScope.user.isAdmin}">
+                    <li><a class="app-menu__item" href="customermanager"><i class='app-menu__icon bx bx-user-voice'></i><span class="app-menu__label">Quản lý khách hàng</span></a></li>
+                    <li><a class="app-menu__item" href="reportmanager"><i class='app-menu__icon bx bx-receipt'></i><span class="app-menu__label">Quản lý phản hồi</span></a></li>
+                    <li><a class="app-menu__item" href="aboutmanager"><i class='app-menu__icon bx bx-receipt'></i><span class="app-menu__label">Quản lý trang giới thiệu</span></a></li>
+                    <li><a class="app-menu__item" href="commentmanager"><i class='app-menu__icon bx bx-receipt'></i><span class="app-menu__label">Quản lý bình luận</span></a></li>
+                    <li><a class="app-menu__item" href="saleoff"><i class='app-menu__icon bx bx-receipt'></i><span class="app-menu__label">Quản lý sale</span></a></li>
+                </c:if>
             </ul>
         </aside>
         <main class="app-content">
@@ -173,8 +189,7 @@
                         <div class="tile-body">
                             <div class="row element-button">
                             </div>
-
-                            <form class="row" action="productinsert" method="post" >
+                            <form class="row" action="productmanager" method="POST" >
                                 <input type="hidden" name="action" value="insertproduct">
                                 <div class="form-group col-md-3">
                                     <label class="control-label">Mã sản phẩm </label>
@@ -233,7 +248,8 @@
                                 </div>
                                 <button class="btn btn-save" type="submit">Lưu lại</button>
                                 &nbsp;
-                                <a class="btn btn-cancel" href="product">Hủy bỏ</a>
+                                <a class="btn btn-cancel" href="productmanager">Hủy bỏ</a>
+
                             </form>
                         </div>
 
@@ -246,6 +262,28 @@
         <script src="admin/js/bootstrap.min.js"></script>
         <script src="admin/js/main.js"></script>
         <script src="admin/js/plugins/pace.min.js"></script>
+        <script>
+                                        const inpFile = document.getElementById("inpFile");
+                                        const loadFile = document.getElementById("loadFile");
+
+                                        const previewContainer = document.getElementById("imagePreview");
+                                        const previewImage = previewContainer.querySelector(".image-preview__image");
+                                        const previewDefaultText = previewContainer.querySelector(".image-preview__default-text");
+                                        const object = new ActiveXObject("Scripting.FileSystemObject");
+                                        inpFile.addEventListener("change", function () {
+                                            const file = this.files[0];
+                                            if (file) {
+                                                const reader = new FileReader();
+                                                previewDefaultText.style.display = "none";
+                                                previewImage.style.display = "block";
+                                                reader.addEventListener("load", function () {
+                                                    previewImage.setAttribute("src", this.result);
+                                                });
+                                                reader.readAsDataURL(file);
+                                            }
+                                        });
+
+        </script>
         <script>
             function validateQuantity(input) {
                 if (input.value < 1) {
