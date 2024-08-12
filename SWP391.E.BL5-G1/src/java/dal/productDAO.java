@@ -154,6 +154,130 @@ public class productDAO extends DBContext {
         }
         return list;
     }
+     public Category getCategoryByName(String name) {
+        String sql = "select * from Category where category_name = ?";
+        try {
+            conn = new DBContext().getConnection();
+            ps = conn.prepareStatement(sql);
+            ps.setString(1, name);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                return new Category(rs.getInt(1), rs.getString(2));
+            }
+        } catch (Exception e) {
+        }
+        return null;
+    }
+     public void ProductDelete(String product_id) {
+        String sql = "delete from product_size where product_id=?";
+        try {
+            conn = new DBContext().getConnection();
+            ps = conn.prepareStatement(sql);
+            ps.setString(1, product_id);
+            ps.executeUpdate();
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+
+        String sql1 = "delete from product_color where product_id=?";
+        try {
+            conn = new DBContext().getConnection();
+            ps = conn.prepareStatement(sql1);
+            ps.setString(1, product_id);
+            ps.executeUpdate();
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+
+        String sql2 = "delete from product_img where product_id=?";
+        try {
+            conn = new DBContext().getConnection();
+            ps = conn.prepareStatement(sql2);
+            ps.setString(1, product_id);
+            ps.executeUpdate();
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+
+        String sq3 = "delete from product where product_id=?";
+        try {
+            conn = new DBContext().getConnection();
+            ps = conn.prepareStatement(sq3);
+            ps.setString(1, product_id);
+            ps.executeUpdate();
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        String sql4 ="delete from product_active where product_id=?";
+             try {
+            conn = new DBContext().getConnection();
+            ps = conn.prepareStatement(sql4);
+            ps.setString(1, product_id);
+            ps.executeUpdate();
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+
+    }
+     public void updateProduct(Product product, int cid, List<Color> listColor, List<Size> listSize) {
+        try {
+            // Update product details
+            String sql = "UPDATE product SET category_id=?, product_name=?, product_price=?, product_describe=?, quantity=?" + (!product.getImg().equalsIgnoreCase("images/") ? ", img=?" : "") + " WHERE product_id=?";
+            conn = new DBContext().getConnection();
+            ps = conn.prepareStatement(sql);
+            ps.setInt(1, cid);
+            ps.setString(2, product.getProduct_name());
+            ps.setFloat(3, product.getProduct_price());
+            ps.setString(4, product.getProduct_describe());
+            ps.setInt(5, product.getQuantity());
+            if (!product.getImg().isEmpty()) {
+                ps.setString(6, product.getImg());
+            }
+            ps.setString(!product.getImg().equalsIgnoreCase("images/") ? 7 : 6, product.getProduct_id());
+            ps.executeUpdate();
+
+            // Delete existing sizes and colors and actives
+            String deleteSizesSQL = "DELETE FROM product_size WHERE product_id=?";
+            ps = conn.prepareStatement(deleteSizesSQL);
+            ps.setString(1, product.getProduct_id());
+            ps.executeUpdate();
+
+            String deleteColorsSQL = "DELETE FROM product_color WHERE product_id=?";
+            ps = conn.prepareStatement(deleteColorsSQL);
+            ps.setString(1, product.getProduct_id());
+            ps.executeUpdate();
+             String deleteActiveSQL = "DELETE FROM product_active WHERE product_id=?";
+            ps = conn.prepareStatement(deleteActiveSQL);
+            ps.setString(1, product.getProduct_id());
+            ps.executeUpdate();
+            // Insert new sizes
+            String insertSizeSQL = "INSERT INTO product_size (product_id, size) VALUES (?, ?)";
+            for (Size size : listSize) {
+                ps = conn.prepareStatement(insertSizeSQL);
+                ps.setString(1, product.getProduct_id());
+                ps.setString(2, size.getSize());
+                ps.executeUpdate();
+            }
+            //Insert new Active
+                String insertActiveSQL = "INSERT INTO product_active (product_id, active) VALUES (?, ?)";
+                ps = conn.prepareStatement(insertActiveSQL);
+                ps.setString(1, product.getProduct_id());
+                ps.setString(2, product.getActive().getAcitve());
+                ps.executeUpdate();
+
+            // Insert new colors
+            String insertColorSQL = "INSERT INTO product_color (product_id, color) VALUES (?, ?)";
+            for (Color color : listColor) {
+                ps = conn.prepareStatement(insertColorSQL);
+                ps.setString(1, product.getProduct_id());
+                ps.setString(2, color.getColor());
+                ps.executeUpdate();
+            }
+            conn.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
     ////
 
     public List<Product> getTop10Product() {
