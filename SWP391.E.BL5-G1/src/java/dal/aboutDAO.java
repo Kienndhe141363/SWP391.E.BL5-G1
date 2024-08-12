@@ -17,6 +17,7 @@ import model.About;
  * @author ThangNPHE151263
  */
 public class aboutDAO extends DBContext {
+
     Connection conn = null;
     PreparedStatement ps = null;
     ResultSet rs = null;
@@ -37,8 +38,8 @@ public class aboutDAO extends DBContext {
         }
         return list;
     }
-    
-        public void addAbout(String title,String img,String content) {
+
+    public void addAbout(String title, String img, String content) {
         String sql = "INSERT INTO [dbo].[About]\n"
                 + "           ([Title]\n"
                 + "           ,[ImageURL]\n"
@@ -52,6 +53,18 @@ public class aboutDAO extends DBContext {
             ps.setString(3, content);
             ps.executeUpdate();
         } catch (Exception e) {
+        }
+    }
+
+    public void deleteAbout(String AboutId) {
+        String sql = "DELETE FROM [dbo].[About] Where AboutId= ?";
+        try {
+            conn = new DBContext().getConnection();
+            ps = conn.prepareStatement(sql);
+            ps.setString(1, AboutId);
+            ps.executeUpdate();
+        } catch (Exception e) {
+            System.out.println(e);
         }
     }
 }

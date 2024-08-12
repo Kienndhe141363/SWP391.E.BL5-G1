@@ -35,7 +35,7 @@
             <tbody>
                 <c:forEach var="item" items="${listAbout}">
                     <tr>
-                        <td>${item.aboutId}</td>
+                        <td id="id">${item.aboutId}</td>
                         <td>${item.title}</td>
                         <td><img src="${item.img}" alt="${item.title}" style="width:100px;"/></td>
                         <td>${item.content}</td>
