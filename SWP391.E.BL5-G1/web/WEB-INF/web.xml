@@ -2,11 +2,19 @@
 <web-app version="6.0" xmlns="https://jakarta.ee/xml/ns/jakartaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="https://jakarta.ee/xml/ns/jakartaee https://jakarta.ee/xml/ns/jakartaee/web-app_6_0.xsd">
     <servlet>
         <servlet-name>ProductManager</servlet-name>
-        <servlet-class>controller.Admin.ProductManager</servlet-class>
+        <servlet-class>Controller.Admin.ProductManager</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>ProductInsert</servlet-name>
-        <servlet-class>admin.ProductInsert</servlet-class>
+        <servlet-class>Controller.Admin.ProductInsert</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>CategoryManager</servlet-name>
+        <servlet-class>Controller.Admin.CategoryManager</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>Home</servlet-name>
+        <servlet-class>Controller.Home.Home</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>ProductManager</servlet-name>
@@ -15,5 +23,13 @@
     <servlet-mapping>
         <servlet-name>ProductInsert</servlet-name>
         <url-pattern>/productinsert</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>CategoryManager</servlet-name>
+        <url-pattern>/categorymanager</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>Home</servlet-name>
+        <url-pattern>/home</url-pattern>
     </servlet-mapping>
 </web-app>
