@@ -1,7 +1,7 @@
 <%-- 
     Document   : addAbout
     Created on : Aug 13, 2024, 12:43:02 AM
-    Author     : Putaa
+    Author     : ThangNPHE151263
 --%>
 
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
@@ -40,9 +40,20 @@
                 border: none;
                 cursor: pointer;
                 font-size: 16px;
+                margin-right: 10px;
             }
             form input[type="submit"]:hover {
                 background-color: #218838;
+            }
+            form input[type="button"] {
+                background-color: #dc3545;
+                color: white;
+                border: none;
+                cursor: pointer;
+                font-size: 16px;
+            }
+            form input[type="button"]:hover {
+                background-color: #c82333;
             }
             img {
                 max-width: 150px;
@@ -67,6 +78,7 @@
                 <textarea id="content" name="content" rows="4" required></textarea>
 
                 <input type="submit" value="Thêm Mới">
+                <input type="button" value="Hủy" onclick="window.location.href='aboutManager';">
             </form>
         </div>
 
