@@ -188,20 +188,7 @@
                         <h3 class="tile-title">Tạo mới sản phẩm</h3>
                         <div class="tile-body">
                             <div class="row element-button">
-                                <!--                                <div class="col-sm-2">
-                                                                    <a class="btn btn-add btn-sm" data-toggle="modal" data-target="#adddanhmuc"><i
-                                                                            class="fas fa-folder-plus"></i> Thêm danh mục</a>
-                                                                </div>
-                                                                <div class="col-sm-2">
-                                                                    <a class="btn btn-add btn-sm" data-toggle="modal" data-target="#adddanhmuc"><i
-                                                                            class="fas fa-folder-plus"></i> Sửa danh mục</a>
-                                                                </div>
-                                                                <div class="col-sm-2">
-                                                                    <a class="btn btn-add btn-sm" data-toggle="modal" data-target="#adddanhmuc"><i
-                                                                            class="fas fa-folder-plus"></i> Xóa danh mục</a>
-                                                                </div>-->
                             </div>
-
                             <form class="row" action="productmanager" method="POST" >
                                 <input type="hidden" name="action" value="insertproduct">
                                 <div class="form-group col-md-3">
@@ -270,46 +257,6 @@
                 </div>
             </div>
         </main>
-
-<!--        <div class="modal fade" id="adddanhmuc" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
-             data-backdrop="static" data-keyboard="false">
-            <div class="modal-dialog modal-dialog-centered" role="document">
-                <div class="modal-content">
-
-                    <div class="modal-body">
-                        <div class="row">
-                            <div class="form-group  col-md-12">
-                                <span class="thong-tin-thanh-toan">
-                                    <h5>Thêm mới danh mục </h5>
-                                </span>
-                            </div>
-
-                            <div class="form-group col-md-12" >
-
-                                <h2 style="color: red; padding-left: 10px">
-                                    ${error}</h2>
-                                <label class="control-label">Nhập tên danh mục mới</label>
-                                <form action="productmanager?action=insertcategory" method="post"> 
-                                    <input class="form-control" type="text" name="name" required>
-                                    <br>
-                                    <button class="btn btn-save" type="submit">Lưu lại</button>
-                                    <a class="btn btn-cancel" data-dismiss="modal" href="#">Hủy bỏ</a>
-                                </form>
-                            </div>
-                            <div class="form-group col-md-12">
-                                <label class="control-label">Danh mục sản phẩm hiện đang có</label>
-                                <ul style="padding-left: 20px;">
-                                    <c:forEach items="${CategoryData}" var="cat">
-                                        <li>${cat.category_name}</li>
-                                        </c:forEach>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>-->
-
         <script src="admin/js/jquery-3.2.1.min.js"></script>
         <script src="admin/js/popper.min.js"></script>
         <script src="admin/js/bootstrap.min.js"></script>
