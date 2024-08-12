@@ -7,6 +7,7 @@ package dal;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import model.About;
@@ -35,5 +36,22 @@ public class aboutDAO extends DBContext {
             System.out.println(e);
         }
         return list;
+    }
+    
+        public void addAbout(String title,String img,String content) {
+        String sql = "INSERT INTO [dbo].[About]\n"
+                + "           ([Title]\n"
+                + "           ,[ImageURL]\n"
+                + "           ,[Content])\n"
+                + "     VALUES(?,?,?)";
+        try {
+            conn = new DBContext().getConnection();
+            ps = conn.prepareStatement(sql);
+            ps.setString(1, title);
+            ps.setString(2, img);
+            ps.setString(3, content);
+            ps.executeUpdate();
+        } catch (Exception e) {
+        }
     }
 }
