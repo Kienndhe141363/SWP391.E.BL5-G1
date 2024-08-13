@@ -24,8 +24,9 @@
         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.css">
         <!--<script src="https://cdn.ckeditor.com/4.16.2/standard/ckeditor.js"></script>-->
+        <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
     </head>
-
     <body onload="time()" class="app sidebar-mini rtl">
         <!-- Navbar-->
         <header class="app-header">
@@ -64,7 +65,7 @@
                     <li><a class="app-menu__item" href="aboutmanager"><i class='app-menu__icon bx bx-receipt'></i><span class="app-menu__label">Quản lý trang giới thiệu</span></a></li>
                     <li><a class="app-menu__item" href="commentmanager"><i class='app-menu__icon bx bx-receipt'></i><span class="app-menu__label">Quản lý bình luận</span></a></li>
                     <li><a class="app-menu__item" href="saleoff"><i class='app-menu__icon bx bx-receipt'></i><span class="app-menu__label">Quản lý sale</span></a></li>
-                            </c:if>
+                </c:if>
             </ul>
         </aside>
         <main class="app-content">
@@ -83,9 +84,6 @@
                                     <a class="btn btn-add btn-sm" href="productmanager?action=insert" title="Thêm"><i class="fas fa-plus"></i>
                                         Tạo mới sản phẩm</a>
                                 </div>
-
-                                <!-- UploadExcelBtn -->
-                                <!-- UploadExcelBtn -->
                                 <!-- UploadExcelBtn -->
                                 <div class="col-sm-2">
                                     <a class="btn btn-add btn-sm"  title="ThêmExcel"
@@ -116,8 +114,6 @@
                                         </div>
                                     </div>
                                 </div>
-                                <!-- uploadModal -->   
-                                <!-- UploadExcelBtn -->
                                 <!-- UploadExcelBtn -->
                                 <div class="col-sm-2">
                                     <a class="btn btn-delete btn-sm print-file" type="button" title="In" onclick="myApp.printTable()"><i
@@ -305,47 +301,47 @@
         <script type="text/javascript" src="admin/js/plugins/jquery.dataTables.min.js"></script>
         <script type="text/javascript" src="admin/js/plugins/dataTables.bootstrap.min.js"></script>
         <script type="text/javascript">
-                                                                            $('#sampleTable').DataTable();
-                                                                            //Thời Gian
-                                                                            function time() {
-                                                                                var today = new Date();
-                                                                                var weekday = new Array(7);
-                                                                                weekday[0] = "Chủ Nhật";
-                                                                                weekday[1] = "Thứ Hai";
-                                                                                weekday[2] = "Thứ Ba";
-                                                                                weekday[3] = "Thứ Tư";
-                                                                                weekday[4] = "Thứ Năm";
-                                                                                weekday[5] = "Thứ Sáu";
-                                                                                weekday[6] = "Thứ Bảy";
-                                                                                var day = weekday[today.getDay()];
-                                                                                var dd = today.getDate();
-                                                                                var mm = today.getMonth() + 1;
-                                                                                var yyyy = today.getFullYear();
-                                                                                var h = today.getHours();
-                                                                                var m = today.getMinutes();
-                                                                                var s = today.getSeconds();
-                                                                                m = checkTime(m);
-                                                                                s = checkTime(s);
-                                                                                nowTime = h + " giờ " + m + " phút " + s + " giây";
-                                                                                if (dd < 10) {
-                                                                                    dd = '0' + dd
-                                                                                }
-                                                                                if (mm < 10) {
-                                                                                    mm = '0' + mm
-                                                                                }
-                                                                                today = day + ', ' + dd + '/' + mm + '/' + yyyy;
-                                                                                tmp = '<span class="date"> ' + today + ' - ' + nowTime +
-                                                                                        '</span>';
-                                                                                document.getElementById("clock").innerHTML = tmp;
-                                                                                clocktime = setTimeout("time()", "1000", "Javascript");
+            $('#sampleTable').DataTable();
+            //Thời Gian
+            function time() {
+                var today = new Date();
+                var weekday = new Array(7);
+                weekday[0] = "Chủ Nhật";
+                weekday[1] = "Thứ Hai";
+                weekday[2] = "Thứ Ba";
+                weekday[3] = "Thứ Tư";
+                weekday[4] = "Thứ Năm";
+                weekday[5] = "Thứ Sáu";
+                weekday[6] = "Thứ Bảy";
+                var day = weekday[today.getDay()];
+                var dd = today.getDate();
+                var mm = today.getMonth() + 1;
+                var yyyy = today.getFullYear();
+                var h = today.getHours();
+                var m = today.getMinutes();
+                var s = today.getSeconds();
+                m = checkTime(m);
+                s = checkTime(s);
+                nowTime = h + " giờ " + m + " phút " + s + " giây";
+                if (dd < 10) {
+                    dd = '0' + dd
+                }
+                if (mm < 10) {
+                    mm = '0' + mm
+                }
+                today = day + ', ' + dd + '/' + mm + '/' + yyyy;
+                tmp = '<span class="date"> ' + today + ' - ' + nowTime +
+                        '</span>';
+                document.getElementById("clock").innerHTML = tmp;
+                clocktime = setTimeout("time()", "1000", "Javascript");
 
-                                                                                function checkTime(i) {
-                                                                                    if (i < 10) {
-                                                                                        i = "0" + i;
-                                                                                    }
-                                                                                    return i;
-                                                                                }
-                                                                            }
+                function checkTime(i) {
+                    if (i < 10) {
+                        i = "0" + i;
+                    }
+                    return i;
+                }
+            }
         </script>
         <script>
 
