@@ -53,4 +53,43 @@ footer {
     padding: 1rem;
     width: 100%;
     bottom: 0;
+    background-color: #f4f4f4;
+}
+
+.container {
+    width: 80%;
+    margin: 0 auto;
+    padding: 2rem;
+}
+
+.content-wrapper {
+    display: flex;
+    align-items: flex-start;
+    margin-bottom: 20px;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+.content-text {
+    flex: 1;
+    min-width: 300px;
+}
+
+.content-image {
+    flex: 1;
+    max-width: 100%;
+}
+
+.content-image img {
+    width: 100%;
+    height: auto;
+    border-radius: 8px;
+}
+
+.c-odd .content-wrapper {
+    flex-direction: row-reverse;
+}
+
+.c-even .content-wrapper {
+    flex-direction: row;
 }
