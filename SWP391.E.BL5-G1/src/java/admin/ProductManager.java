@@ -59,170 +59,133 @@ public class ProductManager extends HttpServlet {
         String action = request.getParameter("action");
         String page = "";
         try {
-            HttpSession session = request.getSession();
-            model.User user = (User) session.getAttribute("user");
-
-//            if (user != null && user.getIsAdmin().equalsIgnoreCase("true") || user.getIsStoreStaff().equalsIgnoreCase("true")) {
-                if (action == null || action.equals("")) {
-                    productDAO c = new productDAO();
-                    List<Product> product = c.getProduct();
-                    List<Size> size = c.getSize();
-                    List<Color> color = c.getColor();
-                    List<Category> category = c.getCategory();
-                    List<Product_Active> active = c.getActive();
-                    request.setAttribute("ActiveData", c.getActive());
-                    request.setAttribute("CategoryData", category);
-                    request.setAttribute("ProductData", product);
-                    request.setAttribute("SizeData", size);
-                    request.setAttribute("ColorData", color);
-                    page = "product.jsp";
-                } else if (action.equalsIgnoreCase("insert")) {
-                    productDAO c = new productDAO();
-                    List<Category> category = c.getCategory();
-                    request.setAttribute("CategoryData", category);
-                    page = "productinsert.jsp";
-                } else if (action.equalsIgnoreCase("insertcategory")) {
-                    String name = request.getParameter("name");
-                    if (name != null && !name.isEmpty()) {
-                        productDAO dao = new productDAO();
-                        Category c = dao.getCategoryByName(name);
-                        if (c != null) {
-                            request.setAttribute("error", name + " already exists.");
-                            page = "category,jsp";
-                        } else {
-//                            dao.insertCategory(name);
-                            response.sendRedirect("categorymanager");
-                            return;
-                        }
-                    } else {
-                        request.setAttribute("error", "Category name cannot be empty.");
-                        page = "category.jsp";
-                    }
-                } else if (action.equalsIgnoreCase("insertproduct")) {
-                    String product_id = request.getParameter("product_id");
-                    String category_id = request.getParameter("category_id");
-                    String product_name = request.getParameter("product_name");
-                    String product_price = request.getParameter("price");
-                    String product_size = request.getParameter("size");
-                    String product_color = request.getParameter("color");
-                    String product_quantity = request.getParameter("quantity");
-                    String product_img = "images/" + request.getParameter("product_img");
-                    String product_describe = request.getParameter("describe");
-                     String active = request.getParameter("permission");
-                    int quantity = Integer.parseInt(product_quantity);
-                    Float price = Float.parseFloat(product_price);
-                    int cid = Integer.parseInt(category_id);
-                    productDAO dao = new productDAO();
-                    Category cate = new Category(cid);
-                    String[] size_rw = product_size.split("\\s*,\\s*");
-                    String[] color_rw = product_color.split("\\s*,\\s*");
-                    
-
-                    List<Size> list = new ArrayList<>();
-                    for (String s : size_rw) {
-                        list.add(new Size(product_id, s));
-                    }
-
-                    List<Color> list2 = new ArrayList<>();
-                    for (String c : color_rw) {
-                        list2.add(new Color(product_id, c));
-                    }
-
-                    Product product = new Product();
-                    Product_Active Pa = new Product_Active(product_id, active);
-                    product.setCate(cate);
-                    product.setProduct_id(product_id);
-                    product.setProduct_name(product_name);
-                    product.setProduct_price(price);
-                    product.setProduct_describe(product_describe);
-                    product.setQuantity(quantity);
-                    product.setImg(product_img);
-                    product.setSize(list);
-                    product.setColor(list2);
-                    product.setActive(Pa);
-                    dao.insertProduct(product);
-                    response.sendRedirect("productmanager");
-                    return;
-                } else if (action.equalsIgnoreCase("deleteproduct")) {
-                    String product_id = request.getParameter("product_id");
-                    productDAO dao = new productDAO();
-                    dao.ProductDelete(product_id);
-                    response.sendRedirect("productmanager");
-                    return;
-
-                } else if (action.equalsIgnoreCase("updateproduct")) {
-                    String product_id = request.getParameter("product_id");
-                    String category_id = request.getParameter("category_id");
-                    String product_name = request.getParameter("product_name");
-                    String product_price = request.getParameter("product_price");
-                    String product_size = request.getParameter("product_size");
-                    String product_color = request.getParameter("product_color");
-                    String product_quantity = request.getParameter("product_quantity");
-                    String product_img = "images/" + request.getParameter("product_img");
-                    String product_describe = request.getParameter("product_describe");
-                    String active = request.getParameter("permission");
-                    //lỗi do các căp key bị null
-                    int quantity = Integer.parseInt(product_quantity);
-                    if(quantity < 0) quantity = 1;
-                    Float price = Float.parseFloat(product_price);
-                    int cid = Integer.parseInt(category_id);
-                    productDAO dao = new productDAO();
-
-                    Category cate = new Category(cid);
-
-                    String[] size_rw = product_size.split("\\s*,\\s*");
-                    String[] color_rw = product_color.split("\\s*,\\s*");
-                    
-                    //size
-                    List<Size> list = new ArrayList<>();
-                   
-                    for (String s : size_rw) {
-                        list.add(new Size(product_id, s));
-                    }
-                    //color
-                    List<Color> list2 = new ArrayList<>();
-                    for (String c : color_rw) {
-                        list2.add(new Color(product_id, c));
-                    }
-                    Product_Active activep =new Product_Active(product_id, active);
-                    Product product = new Product();
-                    product.setCate(cate);
-                    product.setProduct_id(product_id);
-                    product.setProduct_name(product_name);
-                    product.setProduct_price(price);
-                    product.setProduct_describe(product_describe);
-                    product.setQuantity(quantity);
-                    product.setImg(product_img);
-                    product.setSize(list);
-                    product.setColor(list2);      
-                    product.setActive(activep);
-                    dao.updateProduct(product, cid, list2, list);
-                    response.sendRedirect("productmanager");
-                    return;
-                }else if (action.equalsIgnoreCase("insertByExcel")) {
-
-                    Part filePart = request.getPart("file");
-
-                    InputStream fileContent = filePart.getInputStream();
-
-                    Workbook workbook = new XSSFWorkbook(fileContent);
-                    Sheet sheet = workbook.getSheetAt(0);
-                    int totalRow = sheet.getLastRowNum();
-                    for (Row row : sheet) {
-                        if (row.getRowNum() > 3) {
-                            handleExcelData(row);
-                        }
-                    }
-                    response.sendRedirect("productmanager");
-                    return;
+            if (action == null || action.equals("")) {
+                productDAO c                = new productDAO();
+                List<Product> product       = c.getProduct();
+                List<Size> size             = c.getSize();
+                List<Color> color           = c.getColor();
+                List<Category> category     = c.getCategory();
+                List<Product_Active> active = c.getActive();
+                request.setAttribute("ActiveData", active);
+                request.setAttribute("CategoryData", category);
+                request.setAttribute("ProductData", product);
+                request.setAttribute("SizeData", size);
+                request.setAttribute("ColorData", color);
+                page = "product.jsp";
+            } else if (action.equalsIgnoreCase("insert")) {
+                productDAO c = new productDAO();
+                List<Category> category = c.getCategory();
+                request.setAttribute("CategoryData", category);
+                page = "productinsert.jsp";
+            } else if (action.equalsIgnoreCase("insertproduct")) {
+                String product_id       = request.getParameter("product_id");
+                String category_id      = request.getParameter("category_id");
+                String product_name     = request.getParameter("product_name");
+                String product_price    = request.getParameter("price");
+                String product_size     = request.getParameter("size");
+                String product_color    = request.getParameter("color");
+                String product_quantity = request.getParameter("quantity");
+                String product_img      = "images/" + request.getParameter("product_img");
+                String product_describe = request.getParameter("describe");
+                String active           = "True";
+                int quantity            = Integer.parseInt(product_quantity);
+                Float price             = Float.valueOf(product_price);
+                int cid                 = Integer.parseInt(category_id);
+                productDAO dao          = new productDAO();
+                Category cate           = new Category(cid);
+                //trả về một mảng các chuỗi được phân tách bằng dấu phẩy, loại bỏ mọi khoảng trắng xung quanh.
+                String[] size_rw        = product_size.split("\\s*,\\s*"); 
+                String[] color_rw       = product_color.split("\\s*,\\s*");
+                List<Size> list = new ArrayList<>();
+                for (String s : size_rw) {
+                    list.add(new Size(product_id, s));
                 }
-//            } else {
-//                response.sendRedirect("user?action=login");
-//                return;
-//            }
+                List<Color> list2 = new ArrayList<>();
+                for (String c : color_rw) {
+                    list2.add(new Color(product_id, c));
+                }
+                Product product     = new Product();
+                Product_Active Pa   = new Product_Active(product_id, active);
+                product.setCate(cate);
+                product.setProduct_id(product_id);
+                product.setProduct_name(product_name);
+                product.setProduct_price(price);
+                product.setProduct_describe(product_describe);
+                product.setQuantity(quantity);
+                product.setImg(product_img);
+                product.setSize(list);
+                product.setColor(list2);
+                product.setActive(Pa);
+                dao.insertProduct(product);
+                response.sendRedirect("productmanager");
+                return;
+            } else if (action.equalsIgnoreCase("deleteproduct")) {
+                String product_id = request.getParameter("product_id");
+                productDAO dao = new productDAO();
+                dao.ProductDelete(product_id);
+                response.sendRedirect("productmanager");
+                return;
+            } else if (action.equalsIgnoreCase("updateproduct")) {
+                String product_id       = request.getParameter("product_id");
+                String category_id      = request.getParameter("category_id");
+                String product_name     = request.getParameter("product_name");
+                String product_price    = request.getParameter("product_price");
+                String product_size     = request.getParameter("product_size");
+                String product_color    = request.getParameter("product_color");
+                String product_quantity = request.getParameter("product_quantity");
+                String product_img      = "images/" + request.getParameter("product_img");
+                String product_describe = request.getParameter("product_describe");
+                String active           = request.getParameter("permission");
+                //lỗi do các căp key bị null
+                int quantity            = Integer.parseInt(product_quantity);
+                if(quantity < 0) quantity = 1;
+                Float price = Float.valueOf(product_price);
+                int cid = Integer.parseInt(category_id);
+                productDAO dao = new productDAO();
+                Category cate = new Category(cid);
+                String[] size_rw = product_size.split("\\s*,\\s*");
+                String[] color_rw = product_color.split("\\s*,\\s*");
+                //size
+                List<Size> list = new ArrayList<>();
 
-        } catch (Exception e) {
-           
+                for (String s : size_rw) {
+                    list.add(new Size(product_id, s));
+                }
+                //color
+                List<Color> list2 = new ArrayList<>();
+                for (String c : color_rw) {
+                    list2.add(new Color(product_id, c));
+                }
+                Product_Active activep =new Product_Active(product_id, active);
+                Product product = new Product();
+                product.setCate(cate);
+                product.setProduct_id(product_id);
+                product.setProduct_name(product_name);
+                product.setProduct_price(price);
+                product.setProduct_describe(product_describe);
+                product.setQuantity(quantity);
+                product.setImg(product_img);
+                product.setSize(list);
+                product.setColor(list2);      
+                product.setActive(activep);
+                dao.updateProduct(product, cid, list2, list);
+                response.sendRedirect("productmanager");
+                return;
+            }else if (action.equalsIgnoreCase("insertByExcel")) {
+                Part filePart = request.getPart("file");
+                InputStream fileContent = filePart.getInputStream();
+                Workbook workbook = new XSSFWorkbook(fileContent);
+                Sheet sheet = workbook.getSheetAt(0);
+                int totalRow = sheet.getLastRowNum();
+                for (Row row : sheet) {
+                    if (row.getRowNum() > 3) {
+                        handleExcelData(row);
+                    }
+                }
+                response.sendRedirect("productmanager");
+                return;
+            }
+        } catch (ServletException | IOException | NumberFormatException e) {
             page = "404.jsp";
         }
         RequestDispatcher dd = request.getRequestDispatcher(page);
@@ -230,37 +193,30 @@ public class ProductManager extends HttpServlet {
 
     }
     private void handleExcelData(Row row) {
-//                    String name = row.getCell(0).getStringCellValue();
-//                        int age = (int) row.getCell(1).getNumericCellValue();
-
-        String product_id = row.getCell(0).getStringCellValue();
-        int category_id = (int) row.getCell(1).getNumericCellValue();
-        String product_name = row.getCell(2).getStringCellValue();
-        float product_price = (float) row.getCell(3).getNumericCellValue();
-        String product_size = row.getCell(4).getStringCellValue();
-        String product_color = row.getCell(5).getStringCellValue();
-        int product_quantity = (int) row.getCell(6).getNumericCellValue();
-        String product_img = "images/" + row.getCell(7).getStringCellValue();
+        String product_id       = row.getCell(0).getStringCellValue();
+        int category_id         = (int) row.getCell(1).getNumericCellValue();
+        String product_name     = row.getCell(2).getStringCellValue();
+        float product_price     = (float) row.getCell(3).getNumericCellValue();
+        String product_size     = row.getCell(4).getStringCellValue();
+        String product_color    = row.getCell(5).getStringCellValue();
+        int product_quantity    = (int) row.getCell(6).getNumericCellValue();
+        String product_img      = "images/" + row.getCell(7).getStringCellValue();
         String product_describe = row.getCell(8).getStringCellValue();
-        String active = "True";
-
-        productDAO dao = new productDAO();
-        Category cate = new Category(category_id);
-        String[] size_rw = product_size.split("\\s*,\\s*");
-        String[] color_rw = product_color.split("\\s*,\\s*");
-
+        String active           = "True";
+        productDAO dao          = new productDAO();
+        Category cate           = new Category(category_id);
+        String[] size_rw        = product_size.split("\\s*,\\s*");
+        String[] color_rw       = product_color.split("\\s*,\\s*");
         List<Size> list = new ArrayList<>();
         for (String s : size_rw) {
             list.add(new Size(product_id, s));
         }
-
         List<Color> list2 = new ArrayList<>();
         for (String c : color_rw) {
             list2.add(new Color(product_id, c));
         }
-
-        Product product = new Product();
-        Product_Active Pa = new Product_Active(product_id, active);
+        Product product     = new Product();
+        Product_Active Pa   = new Product_Active(product_id, active);
         product.setCate(cate);
         product.setProduct_id(product_id);
         product.setProduct_name(product_name);
@@ -275,7 +231,6 @@ public class ProductManager extends HttpServlet {
         dao.insertProduct(product);
     }
 
-    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
      * Handles the HTTP <code>GET</code> method.
      *
@@ -291,13 +246,10 @@ public class ProductManager extends HttpServlet {
         String action = request.getParameter("action");
         if ("dowloadTemplate".equals(action)) {
             String path = getServletContext().getRealPath("") + "excel_template" + File.separator + "sample-xlsx-file.xlsx";
-
             System.out.println(path);
-
             File file = new File(path);
             OutputStream os = null;
             FileInputStream fis = null;
-
             response.setHeader("Content-Disposition", String.format("attachment;filename=\"%s\"", file.getName()));
             response.setContentType("application/octet-stream");
             if (file.exists()) {

@@ -27,7 +27,7 @@ public class productDAO extends DBContext {
     //namnthe140786
     public List<Category> getCategory() {
         List<Category> list = new ArrayList<>();
-        String sql = "select * from category";
+        String sql = "SELECT * FROM category";
         try {
             conn = new DBContext().getConnection();
             ps = conn.prepareStatement(sql);
@@ -41,7 +41,7 @@ public class productDAO extends DBContext {
     }
 
     public void insertProduct(Product product) {
-        String sql = "insert into product (product_id,category_id,product_name,product_price,product_describe,quantity,img) values(?,?,?,?,?,?,?)";
+        String sql = "INSERT INTO product (product_id,category_id,product_name,product_price,product_describe,quantity,img) VALUES(?,?,?,?,?,?,?)";
         try {
             conn = new DBContext().getConnection();
             ps = conn.prepareStatement(sql);
@@ -93,8 +93,17 @@ public class productDAO extends DBContext {
     public List<Product> getProduct() {
         List<Product> list = new ArrayList<>();
         String sql = """
-                     select c.category_name ,  p.product_id , p.product_name, p.product_price, p.product_describe, p.quantity,p.img, p.category_id from  
-                     product p inner join category c on p.category_id = c.category_id""";
+                     SELECT 
+                        c.category_name 
+                     ,  p.product_id 
+                     ,  p.product_name
+                     ,  p.product_price
+                     ,  p.product_describe
+                     ,  p.quantity,p.img
+                     ,  p.category_id 
+                     FROM  product p 
+                     INNER JOIN category c on p.category_id = c.category_id
+                     """;
         try {
             conn = new DBContext().getConnection();
             ps = conn.prepareStatement(sql);
@@ -112,7 +121,7 @@ public class productDAO extends DBContext {
     
     public List<Size> getSize() {
         List<Size> list = new ArrayList<>();
-        String sql = "select * from product_size";
+        String sql = "SELECT * FROM product_size";
         try {
             conn = new DBContext().getConnection();
             ps = conn.prepareStatement(sql);
@@ -127,7 +136,7 @@ public class productDAO extends DBContext {
     
     public List<Color> getColor() {
         List<Color> list = new ArrayList<>();
-        String sql = "select * from product_color";
+        String sql = "SELECT * FROM product_color";
         try {
             conn = new DBContext().getConnection();
             ps = conn.prepareStatement(sql);
@@ -142,7 +151,7 @@ public class productDAO extends DBContext {
     
     public List<Product_Active> getActive(){
         List<Product_Active> list = new ArrayList<>();
-         String sql = "select * from product_active";
+         String sql = "SELECT * FROM product_active";
         try {
             conn = new DBContext().getConnection();
             ps = conn.prepareStatement(sql);
@@ -155,7 +164,7 @@ public class productDAO extends DBContext {
         return list;
     }
      public Category getCategoryByName(String name) {
-        String sql = "select * from Category where category_name = ?";
+        String sql = "SELECT * FROM Category where category_name = ?";
         try {
             conn = new DBContext().getConnection();
             ps = conn.prepareStatement(sql);
@@ -169,7 +178,7 @@ public class productDAO extends DBContext {
         return null;
     }
      public void ProductDelete(String product_id) {
-        String sql = "delete from product_size where product_id=?";
+        String sql = "DELETE FROM product_size WHERE product_id=?";
         try {
             conn = new DBContext().getConnection();
             ps = conn.prepareStatement(sql);
@@ -179,7 +188,7 @@ public class productDAO extends DBContext {
             System.out.println(e);
         }
 
-        String sql1 = "delete from product_color where product_id=?";
+        String sql1 = "DELETE FROM product_color WHERE product_id=?";
         try {
             conn = new DBContext().getConnection();
             ps = conn.prepareStatement(sql1);
@@ -189,7 +198,7 @@ public class productDAO extends DBContext {
             System.out.println(e);
         }
 
-        String sql2 = "delete from product_img where product_id=?";
+        String sql2 = "DELETE FROM product_img WHERE product_id=?";
         try {
             conn = new DBContext().getConnection();
             ps = conn.prepareStatement(sql2);
@@ -199,7 +208,7 @@ public class productDAO extends DBContext {
             System.out.println(e);
         }
 
-        String sq3 = "delete from product where product_id=?";
+        String sq3 = "DELETE FROM product WHERE product_id=?";
         try {
             conn = new DBContext().getConnection();
             ps = conn.prepareStatement(sq3);
@@ -208,7 +217,7 @@ public class productDAO extends DBContext {
         } catch (Exception e) {
             System.out.println(e);
         }
-        String sql4 ="delete from product_active where product_id=?";
+        String sql4 ="DELETE FROM product_active WHERE product_id=?";
              try {
             conn = new DBContext().getConnection();
             ps = conn.prepareStatement(sql4);
@@ -222,7 +231,15 @@ public class productDAO extends DBContext {
      public void updateProduct(Product product, int cid, List<Color> listColor, List<Size> listSize) {
         try {
             // Update product details
-            String sql = "UPDATE product SET category_id=?, product_name=?, product_price=?, product_describe=?, quantity=?" + (!product.getImg().equalsIgnoreCase("images/") ? ", img=?" : "") + " WHERE product_id=?";
+            String sql = ""
+                    + "UPDATE product "
+                    + "SET category_id=?"
+                    + ", product_name=?"
+                    + ", product_price=?"
+                    + ", product_describe=?"
+                    + ", quantity=?" 
+                    + (!product.getImg().equalsIgnoreCase("images/") ? ", img=?" : "") 
+                    + " WHERE product_id=?";
             conn = new DBContext().getConnection();
             ps = conn.prepareStatement(sql);
             ps.setInt(1, cid);
@@ -259,12 +276,12 @@ public class productDAO extends DBContext {
                 ps.executeUpdate();
             }
             //Insert new Active
-                String insertActiveSQL = "INSERT INTO product_active (product_id, active) VALUES (?, ?)";
-                ps = conn.prepareStatement(insertActiveSQL);
-                ps.setString(1, product.getProduct_id());
-                ps.setString(2, product.getActive().getAcitve());
-                ps.executeUpdate();
-
+            String insertActiveSQL = "INSERT INTO product_active (product_id, active) VALUES (?, ?)";
+            ps = conn.prepareStatement(insertActiveSQL);
+            ps.setString(1, product.getProduct_id());
+            ps.setString(2, product.getActive().getAcitve());
+            ps.executeUpdate();
+        
             // Insert new colors
             String insertColorSQL = "INSERT INTO product_color (product_id, color) VALUES (?, ?)";
             for (Color color : listColor) {
