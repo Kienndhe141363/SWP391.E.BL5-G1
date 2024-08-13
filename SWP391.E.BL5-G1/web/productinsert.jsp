@@ -22,7 +22,6 @@
         <script src="http://code.jquery.com/jquery.min.js" type="text/javascript"></script>
         <script src="https://cdn.ckeditor.com/4.16.2/standard/ckeditor.js"></script>
         <script>
-
             function readURL(input, thumbimage) {
                 if (input.files && input.files[0]) { //Sử dụng  cho Firefox - chrome
                     var reader = new FileReader();
@@ -32,7 +31,6 @@
                     reader.readAsDataURL(input.files[0]);
                 } else { // Sử dụng cho IE
                     $("#thumbimage").attr('src', input.value);
-
                 }
                 $("#thumbimage").show();
                 $('.filename').text($("#uploadfile").val());
@@ -211,7 +209,7 @@
                                 </div>
                                 <div class="form-group  col-md-3">
                                     <label class="control-label">Giá bán</label>
-                                    <input class="form-control" name="price" type="number">
+                                    <input class="form-control" name="price" type="number" oninput="validateQuantity(this)">
                                 </div>
                                 <div class="form-group col-md-3">
                                     <label class="control-label">Size</label>
@@ -262,28 +260,6 @@
         <script src="admin/js/bootstrap.min.js"></script>
         <script src="admin/js/main.js"></script>
         <script src="admin/js/plugins/pace.min.js"></script>
-        <script>
-                                        const inpFile = document.getElementById("inpFile");
-                                        const loadFile = document.getElementById("loadFile");
-
-                                        const previewContainer = document.getElementById("imagePreview");
-                                        const previewImage = previewContainer.querySelector(".image-preview__image");
-                                        const previewDefaultText = previewContainer.querySelector(".image-preview__default-text");
-                                        const object = new ActiveXObject("Scripting.FileSystemObject");
-                                        inpFile.addEventListener("change", function () {
-                                            const file = this.files[0];
-                                            if (file) {
-                                                const reader = new FileReader();
-                                                previewDefaultText.style.display = "none";
-                                                previewImage.style.display = "block";
-                                                reader.addEventListener("load", function () {
-                                                    previewImage.setAttribute("src", this.result);
-                                                });
-                                                reader.readAsDataURL(file);
-                                            }
-                                        });
-
-        </script>
         <script>
             function validateQuantity(input) {
                 if (input.value < 1) {
