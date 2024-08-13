@@ -82,20 +82,51 @@ public class User extends HttpServlet {
             session.setAttribute("logoutMessage", "Đăng xuất thành công!");
             response.sendRedirect("home");
         }
+        if (action.equals("signup")) {
+            HttpSession session = request.getSession();
+            userDAO da = new userDAO();
+            String email = request.getParameter("user_email");
+            String pass = request.getParameter("user_pass");
+            String repass = request.getParameter("re_pass");
+            
+           
+            String passwordRegex = "^(?=.*[A-Z])(?=.*\\d)[A-Za-z\\d]{6,}$";
+            if (!pass.matches(passwordRegex)) {
+                session.setAttribute("error_match", "Mật khẩu phải có ít nhất 6 ký tự, bao gồm ít nhất một chữ cái viết hoa và một chữ số");
+                request.getRequestDispatcher("register.jsp").forward(request, response);
+                return;
+            }
 
-    }
+            if (!pass.equals(repass)) {
+                session.setAttribute("error_rePass", "Vui lòng nhập lại mật khẩu cho đúng");
+                request.getRequestDispatcher("register.jsp").forward(request, response);
+            } else {
+                model.User a = da.checkAcc(email);
+                if (a == null) {
+                    da.signup(email, repass);
+                    session.setAttribute("signupMessage", "đăng kí thành công");
+                     request.getRequestDispatcher("login.jsp").forward(request, response);
+                } else {
+                    session.setAttribute("msg", "Email đã tồn tại");
+                    request.getRequestDispatcher("register.jsp").forward(request, response);
+                }
+            }
+        }
+    
 
-    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
-    /**
-     * Handles the HTTP <code>GET</code> method.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
-    @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+}
+
+// <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
+/**
+ * Handles the HTTP <code>GET</code> method.
+ *
+ * @param request servlet request
+ * @param response servlet response
+ * @throws ServletException if a servlet-specific error occurs
+ * @throws IOException if an I/O error occurs
+ */
+@Override
+protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         processRequest(request, response);
     }
@@ -109,7 +140,7 @@ public class User extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         processRequest(request, response);
     }
@@ -120,7 +151,7 @@ public class User extends HttpServlet {
      * @return a String containing servlet description
      */
     @Override
-    public String getServletInfo() {
+public String getServletInfo() {
         return "Short description";
     }// </editor-fold>
 
