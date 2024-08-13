@@ -21,7 +21,7 @@ public class DBContext {
         Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
         return DriverManager.getConnection(url, userID, password);
     }
-    private final String serverName = "localhost";
+    private final String serverName = "DESKTOP-92QKVO3\\SQLEXPRESS";
     private final String dbName = "ShopYouAndMeVersionFinal";
     //SU24_BL5_SWP391_G1 ShopYouAndMeVersionFinal
     private final String portNumber = "1433";
