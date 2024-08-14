@@ -16,6 +16,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.List;
 import model.Bill;
+import model.BillDetail;
 import model.User;
 
 
@@ -54,7 +55,15 @@ public class OrderManager extends HttpServlet {
                     request.setAttribute("bill", bill);
                     page = "order.jsp";
 
-                } 
+                }else if (action.equals("showdetail")) {
+                String bill_id = request.getParameter("bill_id");
+                int id = Integer.parseInt(bill_id);
+                List<BillDetail> detail = dao.getDetail(id);
+                request.setAttribute("detail", detail);
+                page = "orderdetail.jsp";
+
+            }
+                
            
 
         } catch (Exception e) {
