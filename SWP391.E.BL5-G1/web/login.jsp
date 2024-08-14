@@ -69,7 +69,6 @@
                                         Nhớ tài khoản
                                     </label>
                                     <button type="submit">Đăng nhập</button>
-                                    <p> <a href="register.jsp"> Chưa có account ? Đăng kí ngay</a></p>
 
                                 </div>
 
