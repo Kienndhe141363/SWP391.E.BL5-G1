@@ -10,6 +10,8 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
 import model.Bill;
+import model.BillDetail;
+import model.Product;
 import model.User;
 
 /**
@@ -44,5 +46,24 @@ public class billDAO extends DBContext {
         }
         return list;
     }
+      public List<BillDetail> getDetail(int bill_id) {
+        List<BillDetail> list = new ArrayList<>();
+        String sql = "select d.detail_id, p.product_id, p.product_name, p.img, d.quantity, d.size, d.color, d.price from bill_detail d "
+                + "inner join product p on d.product_id = p.product_id where d.bill_id = ?";
+        try {
+            conn = new DBContext().getConnection();
+            ps = conn.prepareStatement(sql);
+            ps.setInt(1, bill_id);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                Product p = new Product(rs.getString(2), rs.getString(3), rs.getString(4));
+                list.add(new BillDetail(rs.getInt(1), p, rs.getInt(5), rs.getString(6), rs.getString(7), rs.getFloat(8)));
+            }
+        } catch (Exception e) {
+        }
+        return list;
+    }
+      
+      
     
 }
