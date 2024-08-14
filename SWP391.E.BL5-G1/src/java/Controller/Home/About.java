@@ -2,10 +2,9 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
-package admin;
+package Controller.Home;
 
-import dal.billDAO;
-import jakarta.servlet.RequestDispatcher;
+import dal.aboutDAO;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -15,16 +14,13 @@ import jakarta.servlet.http.HttpSession;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.List;
-import model.Bill;
-import model.User;
-
 
 /**
  *
- * @author hieupham
+ * @author ThangNPHE151263
  */
-@WebServlet(name = "OrderManager", urlPatterns = {"/ordermanager"})
-public class OrderManager extends HttpServlet {
+@WebServlet(name = "About", urlPatterns = {"/about"})
+public class About extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -37,32 +33,8 @@ public class OrderManager extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        request.setCharacterEncoding("UTF-8");
-        response.setCharacterEncoding("UTF-8");
-        response.setContentType("text/html; charset=UTF-8");
-        String page = "";
-        try {
-            HttpSession session = request.getSession();
-            User user = (User) session.getAttribute("user");
-            String action = request.getParameter("action");
-            billDAO dao = new billDAO();
-
-           
-                if (action == null) {
-                    String paymentFilter = request.getParameter("paymentFilter");
-                    List<Bill> bill = dao.getBillInfo(paymentFilter);
-                    request.setAttribute("bill", bill);
-                    page = "order.jsp";
-
-                } 
-           
-
-        } catch (Exception e) {
-            page = "404.jsp";
-
-        }
-        RequestDispatcher dd = request.getRequestDispatcher(page);
-        dd.forward(request, response);
+        response.setContentType("text/html;charset=UTF-8");
+        request.getRequestDispatcher("about.jsp").forward(request, response);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -77,7 +49,11 @@ public class OrderManager extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        HttpSession session = request.getSession();
+        aboutDAO dao = new aboutDAO();
+        List<model.About> listAbout = dao.getAbout();
+        session.setAttribute("listAbout", listAbout);
+        response.sendRedirect("about.jsp");
     }
 
     /**
