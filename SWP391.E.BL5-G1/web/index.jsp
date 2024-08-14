@@ -54,9 +54,16 @@
     <body>
         <!-- Main Wrapper Start -->
         <!--Offcanvas menu area start-->
-       
-            
-       
+        <c:if test="${not empty sessionScope.orderSuccessMessage}">
+            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                ${sessionScope.orderSuccessMessage}
+                <a href="user?action=myaccount" class="alert-link">Kiểm tra lịch sử đặt hàng của bạn tại đây.</a>
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <c:remove var="orderSuccessMessage" scope="session"/>
+        </c:if>
         <div class="off_canvars_overlay"></div>
 
         <jsp:include page="menu.jsp"/>
@@ -99,7 +106,62 @@
                 </div>
             </div>
         </div>
-        
+        <!--slider area end-->
+
+        <!--banner area start-->
+        <!--    <div class="banner_section banner_section_three">
+                <div class="container-fluid">
+                    <div class="row ">
+                        <div class="col-lg-4 col-md-6">
+                            <div class="banner_area">
+                                <div class="banner_thumb">
+                                    <a href="product"><img src="assets/img/bg/banner_fashion1.png" alt="#"></a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-4 col-md-6">
+                            <div class="banner_area">
+                                <div class="banner_thumb">
+                                    <a href="product"><img src="assets/img/bg/banner3.png" alt="#"></a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-4 col-md-6">
+                            <div class="banner_area bottom">
+                                <div class="banner_thumb">
+                                    <a href="product"><img src="assets/img/bg/banner_fashion2.png" alt="#"></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>-->
+<!--        
+        <section class="banner_section banner_section_three">
+            <div class="container-fluid">
+                <div class="row ">
+                    <div class="col-lg-6 col-md-6">
+                        <div class="banner_area">
+                            <div class="banner_thumb">
+                                <a href="product"><img src="assets/img/bg/banner16.jpg" alt="#"></a>
+                                <div class="banner_content">                                  
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-6 col-md-6">
+                        <div class="banner_area">
+                            <div class="banner_thumb">
+                                <a href="product"><img src="assets/img/bg/banner17.jpg" alt="#"></a>
+                                <div class="banner_content">                                   
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>-->
+        <!--banner area end-->
 
         <!--product section area start-->
         <section class="product_section womens_product bottom">
