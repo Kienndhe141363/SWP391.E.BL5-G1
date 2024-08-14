@@ -40,7 +40,7 @@
                         <td><img src="${item.img}" alt="${item.title}" style="width:100px;"/></td>
                         <td>${item.content}</td>
                         <td>
-                            <a href="editAbout?id=${item.aboutId}" class="btn btn-edit">Sửa</a>
+                            <a href="editAbout.jsp?id=${item.aboutId}" class="btn btn-edit">Sửa</a>
                             <a href="deleteAbout?id=${item.aboutId}" class="btn btn-delete" onclick="return confirm('Bạn có chắc chắn muốn xóa không?');">Xóa</a>
                         </td>
                     </tr>
