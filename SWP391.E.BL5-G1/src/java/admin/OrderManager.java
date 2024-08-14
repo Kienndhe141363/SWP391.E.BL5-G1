@@ -16,8 +16,8 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.List;
 import model.Bill;
+import model.BillDetail;
 import model.User;
-
 
 /**
  *
@@ -47,15 +47,20 @@ public class OrderManager extends HttpServlet {
             String action = request.getParameter("action");
             billDAO dao = new billDAO();
 
-           
-                if (action == null) {
-                    String paymentFilter = request.getParameter("paymentFilter");
-                    List<Bill> bill = dao.getBillInfo(paymentFilter);
-                    request.setAttribute("bill", bill);
-                    page = "order.jsp";
+            if (action == null) {
+                String paymentFilter = request.getParameter("paymentFilter");
+                List<Bill> bill = dao.getBillInfo(paymentFilter);
+                request.setAttribute("bill", bill);
+                page = "order.jsp";
 
-                } 
-           
+            } else if (action.equals("showdetail")) {
+                String bill_id = request.getParameter("bill_id");
+                int id = Integer.parseInt(bill_id);
+                List<BillDetail> detail = dao.getDetail(id);
+                request.setAttribute("detail", detail);
+                page = "orderdetail.jsp";
+
+            }
 
         } catch (Exception e) {
             page = "404.jsp";
