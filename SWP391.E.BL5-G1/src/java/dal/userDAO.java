@@ -195,4 +195,20 @@ public class userDAO extends DBContext {
 
         }
     }
+
+    public int CountUser() {
+        int count = 0;
+        String sql = "SELECT COUNT(*) as 'count'\n"
+                + "  FROM users where isAdmin = 'False' or isAdmin = 'FALSE' ";
+        try {
+            conn = new DBContext().getConnection();
+            ps = conn.prepareStatement(sql);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                count = rs.getInt(1);
+            }
+        } catch (Exception e) {
+        }
+        return count;
+    }
 }
