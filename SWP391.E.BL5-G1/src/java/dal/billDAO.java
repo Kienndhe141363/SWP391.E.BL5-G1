@@ -5,6 +5,7 @@
 package dal;
 
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
@@ -62,6 +63,117 @@ public class billDAO extends DBContext {
         } catch (Exception e) {
         }
         return list;
+    }
+
+     public List<Bill> getBillByDay() {
+        List<Bill> list = new ArrayList<>();
+        String sql = "select b.bill_id, u.user_name,b.phone,b.address,b.date,b.total,b.payment from bill b inner join users u on b.user_id = u.user_id where date = cast(getdate() as Date)";
+        try {
+            conn = new DBContext().getConnection();
+            ps = conn.prepareStatement(sql);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                User u = new User(rs.getString(2));
+                list.add(new Bill(rs.getInt(1), u, rs.getFloat(6), rs.getString(7), rs.getString(4), rs.getDate(5), rs.getInt(3)));
+            }
+        } catch (Exception e) {
+        }
+        return list;
+    }
+
+    public double getTotalPaidByDate(java.util.Date date) {
+        double totalPaid = 0;
+        String sql = "SELECT SUM(total) FROM bill WHERE date = ?";
+        try {
+            conn = new DBContext().getConnection();
+            ps = conn.prepareStatement(sql);
+            ps.setDate(1, new java.sql.Date(date.getTime())); // Set the date parameter correctly
+            rs = ps.executeQuery();
+            if (rs.next()) {
+                totalPaid = rs.getDouble(1);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            // Close resources (connection, statement, resultset) if needed
+        }
+        return totalPaid;
+    }
+
+    public double getTotalUnpaidByDate(java.util.Date date) {
+        double totalUnpaid = 0;
+        String sql = "SELECT SUM(total) FROM bill WHERE date = ? AND payment = 'Chua thanh toán (VNPAY)'";
+        try {
+            conn = new DBContext().getConnection();
+            ps = conn.prepareStatement(sql);
+            ps.setDate(1, new java.sql.Date(date.getTime()));
+            rs = ps.executeQuery();
+            if (rs.next()) {
+                totalUnpaid = rs.getDouble(1);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return totalUnpaid;
+    }
+
+    public List<Bill> getBillBetweenDates(String startDate, String endDate) {
+        List<Bill> bills = new ArrayList<>();
+        String sql = "SELECT b.bill_id, u.user_name, b.phone, b.address, b.date, b.total, b.payment "
+                + "FROM bill b INNER JOIN users u ON b.user_id = u.user_id "
+                + "WHERE b.date BETWEEN ? AND ?";
+        try {
+            conn = new DBContext().getConnection();
+            ps = conn.prepareStatement(sql);
+            ps.setString(1, startDate);
+            ps.setString(2, endDate);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                User u = new User(rs.getString(2));
+                bills.add(new Bill(rs.getInt(1), u, rs.getFloat(6), rs.getString(7), rs.getString(4), rs.getDate(5), rs.getInt(3)));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return bills;
+    }
+
+    public int CountBill() {
+        int count = 0;
+        String sql = "SELECT COUNT(*) as 'count'\n"
+                + "  FROM bill";
+        try {
+            conn = new DBContext().getConnection();
+            ps = conn.prepareStatement(sql);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                count = rs.getInt(1);
+            }
+        } catch (Exception e) {
+        }
+        return count;
+    }
+
+    public List<Object[]> getTotalBillAmountByMonth() {
+        List<Object[]> result = new ArrayList<>();
+        String sql = "SELECT YEAR(date) as year, MONTH(date) as month, SUM(total) as total_amount "
+                + "FROM bill "
+                + "GROUP BY YEAR(date), MONTH(date) "
+                + "ORDER BY YEAR(date), MONTH(date)";
+        try {
+            conn = new DBContext().getConnection();
+            ps = conn.prepareStatement(sql);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                int year = rs.getInt("year");
+                int month = rs.getInt("month");
+                double totalAmount = rs.getDouble("total_amount");
+                result.add(new Object[]{year, month, totalAmount});
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return result;
     }
 
   
