@@ -132,7 +132,7 @@
                         <p>${item.content}</p>
                     </div>
                     <div class="content-image">
-                        <img src="images/${item.img}" alt="${item.title}">
+                        <img src="${item.img}" alt="${item.title}">
                     </div>
                 </div>
             </section>
