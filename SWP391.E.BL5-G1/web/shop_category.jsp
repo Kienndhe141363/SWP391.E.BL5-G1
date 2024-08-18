@@ -63,6 +63,7 @@
                 padding: 10px;
                 border-radius: 8px;
                 transition: background-color 0.3s ease;
+                padding-left: 25px!important;
             }
             .form-check:hover {
                 background-color: #007bff;
