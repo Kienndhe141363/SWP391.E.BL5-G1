@@ -280,7 +280,7 @@
                                                 <c:set var="o" value="${sessionScope.cart}" />
                                                 <c:forEach items="${o.items}" var="i">
                                                     <tr>
-                                                        <td class="product_remove"><a href="cart?action=deletecart&product_id=${i.product.product_id}"><i class="fa fa-trash-o"></i></a></td>
+                                                        <td class="product_remove"><a href="cart?action=deletecart&product_id=${i.product.product_id}">Delete</a></td>
                                                         <td class="product_thumb"><a href="product?action=productdetail&product_id=${i.product.product_id}"><img src="${i.product.img}" alt=""></a></td>
                                                         <td class="product_name"><a href="product?action=productdetail&product_id=${i.product.product_id}">${i.product.product_name}</a></td>
                                                         <td class="product-price"><fmt:formatNumber pattern="##########" value="${i.product.product_price}" /></td>
