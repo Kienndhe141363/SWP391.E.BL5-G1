@@ -44,22 +44,20 @@
         <!-- Sidebar menu-->
         <div class="app-sidebar__overlay" data-toggle="sidebar"></div>
         <aside class="app-sidebar">
-<!--            <div class="app-sidebar__user"><img class="app-sidebar__user-avatar" src="admin/images/user.png" width="50px"
-                                                alt="User Image">
+            -->            <div class="app-sidebar__user"><img class="app-sidebar__user-avatar" src="admin/images/user.png" width="50px"
+                                                               alt="User Image">
                 <div>
                     <p class="app-sidebar__user-name"><b>${sessionScope.user.user_name}</b></p>
                     <p class="app-sidebar__user-designation">Chào mừng bạn trở lại</p>
                 </div>
-            </div>-->
+            </div>
             <hr>
-<!--            <ul class="app-menu">
+            -->            <ul class="app-menu">
+                <li><a class="app-menu__item" href="dashboard"><i class='app-menu__icon bx bx-tachometer'></i><span class="app-menu__label">Bảng thống kê</span></a></li>
                 <li><a class="app-menu__item" href="customermanager"><i class='app-menu__icon bx bx-user-voice'></i><span class="app-menu__label">Quản lý khách hàng</span></a></li>
                 <li><a class="app-menu__item" href="ordermanager"><i class='app-menu__icon bx bx-task'></i><span class="app-menu__label">Quản lý đơn hàng</span></a></li>
 
-                 Conditionally Display Menu Items 
-
-
-            </ul>-->
+            </ul>
         </aside>
         <main class="app-content">
             <div class="app-title">
@@ -74,12 +72,12 @@
                     <div class="tile">
                         <div class="tile-body">
 
-<!--                            <div class="row element-button">
-                                <div class="col-sm-2">
-                                    <a class="btn btn-delete btn-sm print-file" type="button" title="In" onclick="myApp.printTable()"><i
-                                            class="fas fa-print"></i> In dữ liệu</a>
-                                </div>
-                            </div>-->
+                            <!--                            <div class="row element-button">
+                                                            <div class="col-sm-2">
+                                                                <a class="btn btn-delete btn-sm print-file" type="button" title="In" onclick="myApp.printTable()"><i
+                                                                        class="fas fa-print"></i> In dữ liệu</a>
+                                                            </div>
+                                                        </div>-->
 
                             <div class="form-group">
                                 <label for="userRoleFilter"></label>
@@ -211,7 +209,7 @@
         <script type="text/javascript">$('#sampleTable').DataTable();</script>
         <script>
             //Thời Gian
-           
+
 
             $(document).ready(function () {
                 $('#sampleTable').DataTable();

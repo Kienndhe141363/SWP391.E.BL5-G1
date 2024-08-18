@@ -27,7 +27,7 @@
         <script src="https://www.gstatic.com/charts/loader.js"></script>
 
     </head>
-     <body onload="time()" class="app sidebar-mini rtl">
+    <body onload="time()" class="app sidebar-mini rtl">
         <!-- Navbar-->
         <header class="app-header">
             <!-- Sidebar toggle button--><a class="app-sidebar__toggle" href="#" data-toggle="sidebar"
@@ -45,28 +45,19 @@
         <!-- Sidebar menu-->
         <div class="app-sidebar__overlay" data-toggle="sidebar"></div>
         <aside class="app-sidebar">
-            <div class="app-sidebar__user"><img class="app-sidebar__user-avatar" src="admin/images/user.png" width="50px"
-                                                alt="User Image">
+            -->            <div class="app-sidebar__user"><img class="app-sidebar__user-avatar" src="admin/images/user.png" width="50px"
+                                                               alt="User Image">
                 <div>
                     <p class="app-sidebar__user-name"><b>${sessionScope.user.user_name}</b></p>
                     <p class="app-sidebar__user-designation">Chào mừng bạn trở lại</p>
                 </div>
             </div>
             <hr>
-            <ul class="app-menu">
+            -->            <ul class="app-menu">
                 <li><a class="app-menu__item" href="dashboard"><i class='app-menu__icon bx bx-tachometer'></i><span class="app-menu__label">Bảng thống kê</span></a></li>
-                <li><a class="app-menu__item" href="categorymanager"><i class='app-menu__icon bx bxs-category'></i><span class="app-menu__label">Quản lý danh mục</span></a></li>
-                <li><a class="app-menu__item" href="productmanager"><i class='app-menu__icon bx bx-purchase-tag-alt'></i><span class="app-menu__label">Quản lý sản phẩm</span></a></li>
+                <li><a class="app-menu__item" href="customermanager"><i class='app-menu__icon bx bx-user-voice'></i><span class="app-menu__label">Quản lý khách hàng</span></a></li>
                 <li><a class="app-menu__item" href="ordermanager"><i class='app-menu__icon bx bx-task'></i><span class="app-menu__label">Quản lý đơn hàng</span></a></li>
 
-                <!-- Conditionally Display Menu Items -->
-                <c:if test="${sessionScope.user.isAdmin}">
-                    <li><a class="app-menu__item" href="customermanager"><i class='app-menu__icon bx bx-user-voice'></i><span class="app-menu__label">Quản lý khách hàng</span></a></li>
-                    <li><a class="app-menu__item" href="reportmanager"><i class='app-menu__icon bx bx-receipt'></i><span class="app-menu__label">Quản lý phản hồi</span></a></li>
-                    <li><a class="app-menu__item" href="aboutmanager"><i class='app-menu__icon bx bx-receipt'></i><span class="app-menu__label">Quản lý trang giới thiệu</span></a></li>
-                    <li><a class="app-menu__item" href="commentmanager"><i class='app-menu__icon bx bx-receipt'></i><span class="app-menu__label">Quản lý bình luận</span></a></li>
-                    <li><a class="app-menu__item" href="saleoff"><i class='app-menu__icon bx bx-receipt'></i><span class="app-menu__label">Quản lý sale</span></a></li>
-                </c:if>
             </ul>
         </aside>
         <main class="app-content">
@@ -268,48 +259,48 @@
 
         }
     </script>
-<!--       <script type="text/javascript">
-        // Function to update statistics based on checkbox selection
-        function updateStatistics() {
-            // Get the checkbox elements
-            var customerCheckbox = document.getElementById("customerCheckbox");
-            var productCheckbox = document.getElementById("productCheckbox");
-            var orderCheckbox = document.getElementById("orderCheckbox");
-            var outOfStockCheckbox = document.getElementById("outOfStockCheckbox");
-
-            // Get the elements that display the statistics
-            var customerInfo = document.querySelector(".widget-small.primary .info p b");
-            var productInfo = document.querySelector(".widget-small.info .info p b");
-            var orderInfo = document.querySelector(".widget-small.warning .info p b");
-            var outOfStockInfo = document.querySelector(".widget-small.danger .info p b");
-
-            // Update the statistics based on checkbox selection
-            if (customerCheckbox.checked) {
-                customerInfo.textContent = "${requestScope.user} khách hàng";
-            } else {
-                customerInfo.textContent = "";
+    <!--       <script type="text/javascript">
+            // Function to update statistics based on checkbox selection
+            function updateStatistics() {
+                // Get the checkbox elements
+                var customerCheckbox = document.getElementById("customerCheckbox");
+                var productCheckbox = document.getElementById("productCheckbox");
+                var orderCheckbox = document.getElementById("orderCheckbox");
+                var outOfStockCheckbox = document.getElementById("outOfStockCheckbox");
+    
+                // Get the elements that display the statistics
+                var customerInfo = document.querySelector(".widget-small.primary .info p b");
+                var productInfo = document.querySelector(".widget-small.info .info p b");
+                var orderInfo = document.querySelector(".widget-small.warning .info p b");
+                var outOfStockInfo = document.querySelector(".widget-small.danger .info p b");
+    
+                // Update the statistics based on checkbox selection
+                if (customerCheckbox.checked) {
+                    customerInfo.textContent = "${requestScope.user} khách hàng";
+                } else {
+                    customerInfo.textContent = "";
+                }
+    
+                if (productCheckbox.checked) {
+                    productInfo.textContent = "${requestScope.product} sản phẩm";
+                } else {
+                    productInfo.textContent = "";
+                }
+    
+                if (orderCheckbox.checked) {
+                    orderInfo.textContent = "${requestScope.bill} đơn hàng";
+                } else {
+                    orderInfo.textContent = "";
+                }
+    
+                if (outOfStockCheckbox.checked) {
+                    outOfStockInfo.textContent = "${requestScope.low} sản phẩm";
+                } else {
+                    outOfStockInfo.textContent = "";
+                }
             }
-
-            if (productCheckbox.checked) {
-                productInfo.textContent = "${requestScope.product} sản phẩm";
-            } else {
-                productInfo.textContent = "";
-            }
-
-            if (orderCheckbox.checked) {
-                orderInfo.textContent = "${requestScope.bill} đơn hàng";
-            } else {
-                orderInfo.textContent = "";
-            }
-
-            if (outOfStockCheckbox.checked) {
-                outOfStockInfo.textContent = "${requestScope.low} sản phẩm";
-            } else {
-                outOfStockInfo.textContent = "";
-            }
-        }
-
-    </script>-->
+    
+        </script>-->
     <script>
         // Function to get URL parameters
         function getParameterByName(name) {
@@ -331,7 +322,7 @@
         }
     </script>
 
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script>
         function showNotification(message, isSuccess) {
             Swal.fire({
@@ -354,12 +345,11 @@
         document.addEventListener('DOMContentLoaded', function () {
             var message1 = "${sessionScope.message1}";
             var message2 = "${sessionScope.message2}";
-            
-           if (message1) {
+
+            if (message1) {
                 showNotification(message1, true);
         <% session.removeAttribute("message1"); %>
-            }
-             else if (message2) {
+            } else if (message2) {
                 showNotification(message2, false);
         <% session.removeAttribute("message2"); %>
             }
