@@ -1,9 +1,3 @@
-<%-- 
-    Document   : product-details
-    Created on : Aug 18, 2024, 9:02:24 PM
-    Author     : ADMIN
---%>
-
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
