@@ -78,34 +78,35 @@ public class ProductManager extends HttpServlet {
                 request.setAttribute("CategoryData", category);
                 page = "productinsert.jsp";
             } else if (action.equalsIgnoreCase("insertproduct")) {
-                String product_id       = request.getParameter("product_id");
-                String category_id      = request.getParameter("category_id");
-                String product_name     = request.getParameter("product_name");
-                String product_price    = request.getParameter("price");
-                String product_size     = request.getParameter("size");
-                String product_color    = request.getParameter("color");
+                String product_id = request.getParameter("product_id");
+                String category_id = request.getParameter("category_id");
+                String product_name = request.getParameter("product_name");
+                String product_price = request.getParameter("price");
+                String product_size = request.getParameter("size");
+                String product_color = request.getParameter("color");
                 String product_quantity = request.getParameter("quantity");
-                String product_img      = "images/" + request.getParameter("product_img");
+                String product_img = "images/" + request.getParameter("product_img");
                 String product_describe = request.getParameter("describe");
-                String active           = "True";
-                int quantity            = Integer.parseInt(product_quantity);
-                Float price             = Float.valueOf(product_price);
-                int cid                 = Integer.parseInt(category_id);
-                productDAO dao          = new productDAO();
-                Category cate           = new Category(cid);
-                //trả về một mảng các chuỗi được phân tách bằng dấu phẩy, loại bỏ mọi khoảng trắng xung quanh.
-                String[] size_rw        = product_size.split("\\s*,\\s*"); 
-                String[] color_rw       = product_color.split("\\s*,\\s*");
+                String active = request.getParameter("permission");
+                int quantity = Integer.parseInt(product_quantity);
+                Float price = Float.parseFloat(product_price);
+                int cid = Integer.parseInt(category_id);
+                productDAO dao = new productDAO();
+                Category cate = new Category(cid);
+                String[] size_rw = product_size.split("\\s*,\\s*");
+                String[] color_rw = product_color.split("\\s*,\\s*");
                 List<Size> list = new ArrayList<>();
                 for (String s : size_rw) {
                     list.add(new Size(product_id, s));
                 }
+
                 List<Color> list2 = new ArrayList<>();
                 for (String c : color_rw) {
                     list2.add(new Color(product_id, c));
                 }
-                Product product     = new Product();
-                Product_Active Pa   = new Product_Active(product_id, active);
+
+                Product product = new Product();
+                Product_Active Pa = new Product_Active(product_id, active);
                 product.setCate(cate);
                 product.setProduct_id(product_id);
                 product.setProduct_name(product_name);
