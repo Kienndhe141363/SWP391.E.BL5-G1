@@ -55,9 +55,7 @@
         </div>
         <div class="cart_area">
             <div class="cart_link">
-              
-                <a href="#"><i class="fa fa-shopping-basket">${sessionScope.size}</i>Giỏ Hàng</a>
-                
+                <a href="cart?action=showcart"><i class="fa fa-shopping-basket">${sessionScope.size}</i>Giỏ Hàng</a>
             </div>
         </div>
         <div id="menu" class="text-left ">
