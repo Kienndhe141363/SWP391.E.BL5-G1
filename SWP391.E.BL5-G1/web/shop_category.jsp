@@ -201,9 +201,6 @@
                             </div>
                         </div>
                     </div>
-
-
-
                     <div class="row">
                         <c:choose>
                             <c:when test="${empty ProductData}">

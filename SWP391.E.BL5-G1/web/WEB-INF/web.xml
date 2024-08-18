@@ -8,6 +8,10 @@
         <servlet-name>Product</servlet-name>
         <servlet-class>controller.Product</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>Product_Search</servlet-name>
+        <servlet-class>controller.Product_Search</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>ProductManager</servlet-name>
         <url-pattern>/productmanager</url-pattern>
@@ -15,5 +19,9 @@
     <servlet-mapping>
         <servlet-name>Product</servlet-name>
         <url-pattern>/product</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>Product_Search</servlet-name>
+        <url-pattern>/search</url-pattern>
     </servlet-mapping>
 </web-app>
