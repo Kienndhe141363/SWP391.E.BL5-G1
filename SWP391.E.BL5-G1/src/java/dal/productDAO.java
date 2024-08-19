@@ -626,4 +626,15 @@ public class productDAO extends DBContext {
             System.out.println("----------------------------------");
         }
     }
+    
+    public void insertCategory(String name) {
+        String sql = " insert into Category (category_name) values(?)";
+        try {
+            conn = new DBContext().getConnection();
+            ps = conn.prepareStatement(sql);
+            ps.setString(1, name);
+            ps.executeUpdate();
+        } catch (Exception e) {
+        }
+    }
 }
