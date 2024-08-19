@@ -348,7 +348,7 @@
 
 
     </style>
-   <body>
+    <body>
 
 
         <!-- Main Wrapper Start -->
@@ -377,7 +377,7 @@
         <div class="product_details">
             <div class="container">
                 <div class="row">
-                    <div class="col-lg-5 col-md-5">
+                    <div class="col-lg-4 col-md-4">
                         <div class="product-details-tab">
                             <div id="img-1" class="zoomWrapper single-zoom">
                                 <a href="#">
@@ -385,7 +385,7 @@
                                 </a>
                             </div>
                         </div>
-                    </div>
+                    </div>``
 
                     <div class="col-lg-7 col-md-7">
                         <div class="product_d_right">
@@ -424,7 +424,7 @@
                                                 <option value="${s.size}">${s.size}</option>
                                             </c:forEach>
                                         </select>
-                                        <a href="#" id="size-guide-link">
+                                        <a href="#size-guide-popup" id="size-guide-link">
                                             <i class="fas fa-ruler"></i> Hướng dẫn chọn size
                                         </a>
                                     </div>
@@ -474,7 +474,7 @@
                         <li>
                             <div class="icon"><img src="https://routine.vn/static/version1718856864/frontend/Magenest/routine/vi_VN/images/hotline.png" alt="Hotline hỗ trợ Routine"></div>
                             <div class="text"><strong>Hotline hỗ trợ</strong>
-                                <h3>0348956373</h3>
+                                <h3>0387104105</h3>
                         </li>
                     </ul>
                 </div>
@@ -483,7 +483,7 @@
         <!--product details end-->
         <!-- Form for adding rating -->
 
-        <div class="form-container">
+<!--        <div class="form-container">
             <form action="search" method="POST">
                 <input type="hidden" name="action" value="addComment">
                 <input type="hidden" name="product_id" value="${ProductData.product_id}">
@@ -501,178 +501,193 @@
                 <textarea name="comment" rows="4" cols="50" placeholder="Nhập bình luận của bạn"></textarea>
                 <button type="submit">Gửi bình luận</button>
             </form>
+        </div>-->
+
+
+
+<!--    <c:if test="${not empty comments}">
+        <div class="product_reviews">
+            <h3>Đánh giá và Bình luận</h3>
+            <h5>Bình luận:</h5>
+            <c:forEach items="${comments}" var="c">
+                <div class="comment">
+                    <p>Bởi: ${c.user_name}</p>
+                    <p>Đánh giá: ${c.rating}&#9733</p>
+                    <p>Ngày: <fmt:formatDate value="${c.createdAt}" pattern="dd/MM/yyyy"/></p>
+                    <p>${c.comment}</p>
+                </div>
+            </c:forEach>
         </div>
+    </c:if>-->
 
 
 
-        <c:if test="${not empty comments}">
-            <div class="product_reviews">
-                <h3>Đánh giá và Bình luận</h3>
-                <h5>Bình luận:</h5>
-                <c:forEach items="${comments}" var="c">
-                    <div class="comment">
-                        <p>Bởi: ${c.user_name}</p>
-                        <p>Đánh giá: ${c.rating}&#9733</p>
-                        <p>Ngày: <fmt:formatDate value="${c.createdAt}" pattern="dd/MM/yyyy"/></p>
-                        <p>${c.comment}</p>
-                    </div>
-                </c:forEach>
-            </div>
-        </c:if>
-
-
-
-        <!--product section area start-->
-        <section class="product_section related_product">
-            <div class="container">
-                <div class="row">
-                    <div class="col-12">
-                        <div class="section_title">
-                            <h2>Sản phẩm tương tự</h2>
-                        </div>
+    <!--product section area start-->
+    <section class="product_section related_product">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <div class="section_title">
+                        <h2>Sản phẩm tương tự</h2>
                     </div>
                 </div>
-                <div class="product_area">
-                    <div class="row">
-                        <div class="product_carousel product_three_column4 owl-carousel">
-                            <c:forEach items="${ProductByCategory}" var="pc">
-                                <div class="col-lg-3">
-                                    <div class="single_product">
-                                        <div class="product_thumb">
-                                            <a class="primary_img" href="product?action=productdetail&product_id=${pc.product_id}"><img src="${pc.img}" alt=""></a>
-                                        </div>
-                                        <div class="product_content">
-                                            <h3><a href="product?action=productdetail&product_id=${pc.product_id}">${pc.product_name}</a></h3>
-                                            <span class="current_price">${pc.product_price} VNĐ</span>
-                                        </div>
+            </div>
+            <div class="product_area">
+                <div class="row">
+                    <div class="product_carousel product_three_column4 owl-carousel">
+                        <c:forEach items="${ProductByCategory}" var="pc">
+                            <div class="col-lg-3">
+                                <div class="single_product">
+                                    <div class="product_thumb">
+                                        <a class="primary_img" href="product?action=productdetail&product_id=${pc.product_id}"><img src="${pc.img}" alt=""></a>
+                                    </div>
+                                    <div class="product_content">
+                                        <h3><a href="product?action=productdetail&product_id=${pc.product_id}">${pc.product_name}</a></h3>
+                                        <span class="current_price">${pc.product_price} VNĐ</span>
                                     </div>
                                 </div>
-                            </c:forEach>
-                        </div>
+                            </div>
+                        </c:forEach>
                     </div>
                 </div>
             </div>
-        </section>
-
-        <!--product section area end-->
-
-        <!--footer area start-->
-        <%--<jsp:include page="layout/footer.jsp"/>--%>
-        <!--footer area end-->
-
-        <!-- Plugins JS -->
-        <script src="assets/js/plugins.js"></script>
-        <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
-        <!-- Main JS -->
-        <script src="assets/js/main.js"></script>
-        <script>
-                                            function setActionAndSubmit(action) {
-                                                document.getElementById('action').value = action;
-                                                document.getElementById('productForm').submit();
-                                            }
-        </script>
-        <div id="size-guide-popup" style="display: none; position: fixed; left: 50%; top: 50%; transform: translate(-50%, -50%); background-color: white; padding: 20px; border: 1px solid black; z-index: 1000;">
-
-            <h3>Bảng size</h3>
-            <table border="1">
-                <tr>
-                    <th>SIZE</th>
-                    <th>CHIỀU CAO (CM)</th>
-                    <th>CÂN NẶNG (KG)</th>
-                    <th>NGANG VAI</th>
-                    <th>VÒNG NGỰC</th>
-                    <th>VÒNG EO</th>
-                    <th>DÀI TAY</th>
-                    <th>DÀI ÁO</th>
-                </tr>
-                <tr>
-                    <td>S</td>
-                    <td>< 168</td>
-                    <td>< 62</td>
-                    <td>44.5</td>
-                    <td>100</td>
-                    <td>96</td>
-                    <td>19.5</td>
-                    <td>67.5</td>
-                </tr>
-                <tr>
-                    <td>M</td>
-                    <td>169 - 172</td>
-                    <td>63 - 69</td>
-                    <td>46</td>
-                    <td>104</td>
-                    <td>100</td>
-                    <td>21</td>
-                    <td>69</td>
-                </tr>
-                <tr>
-                    <td>L</td>
-                    <td>173 - 176</td>
-                    <td>70 - 76</td>
-                    <td>47.5</td>
-                    <td>108</td>
-                    <td>104</td>
-                    <td>22.5</td>
-                    <td>71</td>
-                </tr>
-                <tr>
-                    <td>XL</td>
-                    <td>177 - 180</td>
-                    <td>77 - 83</td>
-                    <td>49.5</td>
-                    <td>114</td>
-                    <td>110</td>
-                    <td>24</td>
-                    <td>73</td>
-                </tr>
-                <tr>
-                    <td>XXL</td>
-                    <td>> 180</td>
-                    <td>> 83</td>
-                    <td>51.5</td>
-                    <td>120</td>
-                    <td>116</td>
-                    <td>25.5</td>
-                    <td>75</td>
-                </tr>
-            </table>
-            <p>97% khách hàng của chúng tôi đã chọn đúng size theo bảng này</p>
-            <button id="close-popup">Đóng</button>
         </div>
+    </section>
 
-        <script>
-            function showNotification(message, isSuccess) {
-                Swal.fire({
-                    title: isSuccess ? 'Thành công!' : 'Lỗi!',
-                    text: message,
-                    icon: isSuccess ? 'success' : 'error',
-                    toast: true,
-                    position: 'top-end',
-                    showConfirmButton: false,
-                    timer: 6000,
-                    timerProgressBar: true,
-                    didOpen: (toast) => {
-                        toast.addEventListener('mouseenter', Swal.stopTimer)
-                        toast.addEventListener('mouseleave', Swal.resumeTimer)
-                    }
-                });
-            }
+    <!--product section area end-->
 
-// Kiểm tra và hiển thị thông báo khi trang được tải
-            document.addEventListener('DOMContentLoaded', function () {
-                var successMessage = "${sessionScope.successMessageAdd}";
-                var errorMessage = "${sessionScope.errorMessage}";
+    <!--footer area start-->
+    <%--<jsp:include page="layout/footer.jsp"/>--%>
+    <!--footer area end-->
 
-                if (successMessage) {
-                    showNotification(successMessage, true);
-                    // Xóa thông báo khỏi session
-            <% session.removeAttribute("successMessageAdd"); %>
-                } else if (errorMessage) {
-                    showNotification(errorMessage, false);
-                    // Xóa thông báo khỏi session
-            <% session.removeAttribute("errorMessage"); %>
+    <!-- Plugins JS -->
+    <script src="assets/js/plugins.js"></script>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <!-- Main JS -->
+    <script src="assets/js/main.js"></script>
+    <script>
+                                        function setActionAndSubmit(action) {
+                                            document.getElementById('action').value = action;
+                                            document.getElementById('productForm').submit();
+                                        }
+    </script>
+    <div id="size-guide-popup" style="display: none; position: fixed; left: 50%; top: 50%; transform: translate(-50%, -50%); background-color: white; padding: 20px; border: 1px solid black; z-index: 1000;">
+        <h3>Bảng size</h3>
+        <table border="1">
+            <tr>
+                <th>SIZE</th>
+                <th>CHIỀU CAO (CM)</th>
+                <th>CÂN NẶNG (KG)</th>
+                <th>NGANG VAI</th>
+                <th>VÒNG NGỰC</th>
+                <th>VÒNG EO</th>
+                <th>DÀI TAY</th>
+                <th>DÀI ÁO</th>
+            </tr>
+            <tr>
+                <td>S</td>
+                <td>< 168</td>
+                <td>< 62</td>
+                <td>44.5</td>
+                <td>100</td>
+                <td>96</td>
+                <td>19.5</td>
+                <td>67.5</td>
+            </tr>
+            <tr>
+                <td>M</td>
+                <td>169 - 172</td>
+                <td>63 - 69</td>
+                <td>46</td>
+                <td>104</td>
+                <td>100</td>
+                <td>21</td>
+                <td>69</td>
+            </tr>
+            <tr>
+                <td>L</td>
+                <td>173 - 176</td>
+                <td>70 - 76</td>
+                <td>47.5</td>
+                <td>108</td>
+                <td>104</td>
+                <td>22.5</td>
+                <td>71</td>
+            </tr>
+            <tr>
+                <td>XL</td>
+                <td>177 - 180</td>
+                <td>77 - 83</td>
+                <td>49.5</td>
+                <td>114</td>
+                <td>110</td>
+                <td>24</td>
+                <td>73</td>
+            </tr>
+            <tr>
+                <td>XXL</td>
+                <td>> 180</td>
+                <td>> 83</td>
+                <td>51.5</td>
+                <td>120</td>
+                <td>116</td>
+                <td>25.5</td>
+                <td>75</td>
+            </tr>
+        </table>
+        <p>97% khách hàng của chúng tôi đã chọn đúng size theo bảng này</p>
+        <button id="close-popup">Đóng</button>
+    </div>
+    <script>
+        // Lấy các phần tử DOM
+        const sizeGuideLink = document.getElementById('size-guide-link');
+        const sizeGuidePopup = document.getElementById('size-guide-popup');
+        const closePopupButton = document.getElementById('close-popup');
+
+        // Khi người dùng nhấp vào liên kết "Hướng dẫn chọn size"
+        sizeGuideLink.addEventListener('click', function (event) {
+            event.preventDefault(); // Ngăn chặn hành động mặc định của liên kết
+            sizeGuidePopup.style.display = 'block'; // Hiển thị popup
+        });
+
+        // Khi người dùng nhấp vào nút "Đóng"
+        closePopupButton.addEventListener('click', function () {
+            sizeGuidePopup.style.display = 'none'; // Đóng popup
+        });
+    </script>
+    <script>
+        function showNotification(message, isSuccess) {
+            Swal.fire({
+                title: isSuccess ? 'Thành công!' : 'Lỗi!',
+                text: message,
+                icon: isSuccess ? 'success' : 'error',
+                toast: true,
+                position: 'top-end',
+                showConfirmButton: false,
+                timer: 6000,
+                timerProgressBar: true,
+                didOpen: (toast) => {
+                    toast.addEventListener('mouseenter', Swal.stopTimer)
+                    toast.addEventListener('mouseleave', Swal.resumeTimer)
                 }
             });
-        </script>
-    </body>
+        }
+
+// Kiểm tra và hiển thị thông báo khi trang được tải
+        document.addEventListener('DOMContentLoaded', function () {
+            var successMessage = "${sessionScope.successMessageAdd}";
+            var errorMessage = "${sessionScope.errorMessage}";
+
+            if (successMessage) {
+                showNotification(successMessage, true);
+                // Xóa thông báo khỏi session
+        <% session.removeAttribute("successMessageAdd"); %>
+            } else if (errorMessage) {
+                showNotification(errorMessage, false);
+                // Xóa thông báo khỏi session
+        <% session.removeAttribute("errorMessage"); %>
+            }
+        });
+    </script>
+</body>
 </html>
