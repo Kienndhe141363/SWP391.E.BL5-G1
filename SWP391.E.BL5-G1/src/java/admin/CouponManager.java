@@ -82,7 +82,7 @@ public class CouponManager extends HttpServlet {
                 Logger.getLogger(CouponManager.class.getName()).log(Level.SEVERE, null, ex);
             }
             request.setAttribute("coupons", coupons);
-            request.getRequestDispatcher("listCoupons.jsp").forward(request, response);
+            request.getRequestDispatcher("listCoupon.jsp").forward(request, response);
         } else if ("delete".equals(action)) {
             int couponId = Integer.parseInt(request.getParameter("couponId"));
             try {
