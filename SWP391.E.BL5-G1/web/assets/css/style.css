@@ -8644,7 +8644,7 @@ form input[type="submit"]:hover {
 .product_variant.quantity {
     display: -webkit-box;
     display: -ms-flexbox;
-    display: flex;
+    /*display: flex;*/
     align-items: center;
     margin-bottom: 18px;
 }
