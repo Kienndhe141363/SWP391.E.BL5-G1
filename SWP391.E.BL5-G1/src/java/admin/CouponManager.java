@@ -74,8 +74,8 @@ public class CouponManager extends HttpServlet {
         String action = request.getParameter("action");
         List<Coupon> coupons = null;
         List<CouponType> couponTypes = null;
-        if ("list".equals(action)) {
 
+        if ("list".equals(action)) {
             try {
                 coupons = couponDAO.getAllCoupons();
             } catch (Exception ex) {
@@ -127,7 +127,7 @@ public class CouponManager extends HttpServlet {
             Date endDate = parseDate(endDateStr);
 
             if (startDate != null && endDate != null) {
-                String code = generateCouponCode(); // Tạo mã coupon 8 ký tự
+                String code = generateCouponCode();
                 Coupon coupon = new Coupon(0, startDate, endDate, usageLimit, couponTypeId, code);
 
                 try {
@@ -154,7 +154,7 @@ public class CouponManager extends HttpServlet {
     }// </editor-fold>
 
     private String generateCouponCode() {
-       String characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+        String characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
         StringBuilder code = new StringBuilder();
         Random random = new Random();
         for (int i = 0; i < 8; i++) {
@@ -163,7 +163,8 @@ public class CouponManager extends HttpServlet {
         }
         return code.toString();
     }
-     private Date parseDate(String dateStr) {
+
+    private Date parseDate(String dateStr) {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         java.util.Date date = null;
         try {

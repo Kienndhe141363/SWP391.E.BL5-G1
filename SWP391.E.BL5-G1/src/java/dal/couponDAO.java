@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import java.sql.Connection;
 import java.util.Random;
 import model.Coupon;
+import model.CouponType;
 
 /**
  *
