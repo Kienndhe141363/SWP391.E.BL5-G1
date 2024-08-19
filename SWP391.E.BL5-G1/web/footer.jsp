@@ -83,19 +83,19 @@
                     <div class="col-md-3 mb-4">
                         <h5 class="text-uppercase mb-4">Kết nối với chúng tôi</h5>
                         <div class="d-flex flex-wrap">
-                            <a href="#" class="btn btn-outline-light me-2 mb-2" target="_blank" rel="nofollow noopener">
+                            <a href="https://www.facebook.com/routinevn" class="btn btn-outline-light me-2 mb-2" target="_blank" rel="nofollow noopener">
                                 <i class="fab fa-facebook-f"></i>
                             </a>
-                            <a href="#" class="btn btn-outline-light me-2 mb-2" target="_blank" rel="nofollow noopener">
+                            <a href="https://www.instagram.com/routine_official/" class="btn btn-outline-light me-2 mb-2" target="_blank" rel="nofollow noopener">
                                 <i class="fab fa-instagram"></i>
                             </a>
-                            <a href="#" class="btn btn-outline-light me-2 mb-2" target="_blank" rel="nofollow noopener">
+                            <a href="https://zalo.me/routinevn" class="btn btn-outline-light me-2 mb-2" target="_blank" rel="nofollow noopener">
                                 Zalo
                             </a>
-                            <a href="#" class="btn btn-outline-light me-2 mb-2" target="_blank" rel="nofollow noopener">
+                            <a href="https://www.youtube.com/@routinevn" class="btn btn-outline-light me-2 mb-2" target="_blank" rel="nofollow noopener">
                                 <i class="fab fa-youtube"></i>
                             </a>
-                            <a href="#" class="btn btn-outline-light me-2 mb-2" target="_blank" rel="nofollow noopener">
+                            <a href="https://www.tiktok.com/@routine_vietnam" class="btn btn-outline-light me-2 mb-2" target="_blank" rel="nofollow noopener">
                                 <i class="fab fa-tiktok"></i>
                             </a>
                         </div>
