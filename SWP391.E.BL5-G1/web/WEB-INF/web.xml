@@ -12,6 +12,14 @@
         <servlet-name>Product_Search</servlet-name>
         <servlet-class>controller.Product_Search</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>CategoryManager</servlet-name>
+        <servlet-class>admin.CategoryManager</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>Home</servlet-name>
+        <servlet-class>controller.Home</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>ProductManager</servlet-name>
         <url-pattern>/productmanager</url-pattern>
@@ -23,5 +31,13 @@
     <servlet-mapping>
         <servlet-name>Product_Search</servlet-name>
         <url-pattern>/search</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>CategoryManager</servlet-name>
+        <url-pattern>/categorymanager</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>Home</servlet-name>
+        <url-pattern>/home</url-pattern>
     </servlet-mapping>
 </web-app>
