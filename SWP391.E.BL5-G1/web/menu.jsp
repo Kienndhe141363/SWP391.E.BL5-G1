@@ -44,10 +44,6 @@
                             <li><a href="user?action=login">Đăng xuất</a></li>
                             </c:if>
 
-                        <c:if test="${fn:toUpperCase(sessionScope.user.isAdmin) == 'TRUE' || fn:toUpperCase(sessionScope.user.isStoreStaff) == 'TRUE'}">
-                            <li><a href="dashboard">Quản lý</a></li>
-                            </c:if>
-                    </ul>
                 </li> 
             </ul>
         </div> 
@@ -59,9 +55,7 @@
         </div>
         <div class="cart_area">
             <div class="cart_link">
-                <c:if test="${!user.isAdmin == 'True' && !user.isStoreStaff=='True'}">
                 <a href="cart?action=showcart"><i class="fa fa-shopping-basket">${sessionScope.size}</i>Giỏ Hàng</a>
-                </c:if>
             </div>
         </div>
         <div id="menu" class="text-left ">
@@ -124,9 +118,7 @@
                                         <li><a href="user?action=myaccount">Tài khoản của tôi</a></li>
                                         </c:if>
 
-                                    <c:if test="${fn:toUpperCase(sessionScope.user.isAdmin) == 'TRUE' || fn:toUpperCase(sessionScope.user.isStoreStaff) == 'TRUE'}">
-                                        <li><a href="dashboard">Quản lý</a></li>
-                                        </c:if>
+                                   
 
                                     <c:if test="${sessionScope.user == null}">
                                         <li><a href="user?action=login">Đăng nhập</a></li>
@@ -168,9 +160,9 @@
                     <div class="col-lg-4">
                         <div class="cart_area">
                             <div class="cart_link">
-                                <c:if test="${!user.isAdmin == 'True' && !user.isStoreStaff=='True'}">
+                              
                                 <a href="cart?action=showcart"><i class="fa fa-shopping-basket"></i>${sessionScope.size} Giỏ hàng</a>
-                                </c:if>
+                                
                             </div>
                         </div>
                     </div>

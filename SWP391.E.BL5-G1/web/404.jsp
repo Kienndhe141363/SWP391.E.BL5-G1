@@ -19,11 +19,9 @@
         <!-- Main Style CSS -->
         <link rel="stylesheet" href="assets/css/style.css">
     </head>
-
     <body>
         <div class="off_canvars_overlay"></div>
-        <jsp:include page="layout/menu.jsp"/>
-
+        <%--<jsp:include page="layout/menu.jsp"/>--%>
         <!--error section area start-->
         <div class="error_section">
             <div class="container">   
@@ -39,27 +37,19 @@
         </div>
         <!--error section area end--> 
         <!--footer area start-->
-        <jsp:include page="layout/footer.jsp"/>
+        <%--<jsp:include page="layout/footer.jsp"/>--%>
         <!--footer area end-->
 
         <!-- JS
         ============================================ -->
-
-
         <!--map js code here-->
         <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAdWLY_Y6FL7QGW5vcO3zajUEsrKfQPNzI"></script>
         <script  src="https://www.google.com/jsapi"></script>
         <script src="assets/js/map.js"></script>
-
-
         <!-- Plugins JS -->
         <script src="assets/js/plugins.js"></script>
-
         <!-- Main JS -->
         <script src="assets/js/main.js"></script>
-
-
-
     </body>
 
 </html>

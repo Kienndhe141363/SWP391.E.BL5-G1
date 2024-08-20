@@ -56,7 +56,7 @@
                                 </p>
                                 <p>   
                                     <label>Email <span></span></label>
-                                    <input name="user_email" type="text" value="${cookie.email.value}">
+                                    <input name="user_email" type="email" value="${cookie.email.value}">
                                 </p>
                                 <p>   
                                     <label>Mật khẩu <span></span></label>
@@ -88,8 +88,7 @@
         <jsp:include page="footer.jsp"/>
         <!--footer area end-->
         <!-- JS
-        ============================================ -->
-
+        ============================================ --
 
         <!--map js code here-->
         <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAdWLY_Y6FL7QGW5vcO3zajUEsrKfQPNzI"></script>
@@ -98,12 +97,7 @@
 
         <script  src="https://www.google.com/jsapi"></script>
         <script src="assets/js/map.js"></script>
-        <script>
-            function onSubmit() {
-                var response = grecaptcha.getResponse();
-                document.getElementById('g-recaptcha-response').value = response;
-            }
-        </script>
+       
 
         <!-- Plugins JS -->
         <script src="assets/js/plugins.js"></script>

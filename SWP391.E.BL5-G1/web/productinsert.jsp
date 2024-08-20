@@ -9,7 +9,7 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <!-- Main CSS-->
-        <link rel="stylesheet" type="text/css" href="./css/mainAdmin.css">
+        <link rel="stylesheet" type="text/css" href="admin/css/main.css">
         <!-- Font-icon css-->
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css">
         <!-- or -->
@@ -21,6 +21,43 @@
               href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
         <script src="http://code.jquery.com/jquery.min.js" type="text/javascript"></script>
         <script src="https://cdn.ckeditor.com/4.16.2/standard/ckeditor.js"></script>
+        <script>
+            function readURL(input, thumbimage) {
+                if (input.files && input.files[0]) { //Sử dụng  cho Firefox - chrome
+                    var reader = new FileReader();
+                    reader.onload = function (e) {
+                        $("#thumbimage").attr('src', e.target.result);
+                    }
+                    reader.readAsDataURL(input.files[0]);
+                } else { // Sử dụng cho IE
+                    $("#thumbimage").attr('src', input.value);
+                }
+                $("#thumbimage").show();
+                $('.filename').text($("#uploadfile").val());
+                $('.Choicefile').css('background', '#14142B');
+                $('.Choicefile').css('cursor', 'default');
+                $(".removeimg").show();
+                $(".Choicefile").unbind('click');
+
+            }
+            $(document).ready(function () {
+                $(".Choicefile").bind('click', function () {
+                    $("#uploadfile").click();
+
+                });
+                $(".removeimg").click(function () {
+                    $("#thumbimage").attr('src', '').hide();
+                    $("#myfileupload").html('<input type="file" id="uploadfile"  onchange="readURL(this);" />');
+                    $(".removeimg").hide();
+                    $(".Choicefile").bind('click', function () {
+                        $("#uploadfile").click();
+                    });
+                    $('.Choicefile').css('background', '#14142B');
+                    $('.Choicefile').css('cursor', 'pointer');
+                    $(".filename").text("");
+                });
+            })
+        </script>
     </head>
 
     <body class="app sidebar-mini rtl">
@@ -96,15 +133,24 @@
         </style>
         <!-- Navbar-->
         <header class="app-header">
-            <a class="app-sidebar__toggle" href="#" data-toggle="sidebar"aria-label="Hide Sidebar"></a>
+            <!-- Sidebar toggle button--><a class="app-sidebar__toggle" href="#" data-toggle="sidebar"
+                                            aria-label="Hide Sidebar"></a>
+            <!-- Navbar Right Menu-->
             <ul class="app-nav">
+
+
+                <!-- User Menu-->
                 <li><a class="app-nav__item" href="dashboard"><i class='bx bx-log-out bx-rotate-180'></i> </a>
+
                 </li>
             </ul>
         </header>
+        <!-- Sidebar menu-->
+        <!-- Sidebar menu-->
         <div class="app-sidebar__overlay" data-toggle="sidebar"></div>
         <aside class="app-sidebar">
-            <div class="app-sidebar__user"><img class="app-sidebar__user-avatar" src="../admin/images/user.png" width="50px" alt="User Image">
+            <div class="app-sidebar__user"><img class="app-sidebar__user-avatar" src="admin/images/user.png" width="50px"
+                                                alt="User Image">
                 <div>
                     <p class="app-sidebar__user-name"><b>${sessionScope.user.user_name}</b></p>
                     <p class="app-sidebar__user-designation">Chào mừng bạn trở lại</p>
@@ -118,6 +164,13 @@
                 <li><a class="app-menu__item" href="ordermanager"><i class='app-menu__icon bx bx-task'></i><span class="app-menu__label">Quản lý đơn hàng</span></a></li>
 
                 <!-- Conditionally Display Menu Items -->
+                <c:if test="${sessionScope.user.isAdmin}">
+                    <li><a class="app-menu__item" href="customermanager"><i class='app-menu__icon bx bx-user-voice'></i><span class="app-menu__label">Quản lý khách hàng</span></a></li>
+                    <li><a class="app-menu__item" href="reportmanager"><i class='app-menu__icon bx bx-receipt'></i><span class="app-menu__label">Quản lý phản hồi</span></a></li>
+                    <li><a class="app-menu__item" href="aboutmanager"><i class='app-menu__icon bx bx-receipt'></i><span class="app-menu__label">Quản lý trang giới thiệu</span></a></li>
+                    <li><a class="app-menu__item" href="commentmanager"><i class='app-menu__icon bx bx-receipt'></i><span class="app-menu__label">Quản lý bình luận</span></a></li>
+                    <li><a class="app-menu__item" href="saleoff"><i class='app-menu__icon bx bx-receipt'></i><span class="app-menu__label">Quản lý sale</span></a></li>
+                </c:if>
             </ul>
         </aside>
         <main class="app-content">
@@ -134,8 +187,7 @@
                         <div class="tile-body">
                             <div class="row element-button">
                             </div>
-
-                            <form class="row" action="productinsert" method="post" >
+                            <form class="row" action="productmanager" method="POST" >
                                 <input type="hidden" name="action" value="insertproduct">
                                 <div class="form-group col-md-3">
                                     <label class="control-label">Mã sản phẩm </label>
@@ -157,7 +209,7 @@
                                 </div>
                                 <div class="form-group  col-md-3">
                                     <label class="control-label">Giá bán</label>
-                                    <input class="form-control" name="price" type="number">
+                                    <input class="form-control" name="price" type="number" oninput="validateQuantity(this)">
                                 </div>
                                 <div class="form-group col-md-3">
                                     <label class="control-label">Size</label>
@@ -189,12 +241,13 @@
                                     <label class="control-label">Mô tả sản phẩm</label>
                                     <textarea class="ckeditor" name="describe" id="describe"></textarea>
                                     <script>
-//                                        CKEDITOR.replace('describe');
+                                        CKEDITOR.replace('describe');
                                     </script>
                                 </div>
                                 <button class="btn btn-save" type="submit">Lưu lại</button>
                                 &nbsp;
                                 <a class="btn btn-cancel" href="productmanager">Hủy bỏ</a>
+
                             </form>
                         </div>
 

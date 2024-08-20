@@ -109,7 +109,7 @@
         <!--slider area end-->
 
         <!--banner area start-->
-        <!--    <div class="banner_section banner_section_three">
+            <div class="banner_section banner_section_three">
                 <div class="container-fluid">
                     <div class="row ">
                         <div class="col-lg-4 col-md-6">
@@ -135,7 +135,7 @@
                         </div>
                     </div>
                 </div>
-            </div>-->
+            </div>
         <section class="banner_section banner_section_three">
             <div class="container-fluid">
                 <div class="row ">
@@ -312,7 +312,8 @@
 
 
 
-      
+     
+    
 
     <!--product section area end-->
     <!--footer area start-->

@@ -42,9 +42,9 @@
         </style>
     </head>
     <body>
-        <div class="map-area">                         
-            <iframe id="googleMap" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3131.9208139151415!2d105.51924235129374!3d21.01256992523427!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3135abc60e7d3f19%3A0x2be9d7d0b5abcbf4!2zVHLGsOG7nW5nIMSQ4bqhaSBo4buNYyBGUFQgSMOgIE7hu5lp!5e0!3m2!1svi!2s!4v1718041269304!5m2!1svi!2s" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
-        </div>
+        <!--        <div class="map-area">                         
+                    <iframe id="googleMap" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3131.9208139151415!2d105.51924235129374!3d21.01256992523427!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3135abc60e7d3f19%3A0x2be9d7d0b5abcbf4!2zVHLGsOG7nW5nIMSQ4bqhaSBo4buNYyBGUFQgSMOgIE7hu5lp!5e0!3m2!1svi!2s!4v1718041269304!5m2!1svi!2s" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                </div>-->
         <footer class="bg-dark text-light py-5">
             <div class="container">
                 <div class="row">
@@ -105,14 +105,7 @@
                 <hr class="my-4">
 
                 <!-- Bottom Footer -->
-                <div class="row align-items-center">
-                    <div class="col-md-6 text-center text-md-start">
-                        <p>&copy; 2024 You&Me Vietnam. All rights reserved.</p>
-                    </div>
-                    <div class="col-md-6 text-center text-md-end">
-                        <img src="path_to_certification_image.png" alt="Chứng nhận đã khai báo với Bộ Công Thương" width="153" height="58">
-                    </div>
-                </div>
+               
             </div>
         </footer>
 
