@@ -115,7 +115,7 @@ public class Product_Search extends HttpServlet {
 
                     if (comment_id != null && comment != null && !comment_id.isEmpty() && !comment.isEmpty()) {
                         try {
-                            int cmt_id = request.getParameter("comment_id");
+                            int cmt_id = Integer.parseInt(comment_id);
                             commentRatingDAO crDAO = new commentRatingDAO();
                             crDAO.updateComment(cmt_id, comment);
                             response.sendRedirect("product");
