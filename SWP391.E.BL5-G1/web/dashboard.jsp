@@ -232,7 +232,7 @@
                 google.charts.setOnLoadCallback(drawMonthlyTotalChart);
     </script>
 
-    <script type="text/javascript">
+<!--    <script type="text/javascript">
         function drawLineChart() {
             var data = new google.visualization.DataTable();
             data.addColumn('date', 'Date');
@@ -258,7 +258,7 @@
             chart.draw(data, options);
 
         }
-    </script>
+    </script>-->
     <!--       <script type="text/javascript">
             // Function to update statistics based on checkbox selection
             function updateStatistics() {

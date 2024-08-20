@@ -3,6 +3,7 @@
     Created on : Aug 15, 2024, 9:22:29 PM
     Author     : hieupham
 --%>
+
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
@@ -45,21 +46,22 @@
         </header>
         <!-- Sidebar menu-->
         <div class="app-sidebar__overlay" data-toggle="sidebar"></div>
-<!--        <aside class="app-sidebar">
-            <div class="app-sidebar__user"><img class="app-sidebar__user-avatar" src="admin/images/user.png" width="50px"
-                                                alt="User Image">
+        <aside class="app-sidebar">
+            -->            <div class="app-sidebar__user"><img class="app-sidebar__user-avatar" src="admin/images/user.png" width="50px"
+                                                               alt="User Image">
                 <div>
                     <p class="app-sidebar__user-name"><b>${sessionScope.user.user_name}</b></p>
                     <p class="app-sidebar__user-designation">Chào mừng bạn trở lại</p>
                 </div>
             </div>
             <hr>
-            <ul class="app-menu">
-              <li><a class="app-menu__item" href="customermanager"><i class='app-menu__icon bx bx-user-voice'></i><span class="app-menu__label">Quản lý khách hàng</span></a></li>
+            -->            <ul class="app-menu">
+                <li><a class="app-menu__item" href="dashboard"><i class='app-menu__icon bx bx-tachometer'></i><span class="app-menu__label">Bảng thống kê</span></a></li>
+                <li><a class="app-menu__item" href="customermanager"><i class='app-menu__icon bx bx-user-voice'></i><span class="app-menu__label">Quản lý khách hàng</span></a></li>
                 <li><a class="app-menu__item" href="ordermanager"><i class='app-menu__icon bx bx-task'></i><span class="app-menu__label">Quản lý đơn hàng</span></a></li>
 
             </ul>
-        </aside>-->
+        </aside>
         <main class="app-content">
             <div class="app-title">
                 <ul class="app-breadcrumb breadcrumb side">
@@ -71,11 +73,11 @@
                 <div class="col-md-12">
                     <div class="tile">
                         <div class="tile-body">
-<!--                            <div class="row element-button"
-                                 <div class="col-sm-2">
-                                <a class="btn btn-delete btn-sm print-file" type="button" title="In" onclick="myApp.printTable()"><i
-                                        class="fas fa-print"></i> In dữ liệu</a>
-                            </div>-->
+                            <!--                            <div class="row element-button"
+                                                             <div class="col-sm-2">
+                                                            <a class="btn btn-delete btn-sm print-file" type="button" title="In" onclick="myApp.printTable()"><i
+                                                                    class="fas fa-print"></i> In dữ liệu</a>
+                                                        </div>-->
                         </div>
                         <div>
                             <label for="paymentFilter">Phương thức thanh toán:</label>
