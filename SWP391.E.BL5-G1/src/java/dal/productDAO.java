@@ -637,4 +637,38 @@ public class productDAO extends DBContext {
             System.out.println("----------------------------------");
         }
     }
+
+     public int CountProduct() {
+        int count = 0;
+        String sql = "SELECT COUNT(*) as 'count'\n"
+                + "  FROM product";
+        try {
+            conn = new DBContext().getConnection();
+            ps = conn.prepareStatement(sql);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                count = rs.getInt(1);
+            }
+        } catch (Exception e) {
+        }
+        return count;
+    }
+
+     public int CountProductLow() {
+        int count = 0;
+        String sql = "SELECT COUNT(*) as 'count'\n"
+                + "  FROM product where quantity < 50 ";
+        try {
+            conn = new DBContext().getConnection();
+            ps = conn.prepareStatement(sql);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                count = rs.getInt(1);
+            }
+        } catch (Exception e) {
+        }
+        return count;
+    }
+
+    
 }

@@ -45,8 +45,6 @@ public class Dashboard extends HttpServlet {
 
         try {
            HttpSession session = request.getSession();
-//            model.User user = (User) session.getAttribute("user");
-//            if (user.getIsAdmin().equalsIgnoreCase("true") || user.getIsStoreStaff().equalsIgnoreCase("true")) {
                 productDAO dao = new productDAO();
                 billDAO bdao = new billDAO();
                 categoryDAO cdao = new categoryDAO();
@@ -66,6 +64,8 @@ public class Dashboard extends HttpServlet {
                     unpaidList.add(totalUnpaid);
                     dateList.add(bill.getDate());
                 }
+                
+                
                 String startDate = request.getParameter("startDate");
                 String endDate = request.getParameter("endDate");
                 String message1 = null;
@@ -112,10 +112,6 @@ public class Dashboard extends HttpServlet {
                 List<Object[]> monthlyTotals = bdao.getTotalBillAmountByMonth();
                 request.setAttribute("monthlyTotals", monthlyTotals);
                 request.getRequestDispatcher("dashboard.jsp").forward(request, response);
- //           }
-//            else {
-//                response.sendRedirect("login");
-//            }
         } catch (Exception e) {
             response.sendRedirect("404.jsp");
         }
