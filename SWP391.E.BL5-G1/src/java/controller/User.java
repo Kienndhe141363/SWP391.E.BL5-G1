@@ -17,6 +17,7 @@ import jakarta.servlet.http.HttpSession;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+
 /**
  *
  * @author Admin
@@ -82,7 +83,75 @@ public class User extends HttpServlet {
             session.setAttribute("logoutMessage", "Đăng xuất thành công!");
             response.sendRedirect("home");
         }
+//        if (action.equals("myaccount")) {
+//            try {
+//                HttpSession session = request.getSession();
+//                model.User user = (model.User) session.getAttribute("user");
+//                if (user != null) {
+//                    int user_id = user.getUser_id();
+//                    billDAO dao = new billDAO();
+//                    List<model.Bill> bill = dao.getBillByID(user_id);
+//                    request.setAttribute("bill", bill);
+//                    request.getRequestDispatcher("my-account.jsp").forward(request, response);
+//                } else {
+//                    response.sendRedirect("user?action=login");
+//                }
+//            } catch (Exception e) {
+//                response.sendRedirect("user?action=login");
+//            }
+//        }
+        if (action.equals("updateinfo")) {
+            try {
+                HttpSession session = request.getSession();
+                model.User user = (model.User) session.getAttribute("user");
+              if (user != null) {
+                    String user_name = request.getParameter("user_name");
+                    String user_pass = request.getParameter("user_pass");
+                    String dateOfBirth = request.getParameter("dateOfBirth");
+                    String address = request.getParameter("address");
+                    String phoneNumber = request.getParameter("phoneNumber");
+                    SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+                    try {
+                        Date dob = sdf.parse(dateOfBirth);
+                        Date currentDate = new Date();
+                        if (dob.after(currentDate)) {
+                            session.setAttribute("error_dob", "Ngày sinh không được lớn hơn ngày hiện tại");
+                            request.getRequestDispatcher("my-account.jsp").forward(request, response);
+                            return;
+                        }
+                    } catch (NumberFormatException e) {
 
+                    }
+
+                    //Check if the password has a capital initials and contains at least 1 number
+                    boolean isValidPassword = false;
+                    if (user_pass != null && !user_pass.isEmpty()) {
+                        boolean hasUpperCase = !user_pass.equals(user_pass.toLowerCase());
+                        boolean hasNumber = user_pass.matches(".*\\d.*");
+                        isValidPassword = hasUpperCase && hasNumber;
+                    }
+
+                    if (isValidPassword) {
+                        int user_id = user.getUser_id();
+                        userDAO dao = new userDAO();
+                        dao.updateUser(user_id, user_name, user_pass, dateOfBirth, address, phoneNumber);
+                        model.User user1 = new model.User(user.getUser_id(), user_name, user.getUser_email(), user_pass, user.getIsAdmin(), dateOfBirth, address, phoneNumber, user.isBanned(), user.getAdminReason(), user.getIsStoreStaff());
+                        session.setAttribute("user", user1);
+                        session.setAttribute("updateMessage", "Cập nhật thông tin thành công!");
+                        response.sendRedirect("my-account.jsp");
+                    } else {
+                        session.setAttribute("error_pass", "Mật khẩu chữ cái đầu phải viết hoa");
+                        request.getRequestDispatcher("my-account.jsp").forward(request, response);
+                    }
+                } else {
+
+                    response.sendRedirect("user?action=login");
+                }
+            } catch (Exception e) {
+
+                response.sendRedirect("user?action=login");
+            }
+        }
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
