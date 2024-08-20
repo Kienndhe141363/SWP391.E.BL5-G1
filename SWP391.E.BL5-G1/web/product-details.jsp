@@ -483,7 +483,8 @@
         <!--product details end-->
         <!-- Form for adding rating -->
 
-<!--        <div class="form-container">
+            <c:if test="${user_comment}">
+        <div class="form-container">
             <form action="search" method="POST">
                 <input type="hidden" name="action" value="addComment">
                 <input type="hidden" name="product_id" value="${ProductData.product_id}">
@@ -501,24 +502,65 @@
                 <textarea name="comment" rows="4" cols="50" placeholder="Nhập bình luận của bạn"></textarea>
                 <button type="submit">Gửi bình luận</button>
             </form>
-        </div>-->
-
-
-
-<!--    <c:if test="${not empty comments}">
-        <div class="product_reviews">
-            <h3>Đánh giá và Bình luận</h3>
-            <h5>Bình luận:</h5>
-            <c:forEach items="${comments}" var="c">
-                <div class="comment">
-                    <p>Bởi: ${c.user_name}</p>
-                    <p>Đánh giá: ${c.rating}&#9733</p>
-                    <p>Ngày: <fmt:formatDate value="${c.createdAt}" pattern="dd/MM/yyyy"/></p>
-                    <p>${c.comment}</p>
-                </div>
-            </c:forEach>
         </div>
-    </c:if>-->
+    </c:if>
+
+
+
+    <c:if test="${not empty comments}">
+        <div class="product_reviews">
+        <h3>Đánh giá và Bình luận</h3>
+        <h5>Bình luận:</h5>
+        <c:forEach items="${comments}" var="c">
+            <div class="comment" style="position: relative;">
+                <c:if test="${c.user_name == user.user_name}">
+                    <button class="btn btn-primary btn-sm edit" type="button" data-toggle="modal" data-target="#ModalEditComment${c.user_name}" class="edit-icon" title="Chỉnh sửa">
+                        <i class="fas fa-edit"></i></button>
+                    <button class="btn btn-primary btn-sm trash" type="button" title="xóa" value="${c.id}">
+                                                <i class="fas fa-trash"></i></button>
+                </c:if>
+                <p>Bởi: ${c.user_name}</p> 
+                <p>Đánh giá: ${c.rating}&#9733</p>
+                <p>Ngày: <fmt:formatDate value="${c.createdAt}" pattern="dd/MM/yyyy"/></p>
+                <p>${c.comment}</p>
+            </div>
+            <div class="modal fade" id="ModalEditComment${c.user_name}" tabindex="-1" role="dialog" aria-hidden="true">
+                                    <div class="modal-dialog modal-dialog-centered" role="document">
+                                        <div class="modal-content">
+                                            <div class="modal-body">
+                                                <form action="search?action=productdetail&product_id=${ProductData.product_id}" method="POST">
+                                                    <input type="hidden" name="action" value="updatecmt">
+                                                    <div class="row">
+                                                        <div class="form-group col-md-12">
+                                                            <span class="thong-tin-thanh-toan">
+                                                                <h5>Chỉnh sửa đánh giá</h5>
+                                                            </span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                       <h3>Đánh giá sản phẩm</h3>
+                <select name="rating" id="star-rating-update">
+
+                    <option value="1">1&#9733;</option>
+                    <option value="2">2&#9733;&#9733;</option>
+                    <option value="3">3&#9733;&#9733;&#9733;</option>
+                    <option value="4">4&#9733;&#9733;&#9733;&#9733;</option>
+                    <option value="5">5&#9733;&#9733;&#9733;&#9733;&#9733;</option>
+                </select>
+                <textarea name="comment-update" rows="4" cols="50" placeholder="Nhập bình luận của bạn" value="${c.comment}"></textarea>
+                                                    </div>
+                                                    <button class="btn btn-save" type="submit">Lưu lại</button>
+                                                    <a class="btn btn-cancel" data-dismiss="modal" href="#">Hủy bỏ</a>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+        </c:forEach>
+        </div>
+    </c:if>
+            
+    
 
 
 
@@ -566,6 +608,25 @@
     <!-- Main JS -->
     <script src="assets/js/main.js"></script>
     <script>
+        jQuery(document).ready(function () {
+            // Event delegation for delete buttons
+            jQuery(document).on('click', '.trash', function () {
+                var cmtId = $(this).attr("value");
+                swal({
+                    title: "Cảnh báo",
+                    text: "Bạn có chắc chắn là muốn xóa danh mục này?",
+                    buttons: ["Hủy bỏ", "Đồng ý"],
+                }).then((willDelete) => {
+                    if (willDelete) {
+                        window.location = "search?action=productdetail&cmt_id=" + cmtId;
+                        swal("Đã xóa thành công!", {
+                            icon: "success",
+                        });
+                    }
+                });
+            });
+        });
+        
                                         function setActionAndSubmit(action) {
                                             document.getElementById('action').value = action;
                                             document.getElementById('productForm').submit();

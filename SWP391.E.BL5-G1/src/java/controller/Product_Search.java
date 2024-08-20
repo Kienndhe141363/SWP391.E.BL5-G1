@@ -4,6 +4,7 @@
  */
 package controller;
 
+import dal.commentRatingDAO;
 import dal.productDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -65,6 +66,10 @@ public class Product_Search extends HttpServlet {
             request.getRequestDispatcher("shop_category.jsp").forward(request, response);
         }
         if (action.equalsIgnoreCase("productdetail")) {
+            boolean user_comment = false;
+            if(request.getParameter("comment") !=  null){
+                user_comment = true;
+            }
             String product_id = request.getParameter("product_id");
             productDAO c = new productDAO();
             List<model.Size> sizeList = c.getSizeByID(product_id);
@@ -72,16 +77,18 @@ public class Product_Search extends HttpServlet {
             model.Product product = c.getProductByID(product_id);
             int category_id = product.getCate().getCategory_id();
             List<model.Product> productByCategory = c.getProductByCategory(category_id);
-//            commentRatingDAO crDAO = new commentRatingDAO();
-//            List<model.Comment> comments = crDAO.getCommentsByProductId(product_id);
-//            double averageRating = crDAO.getAverageRatingForProduct(product_id);
+            commentRatingDAO crDAO = new commentRatingDAO();
+            List<model.Comment> comments = crDAO.getCommentsByProductId(product_id);
+            double averageRating = crDAO.getAverageRatingForProduct(product_id);
             request.setAttribute("ProductData", product);
             request.setAttribute("SizeData", sizeList);
             request.setAttribute("ColorData", colorList);
             request.setAttribute("ProductByCategory", productByCategory);
-//            request.setAttribute("comments", comments);
-//            request.setAttribute("averageRating", averageRating);
+            request.setAttribute("comments", comments);
+            request.setAttribute("averageRating", averageRating);
+            request.setAttribute("user_comment", user_comment);
             request.getRequestDispatcher("product-details.jsp").forward(request, response);
+       
         } else if (action.equalsIgnoreCase("addComment")) {
             String productId = request.getParameter("product_id");
             String userId = request.getParameter("user_id");  // Retrieve userId from session
@@ -89,18 +96,52 @@ public class Product_Search extends HttpServlet {
             int rating = Integer.parseInt(request.getParameter("rating"));
             String commentText = request.getParameter("comment");
 
-            // Call DAO method to add rating
-//            commentRatingDAO dao = new commentRatingDAO();
-//            if (dao.hasUserCommented(productId, userId)) {
-//                HttpSession session = request.getSession();
-//                session.setAttribute("errorMessage", "Bạn đã đánh giá và bình luận cho sản phẩm này rồi.");
-//            } else {
-//                dao.addComment(productId, userId, commentText, rating, userName);
-//                HttpSession session = request.getSession();
-//                session.setAttribute("successMessage", "Hãy tiến hành mua sản phẩm để được đánh giá và bình luận");
-//            }
+//             Call DAO method to add rating
+            commentRatingDAO dao = new commentRatingDAO();
+            if (dao.hasUserCommented(productId, userId)) {
+                HttpSession session = request.getSession();
+                session.setAttribute("errorMessage", "Bạn đã đánh giá và bình luận cho sản phẩm này rồi.");
+            } else {
+                dao.addComment(productId, userId, commentText, rating, userName);
+                HttpSession session = request.getSession();
+                session.setAttribute("successMessage", "Hãy tiến hành mua sản phẩm để được đánh giá và bình luận");
+            }
             response.sendRedirect("search?action=productdetail&product_id=" + productId);
-        }
+        } //update comment
+        else if (action.equalsIgnoreCase("updatecmt")) {
+                    String productId = request.getParameter("product_id");
+                    String comment_id = request.getParameter("rating");
+                    String comment = request.getParameter("omment-update");
+
+                    if (comment_id != null && comment != null && !comment_id.isEmpty() && !comment.isEmpty()) {
+                        try {
+                            int cmt_id = request.getParameter("comment_id");
+                            commentRatingDAO crDAO = new commentRatingDAO();
+                            crDAO.updateComment(cmt_id, comment);
+                            response.sendRedirect("product");
+                            return;
+                        } catch (NumberFormatException e) {
+                            request.setAttribute("error", "Invalid Rating.");
+                        } catch (Exception e) {
+                            request.setAttribute("error", "An error occurred while updating the comment.");
+                        }
+                    } else {
+                        // Handle validation errors or missing parameters
+                        request.setAttribute("error", "Rating and cmt cannot be empty.");
+                    }
+                    // Forward back to the category manager page with an error message
+            response.sendRedirect("search?action=productdetail&product_id=" + productId);
+
+
+                } //delete cmt
+                else if (action.equalsIgnoreCase("delete")) {
+                    String cmt_id = request.getParameter("cmt_id");
+                    int id = Integer.parseInt(cmt_id);
+                    commentRatingDAO crDAO = new commentRatingDAO();
+                    crDAO.deleteComment(id);
+                    response.sendRedirect("product");
+                    return;
+                }
 
         if (action.equals("sort")) {
             String type = request.getParameter("type");

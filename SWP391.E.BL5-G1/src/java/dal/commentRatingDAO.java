@@ -99,6 +99,19 @@ public class commentRatingDAO extends DBContext {
             System.out.println(e);
         }
     }
+    
+    public void updateComment(int cmt_id, String comment) {
+        try {
+            String sql = "UPDATE product_comment SET comment = ? WHERE id = ?";
+            conn = new DBContext().getConnection();
+            ps = conn.prepareStatement(sql);
+            ps.setString(1, comment);
+            ps.setInt(2, cmt_id);
+            ps.executeUpdate();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 
     public double getAverageRatingForProduct(String productId) {
         String sql = "SELECT ROUND(CAST(SUM(rating) AS FLOAT) / CAST(COUNT(rating) AS FLOAT), 1) AS avg_rating\n"
