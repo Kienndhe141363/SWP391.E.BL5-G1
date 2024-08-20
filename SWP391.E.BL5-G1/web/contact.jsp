@@ -112,7 +112,21 @@
         <!-- Main JS -->
         <script src="assets/js/main.js"></script>
         <script>
-            
+            function doGet(e) {
+                var email = e.parameter.Email;
+                var subject = e.parameter.Subject;
+                var message = e.parameter.Message;
+                // Tạo nội dung email
+                var emailContent = 'Email: ' + email + '\n\n' + 'Subject: ' + subject + '\n\n' + 'Message: ' + message;
+                // Gửi email
+                MailApp.sendEmail({
+                    to: ' doanhtnhe172637@fpt.edu.vn', // Thay bằng địa chỉ email của bạn
+                    subject: subject,
+                    body: emailContent
+                });
+                // Trả về phản hồi
+                return ContentService.createTextOutput('Success');
+            }
 
         </script>
     </body>
