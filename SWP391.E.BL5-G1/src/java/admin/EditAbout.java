@@ -11,6 +11,7 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import jakarta.servlet.http.Part;
 import java.io.IOException;
 import java.io.InputStream;
@@ -61,6 +62,17 @@ public class EditAbout extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        HttpSession session = request.getSession(false);
+        if (session == null || session.getAttribute("user") == null) {
+            response.sendRedirect("user?action=login");
+            return;
+        }
+
+        model.User user = (model.User) session.getAttribute("user");
+        if (!user.getIsStoreStaff().equals("1")) {
+            response.sendRedirect("home");
+            return;
+        }
         String aboutId = request.getParameter("id");
         aboutDAO dao = new aboutDAO();
         About about = dao.getAboutById(aboutId);
