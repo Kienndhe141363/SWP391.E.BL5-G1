@@ -44,19 +44,28 @@
         <!-- Sidebar menu-->
         <div class="app-sidebar__overlay" data-toggle="sidebar"></div>
         <aside class="app-sidebar">
-            -->            <div class="app-sidebar__user"><img class="app-sidebar__user-avatar" src="admin/images/user.png" width="50px"
-                                                               alt="User Image">
+            <div class="app-sidebar__user"><img class="app-sidebar__user-avatar" src="admin/images/user.png" width="50px"
+                                                alt="User Image">
                 <div>
                     <p class="app-sidebar__user-name"><b>${sessionScope.user.user_name}</b></p>
                     <p class="app-sidebar__user-designation">Chào mừng bạn trở lại</p>
                 </div>
             </div>
             <hr>
-            -->            <ul class="app-menu">
+            <ul class="app-menu">
                 <li><a class="app-menu__item" href="dashboard"><i class='app-menu__icon bx bx-tachometer'></i><span class="app-menu__label">Bảng thống kê</span></a></li>
-                <li><a class="app-menu__item" href="customermanager"><i class='app-menu__icon bx bx-user-voice'></i><span class="app-menu__label">Quản lý khách hàng</span></a></li>
+                <li><a class="app-menu__item" href="categorymanager"><i class='app-menu__icon bx bxs-category'></i><span class="app-menu__label">Quản lý danh mục</span></a></li>
+                <li><a class="app-menu__item" href="productmanager"><i class='app-menu__icon bx bx-purchase-tag-alt'></i><span class="app-menu__label">Quản lý sản phẩm</span></a></li>
                 <li><a class="app-menu__item" href="ordermanager"><i class='app-menu__icon bx bx-task'></i><span class="app-menu__label">Quản lý đơn hàng</span></a></li>
 
+                <!-- Conditionally Display Menu Items -->
+                <c:if test="${sessionScope.user.isAdmin}">
+                    <li><a class="app-menu__item" href="customermanager"><i class='app-menu__icon bx bx-user-voice'></i><span class="app-menu__label">Quản lý khách hàng</span></a></li>
+                    <li><a class="app-menu__item" href="reportmanager"><i class='app-menu__icon bx bx-receipt'></i><span class="app-menu__label">Quản lý phản hồi</span></a></li>
+                    <li><a class="app-menu__item" href="aboutmanager"><i class='app-menu__icon bx bx-receipt'></i><span class="app-menu__label">Quản lý trang giới thiệu</span></a></li>
+                    <li><a class="app-menu__item" href="commentmanager"><i class='app-menu__icon bx bx-receipt'></i><span class="app-menu__label">Quản lý bình luận</span></a></li>
+                    <li><a class="app-menu__item" href="couponmanager"><i class='app-menu__icon bx bx-receipt'></i><span class="app-menu__label">Quản lý coupon</span></a></li>
+                            </c:if>
             </ul>
         </aside>
         <main class="app-content">
@@ -72,12 +81,12 @@
                     <div class="tile">
                         <div class="tile-body">
 
-                            <!--                            <div class="row element-button">
-                                                            <div class="col-sm-2">
-                                                                <a class="btn btn-delete btn-sm print-file" type="button" title="In" onclick="myApp.printTable()"><i
-                                                                        class="fas fa-print"></i> In dữ liệu</a>
-                                                            </div>
-                                                        </div>-->
+                            <div class="row element-button">
+                                <div class="col-sm-2">
+                                    <a class="btn btn-delete btn-sm print-file" type="button" title="In" onclick="myApp.printTable()"><i
+                                            class="fas fa-print"></i> In dữ liệu</a>
+                                </div>
+                            </div>
 
                             <div class="form-group">
                                 <label for="userRoleFilter"></label>
@@ -165,15 +174,15 @@
                                         <label for="exampleSelect1" class="control-label">Quyền quản trị</label>
                                         <input hidden name="user_id" value="${u.user_id}">
                                         <select name="permission" class="form-control" id="exampleSelect1">
-                                            <option value="True">Cho phép</option>
-                                            <option value="False">Hủy bỏ</option>
+                                            <option value= "TRUE" >Cho phép</option>
+                                            <option value= "FALSE" >Hủy bỏ</option>
                                         </select>
                                     </div>
                                     <div class="form-group col-md-6">
                                         <label for="exampleSelect2" class="control-label">Quyền nhân viên cửa hàng</label>
                                         <select name="storeStaffPermission" class="form-control" id="exampleSelect2">
-                                            <option value="TRUE">Cho phép</option>
-                                            <option value="FALSE">Hủy bỏ</option>
+                                            <option value= "TRUE" >Cho phép</option>
+                                            <option value= "FALSE" >Hủy bỏ</option>
                                         </select>
                                     </div>
                                     <div class="form-group col-md-6">
@@ -209,6 +218,55 @@
         <script type="text/javascript">$('#sampleTable').DataTable();</script>
         <script>
             //Thời Gian
+             function time() {
+                var today = new Date();
+                var weekday = new Array(7);
+                weekday[0] = "Chủ Nhật";
+                weekday[1] = "Thứ Hai";
+                weekday[2] = "Thứ Ba";
+                weekday[3] = "Thứ Tư";
+                weekday[4] = "Thứ Năm";
+                weekday[5] = "Thứ Sáu";
+                weekday[6] = "Thứ Bảy";
+                var day = weekday[today.getDay()];
+                var dd = today.getDate();
+                var mm = today.getMonth() + 1;
+                var yyyy = today.getFullYear();
+                var h = today.getHours();
+                var m = today.getMinutes();
+                var s = today.getSeconds();
+                m = checkTime(m);
+                s = checkTime(s);
+                nowTime = h + " giờ " + m + " phút " + s + " giây";
+                if (dd < 10) {
+                    dd = '0' + dd
+                }
+                if (mm < 10) {
+                    mm = '0' + mm
+                }
+                today = day + ', ' + dd + '/' + mm + '/' + yyyy;
+                tmp = '<span class="date"> ' + today + ' - ' + nowTime +
+                        '</span>';
+                document.getElementById("clock").innerHTML = tmp;
+                clocktime = setTimeout("time()", "1000", "Javascript");
+
+                function checkTime(i) {
+                    if (i < 10) {
+                        i = "0" + i;
+                    }
+                    return i;
+                }
+            }
+            
+               var myApp = new function () {
+                this.printTable = function () {
+                    var tab = document.getElementById('sampleTable');
+                    var win = window.open('', '', 'height=700,width=700');
+                    win.document.write(tab.outerHTML);
+                    win.document.close();
+                    win.print();
+                }
+            }
 
 
             $(document).ready(function () {
