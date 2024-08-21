@@ -20,11 +20,12 @@ import model.User;
  * @author hieupham
  */
 public class billDAO extends DBContext {
+
     Connection conn = null;
     PreparedStatement ps = null;
     ResultSet rs = null;
-    
-      public List<Bill> getBillInfo(String paymentMethod) {
+
+    public List<Bill> getBillInfo(String paymentMethod) {
         List<Bill> list = new ArrayList<>();
         String sql = "SELECT b.bill_id, u.user_name, b.phone, b.address, b.date, b.total, b.payment "
                 + "FROM bill b INNER JOIN users u ON b.user_id = u.user_id";
@@ -47,7 +48,8 @@ public class billDAO extends DBContext {
         }
         return list;
     }
-      public List<BillDetail> getDetail(int bill_id) {
+
+    public List<BillDetail> getDetail(int bill_id) {
         List<BillDetail> list = new ArrayList<>();
         String sql = "select d.detail_id, p.product_id, p.product_name, p.img, d.quantity, d.size, d.color, d.price from bill_detail d "
                 + "inner join product p on d.product_id = p.product_id where d.bill_id = ?";
@@ -65,7 +67,7 @@ public class billDAO extends DBContext {
         return list;
     }
 
-     public List<Bill> getBillByDay() {
+    public List<Bill> getBillByDay() {
         List<Bill> list = new ArrayList<>();
         String sql = "select b.bill_id, u.user_name,b.phone,b.address,b.date,b.total,b.payment from bill b inner join users u on b.user_id = u.user_id where date = cast(getdate() as Date)";
         try {
@@ -176,8 +178,20 @@ public class billDAO extends DBContext {
         return result;
     }
 
-  
-      
-      
-    
+    public List<Bill> getBillByID(int user_id) {
+        List<Bill> list = new ArrayList<>();
+        String sql = "select b.bill_id, b.date,b.total,b.payment, b.address, b.phone from bill b where user_id = ?";
+        try {
+            conn = new DBContext().getConnection();
+            ps = conn.prepareStatement(sql);
+            ps.setInt(1, user_id);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                list.add(new Bill(rs.getInt(1), rs.getFloat(3), rs.getString(4), rs.getString(5), rs.getDate(2), rs.getInt(6)));
+            }
+        } catch (Exception e) {
+        }
+        return list;
+    }
+
 }
