@@ -78,7 +78,7 @@
                 <textarea id="content" name="content" rows="4" required></textarea>
 
                 <input type="submit" value="Thêm Mới">
-                <input type="button" value="Hủy" onclick="window.location.href='aboutManager';">
+                <input type="button" value="Hủy" onclick="window.location.href='aboutmanager';">
             </form>
         </div>
 

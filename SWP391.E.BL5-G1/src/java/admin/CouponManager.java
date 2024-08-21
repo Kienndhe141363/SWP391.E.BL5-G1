@@ -102,7 +102,7 @@ public class CouponManager extends HttpServlet {
             } catch (Exception ex) {
                 Logger.getLogger(CouponManager.class.getName()).log(Level.SEVERE, null, ex);
             }
-            response.sendRedirect("couponManager?action=list");
+            response.sendRedirect("couponmanager?action=list");
         } else if ("generate".equals(action)) {
             try {
                 couponTypes = couponTypeDAO.getAllCouponTypes();
@@ -112,7 +112,7 @@ public class CouponManager extends HttpServlet {
             request.setAttribute("couponTypes", couponTypes);
             request.getRequestDispatcher("generateCoupon.jsp").forward(request, response);
         } else {
-            response.sendRedirect("couponManager?action=list");
+            response.sendRedirect("couponmanager?action=list");
         }
     }
 
@@ -147,7 +147,7 @@ public class CouponManager extends HttpServlet {
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
-                response.sendRedirect("couponManager?action=list");
+                response.sendRedirect("couponmanager?action=list");
             } else {
                 request.setAttribute("errorMessage", "Invalid date format. Please use yyyy-MM-dd.");
                 request.getRequestDispatcher("generateCoupon.jsp").forward(request, response);

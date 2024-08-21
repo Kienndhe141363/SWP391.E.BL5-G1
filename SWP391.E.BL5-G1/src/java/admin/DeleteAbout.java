@@ -73,7 +73,7 @@ public class DeleteAbout extends HttpServlet {
         String aboutId = request.getParameter("id");
         aboutDAO dao = new aboutDAO();
         dao.deleteAbout(aboutId);
-        response.sendRedirect("aboutManager");
+        response.sendRedirect("aboutmanager");
     }
 
     /**
