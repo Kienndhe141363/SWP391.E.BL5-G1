@@ -190,6 +190,7 @@
                             <div class="dashboard_tab_button">
                                 <ul role="tablist" class="nav flex-column dashboard-list">
                                     <li><a href="#account-details" data-toggle="tab" class="nav-link">Tài khoản của tôi</a></li>
+                                    <li> <a href="#password" data-toggle="tab" class="nav-link">Doi mat khau</a></li>
                                     <li> <a href="#orders" data-toggle="tab" class="nav-link">Đơn hàng</a></li>
                                     <li><a href="user?action=logout" class="nav-link">Đăng xuất</a></li>
                                 </ul>
@@ -236,13 +237,13 @@
                                                     <label><b>Tên người dùng</b></label>
                                                     <input type="text" name="user_name" value="${sessionScope.user.user_name}" placeholder="Nhập tên người dùng">
                                                     <label><b>Email</b></label>
-                                                    <input type="text" readonly name="user_email" value="${sessionScope.user.user_email}">
-                                                    <label><b>Mật khẩu</b></label>
-                                                    <input type="password" name="user_pass" value="${sessionScope.user.user_pass}" placeholder="Nhập mật khẩu A-Z 0-9">
-                                                    
+                                                    <input type="text" readonly name="user_email"  value="${sessionScope.user.user_email}" readonly="">
+                                                    <!--                                                    <label><b>Mật khẩu</b></label>
+                                                                                                        <input type="password" name="user_pass" value="${sessionScope.user.user_pass}" placeholder="Nhập mật khẩu A-Z 0-9">-->
+
                                                     <label><b>Ngày sinh</b></label>
                                                     <input type="Date" name="dateOfBirth" value="${sessionScope.user.dateOfBirth}" placeholder="Nhập ngày sinh(ngày/tháng/năm)">
-                                                    
+
                                                     <label><b>Địa chỉ</b></label>
                                                     <input type="text" name="address" value="${sessionScope.user.address}" placeholder="Nhập địa chỉ (Xã,Huyện,Tỉnh)">
                                                     <label><b>Số điện thoại</b></label>
@@ -255,11 +256,30 @@
                                         </div>
                                     </div>
                                 </div>
+                                <div class="tab-pane fade" id="password">
+                                    <h3>Đổi mật khẩu</h3>
+                                    <div class="login">
+                                        <div class="login_form_container">
+                                            <div class="account_login_form">
+                                                <form action="user?action=updatepassword" method="POST">
+                                                    <label><b>Mật khẩu hiện tại</b></label>
+                                                    <input type="password" name="current_password" placeholder="Nhập mật khẩu hiện tại">
+                                                    <label><b>Mật khẩu mới</b></label>
+                                                    <input type="password" name="new_password" placeholder="Nhập mật khẩu mới (A-Z, 0-9)">
+                                                    <label><b>Xác nhận mật khẩu mới</b></label>
+                                                    <input type="password" name="confirm_new_password" placeholder="Nhập lại mật khẩu mới">
+                                                    <div class="cart_submit">
+                                                        <button type="submit">Đổi mật khẩu</button>
+                                                    </div> 
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                </div>  
-            </div>        	
+                    </div>  
+                </div>        	
         </section>			
         <!-- my account end   --> 
         <!--footer area start-->
@@ -293,7 +313,7 @@
                 });
             }
 
-    // Kiểm tra và hiển thị thông báo khi trang được tải
+            // Kiểm tra và hiển thị thông báo khi trang được tải
             document.addEventListener('DOMContentLoaded', function () {
                 var error_dob = "${sessionScope.error_dob}";
                 var error_pass = "${sessionScope.error_pass}";
@@ -305,12 +325,11 @@
                 if (updateMessage) {
                     showNotification(updateMessage, true);
             <% session.removeAttribute("updateMessage"); %>
-                }
-                else if (error_pass) {
+                } else if (error_pass) {
 
                     showNotification(error_pass, false);
             <% session.removeAttribute("error_pass"); %>
-                } 
+                }
             });
         </script>
 
