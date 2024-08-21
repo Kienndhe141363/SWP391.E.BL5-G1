@@ -37,9 +37,9 @@
 
                                 <label>Nhập Code <span>*</span></label>
                                 <input name="code" type="text">
-                                <label>Nhập New PassWord <span>*</span></label>
-                                <input name="Pass" type="password"><!-- comment -->
-                                <label>Nhập lai password <span>*</span></label>
+                                <label>Nhập PassWord Mới <span>*</span></label>
+                                <input name="Pass" type="password">
+                                <label>Xác Nhận PassWord Mới <span>*</span></label>
                                 <input name="Repass" type="password">
                             </p>
 
