@@ -12,6 +12,7 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.List;
 import model.About;
@@ -20,7 +21,7 @@ import model.About;
  *
  * @author ThangNPHE151263
  */
-@WebServlet(name = "AboutManager", urlPatterns = {"/aboutManager"})
+@WebServlet(name = "AboutManager", urlPatterns = {"/aboutmanager"})
 public class AboutManager extends HttpServlet {
 
     /**
@@ -40,7 +41,7 @@ public class AboutManager extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet AboutManager</title>");            
+            out.println("<title>Servlet AboutManager</title>");
             out.println("</head>");
             out.println("<body>");
             out.println("<h1>Servlet AboutManager at " + request.getContextPath() + "</h1>");
@@ -61,6 +62,18 @@ public class AboutManager extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        HttpSession session = request.getSession(false);
+        if (session == null || session.getAttribute("user") == null) {
+            response.sendRedirect("user?action=login");
+            return;
+        }
+
+        model.User user = (model.User) session.getAttribute("user");
+        if (!user.getIsStoreStaff().equalsIgnoreCase("true")) {
+            response.sendRedirect("home");
+            return;
+        }
+
         aboutDAO dao = new aboutDAO();
         List<About> listAbout = dao.getAbout();
         request.setAttribute("listAbout", listAbout);

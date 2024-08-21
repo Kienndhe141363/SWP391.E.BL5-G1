@@ -14,6 +14,101 @@
     <link rel="stylesheet" href="css/about.css">
     <link rel="stylesheet" href="assets/css/plugins.css">
     <link rel="stylesheet" href="assets/css/style.css">
+    <style>
+            body {
+                font-family: Arial, sans-serif;
+                line-height: 1.6;
+                margin: 0;
+                padding: 0;
+            }
+
+            header {
+                padding: 1rem;
+                text-align: center;
+            }
+
+            header nav ul {
+                list-style: none;
+                padding: 0;
+            }
+
+            header nav ul li {
+                display: inline;
+                margin: 0 1rem;
+            }
+
+            header nav ul li a {
+                color: #fff;
+                text-decoration: none;
+            }
+
+            .container {
+                max-width: 1200px;
+                margin: 0 auto;
+                padding: 2rem;
+            }
+
+            section {
+                margin-bottom: 2rem;
+            }
+
+            section img {
+                max-width: 100%;
+                height: auto;
+                border-radius: 8px;
+                margin-bottom: 1rem;
+            }
+
+            section h2 {
+                border-bottom: 2px solid #333;
+                padding-bottom: 0.5rem;
+                margin-bottom: 1rem;
+            }
+
+            footer {
+                text-align: center;
+                padding: 1rem;
+                width: 100%;
+                bottom: 0;
+                background-color: #f4f4f4;
+            }
+
+            .content-wrapper {
+                display: flex;
+                align-items: center;
+                margin-bottom: 20px;
+                gap: 20px;
+                flex-wrap: wrap;
+            }
+
+            .content-text, .content-image {
+                flex: 1;
+                min-width: 300px;
+            }
+
+            .content-text {
+                padding: 10px;
+            }
+
+            .content-image {
+                max-width: 100%;
+            }
+
+            .content-image img {
+                width: 100%;
+                height: auto;
+                border-radius: 8px;
+            }
+
+            .c-odd .content-wrapper {
+                flex-direction: row-reverse;
+            }
+
+            .c-even .content-wrapper {
+                flex-direction: row;
+            }
+
+        </style>
 </head>
 <body>
     <jsp:include page="menu.jsp"/>
@@ -29,14 +124,15 @@
         </section>
 
         <c:forEach var="item" items="${listAbout}">
-            <section id="${item.aboutId}">
+            <c:set var="counter" value="${counter + 1}" />
+            <section id="${item.aboutId}" class="${(counter % 2 == 0) ? 'c-even' : 'c-odd'}">
                 <h2>${item.title}</h2>
                 <div class="content-wrapper">
                     <div class="content-text">
                         <p>${item.content}</p>
                     </div>
                     <div class="content-image">
-                        <img src="images/${item.img}" alt="${item.title}">
+                        <img src="${item.img}" alt="${item.title}">
                     </div>
                 </div>
             </section>

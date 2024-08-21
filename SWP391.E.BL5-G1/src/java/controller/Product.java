@@ -2,24 +2,23 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
-package admin;
+package controller;
 
-import dal.aboutDAO;
+import dal.productDAO;
+import java.io.IOException;
+import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
-import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.HttpSession;
-import java.io.IOException;
-import java.io.PrintWriter;
+import java.util.List;
+import model.Category;
 
 /**
  *
- * @author ThangNPHE151263
+ * @author ADMIN
  */
-@WebServlet(name = "DeleteAbout", urlPatterns = {"/deleteAbout"})
-public class DeleteAbout extends HttpServlet {
+public class Product extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -33,17 +32,29 @@ public class DeleteAbout extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet DeleteAbout</title>");            
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet DeleteAbout at " + request.getContextPath() + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
+        String action = request.getParameter("action");
+        if (action == null) {
+            productDAO c = new productDAO();
+            List<model.Product> productList = c.getProductA();
+            List<Category> category = c.getCategory();
+            int page, numperpage = 9;
+            int size = productList.size();
+            int num = (size % 9 == 0 ? (size / 9) : ((size / 9)) + 1);//so trang
+            String xpage = request.getParameter("page");
+            if (xpage == null) {
+                page = 1;
+            } else {
+                page = Integer.parseInt(xpage);
+            }
+            int start, end;
+            start = (page - 1) * numperpage;
+            end = Math.min(page * numperpage, size);
+            List<model.Product> product = c.getListByPage(productList, start, end);
+            request.setAttribute("page", page);
+            request.setAttribute("num", num);
+            request.setAttribute("CategoryData", category);
+            request.setAttribute("ProductData", product);
+            request.getRequestDispatcher("shop_category.jsp").forward(request, response);
         }
     }
 
@@ -59,21 +70,7 @@ public class DeleteAbout extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        HttpSession session = request.getSession(false);
-        if (session == null || session.getAttribute("user") == null) {
-            response.sendRedirect("user?action=login");
-            return;
-        }
-
-        model.User user = (model.User) session.getAttribute("user");
-        if (!user.getIsStoreStaff().equals("true")) {
-            response.sendRedirect("home");
-            return;
-        }
-        String aboutId = request.getParameter("id");
-        aboutDAO dao = new aboutDAO();
-        dao.deleteAbout(aboutId);
-        response.sendRedirect("aboutManager");
+        processRequest(request, response);
     }
 
     /**

@@ -4,25 +4,30 @@
  */
 package admin;
 
-import dal.aboutDAO;
-import model.About;
+import dal.categoryDAO;
+import dal.productDAO;
+import dal.reportDAO;
+import dal.userDAO;
+import jakarta.servlet.RequestDispatcher;
+import java.io.IOException;
+import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
-import jakarta.servlet.http.Part;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.PrintWriter;
+import java.util.List;
+import model.Category;
+import model.Report;
+import model.User;
 
 /**
  *
- * @author ThangNPHE151263
+ * @author admin
  */
-@WebServlet(name = "EditAbout", urlPatterns = {"/editAbout"})
-public class EditAbout extends HttpServlet {
+@WebServlet(name = "reportManager", urlPatterns = {"/reportmanager"})
+public class ReportManager extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -35,19 +40,38 @@ public class EditAbout extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet EditAbout</title>");            
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet EditAbout at " + request.getContextPath() + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
+        request.setCharacterEncoding("UTF-8");
+        response.setCharacterEncoding("UTF-8");
+        response.setContentType("text/html; charset=UTF-8");
+        String page = "";
+        try {
+            HttpSession session = request.getSession();
+            User user = (User) session.getAttribute("user");
+            String action = request.getParameter("action");
+            if (user.getIsAdmin().equalsIgnoreCase("true")) {
+                if (action == null) {
+                    userDAO cdao = new userDAO();
+                    reportDAO rdao = new reportDAO();
+                    List<Report> reports = rdao.getAll();
+                    List<User> users = cdao.getUser();
+                    session.setAttribute("Reports", reports);
+                    request.setAttribute("users", users);
+                    page = "admin/report.jsp";
+                } else if (action.equalsIgnoreCase("delete")) {
+                    String id_report = request.getParameter("id_report");
+                    int id = Integer.parseInt(id_report);
+                    reportDAO dao = new reportDAO();
+                    dao.deleteReport(id);
+                    response.sendRedirect("reportmanager");
+                    return;
+                }
+            }
+        } catch (Exception e) {
+            page = "404.jsp";
         }
+        RequestDispatcher dd = request.getRequestDispatcher(page);
+        dd.forward(request, response);
+
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -62,25 +86,7 @@ public class EditAbout extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        HttpSession session = request.getSession(false);
-        if (session == null || session.getAttribute("user") == null) {
-            response.sendRedirect("user?action=login");
-            return;
-        }
-
-        model.User user = (model.User) session.getAttribute("user");
-        if (!user.getIsStoreStaff().equals("true")) {
-            response.sendRedirect("home");
-            return;
-        }
-        String aboutId = request.getParameter("id");
-        aboutDAO dao = new aboutDAO();
-        About about = dao.getAboutById(aboutId);
-        request.setAttribute("aboutId", about.getAboutId());
-        request.setAttribute("title", about.getTitle());
-        request.setAttribute("img", about.getImg());
-        request.setAttribute("content", about.getContent());
-        request.getRequestDispatcher("editAbout.jsp").forward(request, response);
+        processRequest(request, response);
     }
 
     /**
@@ -94,14 +100,7 @@ public class EditAbout extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        aboutDAO dao = new aboutDAO();
-        String aboutId = request.getParameter("aboutId");
-        String title = request.getParameter("title");
-        String img = request.getParameter("img");
-        String content = request.getParameter("content");
-        About about = new About(aboutId,title,img,content);
-        dao.updateAbout(about);
-        response.sendRedirect("aboutManager");
+        processRequest(request, response);
     }
 
     /**
