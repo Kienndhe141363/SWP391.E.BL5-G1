@@ -41,7 +41,7 @@ public class EditAbout extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet EditAbout</title>");            
+            out.println("<title>Servlet EditAbout</title>");
             out.println("</head>");
             out.println("<body>");
             out.println("<h1>Servlet EditAbout at " + request.getContextPath() + "</h1>");
@@ -94,14 +94,20 @@ public class EditAbout extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        HttpSession session = request.getSession(false);
+        if (session == null || session.getAttribute("user") == null) {
+            response.sendRedirect("user?action=login");
+            return;
+        }
+        model.User user = (model.User) session.getAttribute("user");
+
         aboutDAO dao = new aboutDAO();
-        String aboutId = request.getParameter("aboutId");
+        int aboutId = Integer.parseInt(request.getParameter("aboutId"));
         String title = request.getParameter("title");
         String img = request.getParameter("img");
         String content = request.getParameter("content");
-        About about = new About(aboutId,title,img,content);
-        dao.updateAbout(about);
-        response.sendRedirect("aboutManager");
+        dao.updateAbout(title,content,img,aboutId);
+        response.sendRedirect("aboutmanager");
     }
 
     /**
