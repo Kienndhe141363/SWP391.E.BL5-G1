@@ -115,10 +115,10 @@
                             <input style="margin-left: 150px" ${(cookie.rem.value eq 'ON') ? "checked" : ""} id="remember" name="remember" value="ON" type="checkbox">
                             Nhớ tài khoản
                         </label>
-                        <p ><a href="forgotpass.jsp">Ban quen mat khau ? </a></p>
-                        <button style="margin-left: -120px" type="submit">Đăng nhập</button>
+                        <p ><a href="forgotpass.jsp">Quên mật khẩu </a></p>
+                        <button style="margin-left: -100px" type="submit">Đăng nhập</button>
 
-                        <p><a href="register.jsp">Chưa có account? Đăng kí ngay</a></p>
+                        <p><a style="margin-left: 100px" href="register.jsp">  Chưa có tài khoản ? Đăng kí ngay</a></p>
 
 
                     </div> 
@@ -132,11 +132,8 @@
         <!--footer area end-->
 
         <!-- JS -->
-        <!--map js code here-->
-        <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAdWLY_Y6FL7QGW5vcO3zajUEsrKfQPNzI"></script>
-        <script src="https://www.google.com/recaptcha/api.js" async defer></script>
-        <script src="https://www.google.com/jsapi"></script>
-        <script src="assets/js/map.js"></script>
+        
+        
         <!-- Plugins JS -->
         <script src="assets/js/plugins.js"></script>
         <!-- Main JS -->
