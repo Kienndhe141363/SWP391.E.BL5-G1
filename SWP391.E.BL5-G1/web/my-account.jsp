@@ -190,11 +190,12 @@
                             <div class="dashboard_tab_button">
                                 <ul role="tablist" class="nav flex-column dashboard-list">
                                     <li><a href="#account-details" data-toggle="tab" class="nav-link">Tài khoản của tôi</a></li>
-                                    <li> <a href="#password" data-toggle="tab" class="nav-link">Doi mat khau</a></li>
-                                    <li> <a href="#orders" data-toggle="tab" class="nav-link">Đơn hàng</a></li>
+                                    <li><a href="#edit-profile" data-toggle="tab" class="nav-link">Chỉnh sửa hồ sơ</a></li>
+                                    <li><a href="#password" data-toggle="tab" class="nav-link">Đổi mật khẩu</a></li>
+                                    <li><a href="#orders" data-toggle="tab" class="nav-link">Đơn hàng</a></li>
                                     <li><a href="user?action=logout" class="nav-link">Đăng xuất</a></li>
                                 </ul>
-                            </div>    
+                            </div>  
                         </div>
                         <div class="col-sm-12 col-md-9 col-lg-9">
                             <!-- Tab panes -->
@@ -235,21 +236,21 @@
                                             <div class="account_login_form">
                                                 <form action="user?action=updateinfo" method="POST">
                                                     <label><b>Tên người dùng</b></label>
-                                                    <input type="text" name="user_name" value="${sessionScope.user.user_name}" placeholder="Nhập tên người dùng">
+                                                    <input type="text" name="user_name" value="${sessionScope.user.user_name}" placeholder="Nhập tên người dùng" readonly="">
                                                     <label><b>Email</b></label>
                                                     <input type="text" readonly name="user_email"  value="${sessionScope.user.user_email}" readonly="">
                                                     <!--                                                    <label><b>Mật khẩu</b></label>
                                                                                                         <input type="password" name="user_pass" value="${sessionScope.user.user_pass}" placeholder="Nhập mật khẩu A-Z 0-9">-->
 
                                                     <label><b>Ngày sinh</b></label>
-                                                    <input type="Date" name="dateOfBirth" value="${sessionScope.user.dateOfBirth}" placeholder="Nhập ngày sinh(ngày/tháng/năm)">
+                                                    <input type="Date" name="dateOfBirth" value="${sessionScope.user.dateOfBirth}" placeholder="Nhập ngày sinh(ngày/tháng/năm)" readonly="">
 
                                                     <label><b>Địa chỉ</b></label>
-                                                    <input type="text" name="address" value="${sessionScope.user.address}" placeholder="Nhập địa chỉ (Xã,Huyện,Tỉnh)">
+                                                    <input type="text" name="address" value="${sessionScope.user.address}" placeholder="Nhập địa chỉ (Xã,Huyện,Tỉnh)" readonly="">
                                                     <label><b>Số điện thoại</b></label>
-                                                    <input type="number" name="phoneNumber" value="${sessionScope.user.phoneNumber}" placeholder="Nhập số điện thoại (10 số)">
+                                                    <input type="number" name="phoneNumber" value="${sessionScope.user.phoneNumber}" placeholder="Nhập số điện thoại (10 số)" readonly="">
                                                     <div class="cart_submit">
-                                                        <button type="submit">Lưu</button>
+                                                        <!--                                                        <button type="submit">Lưu</button>-->
                                                     </div> 
                                                 </form>
                                             </div>
@@ -270,6 +271,30 @@
                                                     <input type="password" name="confirm_new_password" placeholder="Nhập lại mật khẩu mới">
                                                     <div class="cart_submit">
                                                         <button type="submit">Đổi mật khẩu</button>
+                                                    </div> 
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="tab-pane fade" id="edit-profile">
+                                    <h3>Chỉnh sửa hồ sơ</h3>
+                                    <div class="login">
+                                        <div class="login_form_container">
+                                            <div class="account_login_form">
+                                                <form action="user?action=updateinfo" method="POST">
+                                                    <label><b>Tên người dùng</b></label>
+                                                    <input type="text" name="user_name" value="${sessionScope.user.user_name}" placeholder="Nhập tên người dùng">
+                                                    <label><b>Email</b></label>
+                                                    <input type="text" readonly name="user_email" value="${sessionScope.user.user_email}">
+                                                    <label><b>Ngày sinh</b></label>
+                                                    <input type="Date" name="dateOfBirth" value="${sessionScope.user.dateOfBirth}" placeholder="Nhập ngày sinh(ngày/tháng/năm)">
+                                                    <label><b>Địa chỉ</b></label>
+                                                    <input type="text" name="address" value="${sessionScope.user.address}" placeholder="Nhập địa chỉ (Xã,Huyện,Tỉnh)">
+                                                    <label><b>Số điện thoại</b></label>
+                                                    <input type="number" name="phoneNumber" value="${sessionScope.user.phoneNumber}" placeholder="Nhập số điện thoại (10 số)">
+                                                    <div class="cart_submit">
+                                                        <button type="submit">Lưu thay đổi</button>
                                                     </div> 
                                                 </form>
                                             </div>

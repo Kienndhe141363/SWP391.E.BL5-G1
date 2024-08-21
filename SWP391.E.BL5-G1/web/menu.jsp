@@ -44,6 +44,10 @@
                             <li><a href="user?action=login">Đăng xuất</a></li>
                             </c:if>
 
+                        <c:if test="${fn:toUpperCase(sessionScope.user.isAdmin) == 'TRUE' || fn:toUpperCase(sessionScope.user.isStoreStaff) == 'TRUE'}">
+                            <li><a href="dashboard">Quản lý</a></li>
+                            </c:if>
+                    </ul>
                 </li> 
             </ul>
         </div> 
@@ -55,11 +59,9 @@
         </div>
         <div class="cart_area">
             <div class="cart_link">
-
-
-
-      <a href="cart?action=showcart"><i class="fa fa-shopping-basket">${sessionScope.size}</i>Giỏ Hàng</a>
-
+                <c:if test="${!user.isAdmin == 'True' && !user.isStoreStaff=='True'}">
+                <a href="cart?action=showcart"><i class="fa fa-shopping-basket">${sessionScope.size}</i>Giỏ Hàng</a>
+                </c:if>
             </div>
         </div>
         <div id="menu" class="text-left ">
@@ -75,12 +77,12 @@
                     <a href="about">Chúng tôi</a>
                 </li>
                 <li class="menu-item-has-children">
-                    <a href="contact.jsp">Liên hệ</a> 
+                    <a href="contact">Liên hệ</a> 
                 </li>
             </ul>
         </div>
         <div class="offcanvas_footer">
-            <span><a href="#"><i class="fa fa-envelope-o"></i> kienndhe141363@fpt.edu.vn</a></span>
+            <span><a href="#"><i class="fa fa-envelope-o"></i> kienndhe141363@ft.edu.vn</a></span>
             <ul>
                 <li class="facebook"><a href="#"><i class="fa fa-facebook"></i></a></li>
                 <li class="twitter"><a href="#"><i class="fa fa-twitter"></i></a></li>
@@ -121,10 +123,12 @@
                                     <c:if test="${sessionScope.user != null}">
                                         <li><a href="user?action=myaccount">Tài khoản của tôi</a></li>
                                         </c:if>
-                                        <c:if test="${fn:toUpperCase(sessionScope.user.isAdmin) == 'TRUE' || fn:toUpperCase(sessionScope.user.isStoreStaff) == 'TRUE'}">
+
+                                    <c:if test="${fn:toUpperCase(sessionScope.user.isAdmin) == 'TRUE' || fn:toUpperCase(sessionScope.user.isStoreStaff) == 'TRUE'}">
                                         <li><a href="dashboard">Quản lý</a></li>
                                         </c:if>
-                                        <c:if test="${sessionScope.user == null}">
+
+                                    <c:if test="${sessionScope.user == null}">
                                         <li><a href="user?action=login">Đăng nhập</a></li>
                                         </c:if>
 
@@ -164,9 +168,9 @@
                     <div class="col-lg-4">
                         <div class="cart_area">
                             <div class="cart_link">
-
+                                <c:if test="${!user.isAdmin == 'True' && !user.isStoreStaff=='True'}">
                                 <a href="cart?action=showcart"><i class="fa fa-shopping-basket"></i>${sessionScope.size} Giỏ hàng</a>
-
+                                </c:if>
                             </div>
                         </div>
                     </div>
@@ -190,7 +194,7 @@
                         <nav>  
                             <ul>
                                 <li><a href="about">Chúng tôi</a></li>
-                                <li><a href="contact.jsp">Liên hệ</a></li>
+                                <li><a href="contact">Liên hệ</a></li>
                             </ul> 
                         </nav> 
                     </div>
@@ -212,7 +216,7 @@
                                     <li class="active"><a href="home">Trang chủ</a></li>
                                     <li><a href="product">Sản phẩm</a></li>
                                     <li><a href="about">Chúng tôi</a></li>
-                                    <li><a href="contact.jsp">Liên hệ</a></li>
+                                    <li><a href="contact">Liên hệ</a></li>
                                 </ul>   
                             </nav> 
                         </div>
