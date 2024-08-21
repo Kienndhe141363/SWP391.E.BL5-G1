@@ -211,4 +211,136 @@ public class userDAO extends DBContext {
         }
         return count;
     }
+
+    public void updateUser2(int user_id, String user_name, String dateOfBirth, String address, String phoneNumber) {
+        String sql = "UPDATE users SET user_name = ?, dateOfBirth = ?, address = ?, phoneNumber = ? WHERE user_id = ?";
+
+        try {
+            conn = new DBContext().getConnection();
+            ps = conn.prepareStatement(sql);
+
+            // Set parameters
+            ps.setString(1, user_name);
+            ps.setString(2, dateOfBirth);
+            ps.setString(3, address);
+            ps.setString(4, phoneNumber);
+            ps.setInt(5, user_id);
+
+            ps.executeUpdate();
+        } catch (Exception e) {
+            e.printStackTrace(); // Log the exception for debugging
+        } finally {
+            // Ensure resources are closed
+            try {
+                if (ps != null) {
+                    ps.close();
+                }
+                if (conn != null) {
+                    conn.close();
+                }
+            } catch (Exception ex) {
+                ex.printStackTrace(); // Log closing aexceptions
+            }
+        }
+    }
+
+    public boolean checkPassword(int user_id, String currentPassword) {
+        String sql = "SELECT user_pass FROM users WHERE user_id = ?";
+        try {
+            conn = new DBContext().getConnection();
+            ps = conn.prepareStatement(sql);
+            ps.setInt(1, user_id);
+            rs = ps.executeQuery();
+
+            if (rs.next()) {
+                String storedPassword = rs.getString("user_pass");
+                return storedPassword.equals(currentPassword); // You should hash and compare passwords securely
+            }
+        } catch (Exception e) {
+            e.printStackTrace(); // Log the exception
+        } finally {
+            // Ensure resources are closed
+            try {
+                if (ps != null) {
+                    ps.close();
+                }
+                if (conn != null) {
+                    conn.close();
+                }
+            } catch (Exception ex) {
+                ex.printStackTrace(); // Log closing exceptions
+            }
+        }
+        return false;
+    }
+
+    public void updatePassword(int user_id, String newPassword) {
+        String sql = "UPDATE users SET user_pass = ? WHERE user_id = ?";
+        try {
+            conn = new DBContext().getConnection();
+            ps = conn.prepareStatement(sql);
+            ps.setString(1, newPassword); // You should hash the password before storing it
+            ps.setInt(2, user_id);
+            ps.executeUpdate();
+        } catch (Exception e) {
+            e.printStackTrace(); // Log the exception
+        } finally {
+            // Ensure resources are closed
+            try {
+                if (ps != null) {
+                    ps.close();
+                }
+                if (conn != null) {
+                    conn.close();
+                }
+            } catch (Exception ex) {
+                ex.printStackTrace(); // Log closing exceptions
+            }
+        }
+    }
+
+    public void updatePasswordbyEmail(String user_email, String newPassword) {
+        String sql = "UPDATE users SET user_pass = ? WHERE user_email = ?";
+        try {
+            conn = new DBContext().getConnection();
+            ps = conn.prepareStatement(sql);
+            ps.setString(1, newPassword); // Bạn nên mã hóa mật khẩu trước khi lưu
+            ps.setString(2, user_email);
+            ps.executeUpdate();
+        } catch (Exception e) {
+            e.printStackTrace(); // Log the exception
+        } finally {
+            // Đảm bảo tài nguyên được đóng
+            try {
+                if (ps != null) {
+                    ps.close();
+                }
+                if (conn != null) {
+                    conn.close();
+                }
+            } catch (Exception ex) {
+                ex.printStackTrace(); // Log closing exceptions
+            }
+        }
+    }
+    
+     public void signup(String fullname, String user_email, String user_pass) {
+        try {
+            String query = "insert into users values(?,?,?,?,?,?,?,?,?,?)";
+            conn = new DBContext().getConnection();
+            ps = conn.prepareStatement(query);
+            ps.setString(1, fullname);
+            ps.setString(2, user_email);
+            ps.setString(3, user_pass);
+            ps.setString(4, "False");
+            ps.setString(5, "");
+            ps.setString(6, "");
+            ps.setString(7, "");
+            ps.setString(8, "");
+            ps.setString(9, "");
+            ps.setString(10, "False");
+            ps.executeUpdate();
+        } catch (Exception e) {
+        };
+    }
 }
