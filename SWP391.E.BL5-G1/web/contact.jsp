@@ -87,7 +87,7 @@
                                 <input hidden name="user_id" require type="text" value="${user.user_id}">
                                 <br>
                                 <c:if test="${!user.isAdmin == 'True' && !user.isStoreStaff=='True'}">
-                                    <button type="submit" onclick="handleSubmit()">Gửi</button>
+                                    <button onclick="handleSubmit()" type="submit">Gửi</button>
                                 </c:if>
                             </form>    
 

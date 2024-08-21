@@ -64,6 +64,35 @@ public class commentRatingDAO extends DBContext {
         }
         return comments;
     }
+    
+    public List<Comment> getCommentsByRating(String productId, int comment_filter) {
+        List<Comment> comments = new ArrayList<>();
+        String sql = "SELECT DISTINCT c.* FROM product_comment c JOIN users u ON c.user_id = u.user_id\n"
+                + "Inner Join bill b On b.user_id=c.user_id\n"
+                + "Inner Join bill_detail bi On bi.bill_id = b.bill_id And bi.product_id= c.product_id\n"
+                + "WHERE c.product_id = ? AND c.Rating = ? ORDER BY c.created_at DESC";
+        try {
+            conn = new DBContext().getConnection();
+            ps = conn.prepareStatement(sql);
+            ps.setString(1, productId);
+            ps.setInt(2, comment_filter);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                Comment comment = new Comment();
+                comment.setId(rs.getInt("id"));
+                comment.setProductId(rs.getString("product_id"));
+                comment.setUserId(rs.getInt("user_id"));
+                comment.setComment(rs.getString("comment"));
+                comment.setCreatedAt(rs.getTimestamp("created_at"));
+                comment.setRating(rs.getInt(5));
+                comment.setUser_name(rs.getString("user_name"));
+                comments.add(comment);
+            }
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        return comments;
+    }
 
     public List<Comment> getComment() {
         List<Comment> comments = new ArrayList<>();

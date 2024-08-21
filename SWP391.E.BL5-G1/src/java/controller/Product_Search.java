@@ -17,7 +17,9 @@ import jakarta.servlet.http.HttpSession;
 import java.util.ArrayList;
 import java.util.List;
 import model.Category;
-
+import javax.mail.*;
+import javax.mail.internet.*;
+import java.util.Properties;
 /**
  *
  * @author ADMIN
@@ -78,15 +80,26 @@ public class Product_Search extends HttpServlet {
             int category_id = product.getCate().getCategory_id();
             List<model.Product> productByCategory = c.getProductByCategory(category_id);
             commentRatingDAO crDAO = new commentRatingDAO();
-            List<model.Comment> comments = crDAO.getCommentsByProductId(product_id);
+            List<model.Comment> comments = null;
+            int ratingCmt = 6;
+            if(request.getParameter("comment_filter") != null){
+                String comment_filter = request.getParameter("comment_filter");
+                 ratingCmt = Integer.parseInt(comment_filter);
+                comments = crDAO.getCommentsByRating(product_id, ratingCmt);
+            } else {
+                comments = crDAO.getCommentsByProductId(product_id);
+            }
+            int numberOfComments = comments.size();
             double averageRating = crDAO.getAverageRatingForProduct(product_id);
             request.setAttribute("ProductData", product);
             request.setAttribute("SizeData", sizeList);
             request.setAttribute("ColorData", colorList);
             request.setAttribute("ProductByCategory", productByCategory);
             request.setAttribute("comments", comments);
+            request.setAttribute("numberOfComments", numberOfComments);
             request.setAttribute("averageRating", averageRating);
             request.setAttribute("user_comment", user_comment);
+            request.setAttribute("comment_filter", ratingCmt);
             request.getRequestDispatcher("product-details.jsp").forward(request, response);
        
         } else if (action.equalsIgnoreCase("addComment")) {
@@ -110,14 +123,14 @@ public class Product_Search extends HttpServlet {
         } //update comment
         else if (action.equalsIgnoreCase("updatecmt")) {
                     String productId = request.getParameter("product_id");
-                    String comment_id = request.getParameter("rating");
-                    String comment = request.getParameter("omment-update");
+                    String comment_update_rating = request.getParameter("rating-update");
+                    String comment = request.getParameter("comment-update");
 
-                    if (comment_id != null && comment != null && !comment_id.isEmpty() && !comment.isEmpty()) {
+                    if (comment_update_rating != null && comment != null && !comment_update_rating.isEmpty() && !comment.isEmpty()) {
                         try {
-                            int cmt_id = Integer.parseInt(comment_id);
+                            int cmt_rating = Integer.parseInt(comment_update_rating); 
                             commentRatingDAO crDAO = new commentRatingDAO();
-                            crDAO.updateComment(cmt_id, comment);
+                            crDAO.updateComment(cmt_rating, comment);
                             response.sendRedirect("product");
                             return;
                         } catch (NumberFormatException e) {

@@ -17,6 +17,10 @@
         <link rel="stylesheet" href="assets/css/style.css">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.19/dist/sweetalert2.min.css">
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+        <link href="css/mainAdmin.css" rel="stylesheet" type="text/css"/>
+
         <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.19/dist/sweetalert2.all.min.js"></script>
     </head>
     <style>.product-buttons {
@@ -134,6 +138,20 @@
         }
         .rating p, .comment p {
             margin: 5px 0;
+        }
+        .btn-save{
+            background-color: rgb(166 236 171);
+            color: rgb(1 123 10);
+            /* width: 100px; */
+            font-weight: 600;
+            letter-spacing: 1px;
+        }
+        .btn-cancel{
+            background-color: rgb(255 197 197);
+            color: rgb(190, 40, 40);
+            /* width: 100px; */
+            font-weight: 600;
+            letter-spacing: 1px;
         }
     </style>
     <style>
@@ -344,7 +362,196 @@
         .slider_content a {
             text-decoration: none;
         }
+        button.close {
+            padding: 0;
+            background-color: transparent;
+            border: 0;
+            -webkit-appearance: none;
+        }
 
+        .modal-open {
+            overflow: hidden;
+        }
+
+        .modal {
+            position: fixed;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            left: 0;
+            z-index: 1050;
+            display: none;
+            overflow: hidden;
+            outline: 0;
+        }
+
+        .modal-open .modal {
+            overflow-x: hidden;
+            overflow-y: auto;
+        }
+
+        .modal-dialog {
+            position: relative;
+            width: auto;
+            margin: 0.5rem;
+            pointer-events: none;
+        }
+
+        .modal.fade .modal-dialog {
+            -webkit-transition: -webkit-transform 0.3s ease-out;
+            transition: -webkit-transform 0.3s ease-out;
+            -o-transition: transform 0.3s ease-out;
+            transition: transform 0.3s ease-out;
+            transition: transform 0.3s ease-out, -webkit-transform 0.3s ease-out;
+            -webkit-transform: translate(0, -25%);
+            -ms-transform: translate(0, -25%);
+            transform: translate(0, -25%);
+        }
+
+        @media screen and (prefers-reduced-motion: reduce) {
+            .modal.fade .modal-dialog {
+                -webkit-transition: none;
+                -o-transition: none;
+                transition: none;
+            }
+        }
+
+        .modal.show .modal-dialog {
+            -webkit-transform: translate(0, 0);
+            -ms-transform: translate(0, 0);
+            transform: translate(0, 0);
+        }
+
+        .modal-dialog-centered {
+            display: -webkit-box;
+            display: -ms-flexbox;
+            display: flex;
+            -webkit-box-align: center;
+            -ms-flex-align: center;
+            align-items: center;
+            min-height: calc(100% - (0.5rem * 2));
+        }
+
+        .modal-content {
+            position: relative;
+            display: -webkit-box;
+            display: -ms-flexbox;
+            display: flex;
+            -webkit-box-orient: vertical;
+            -webkit-box-direction: normal;
+            -ms-flex-direction: column;
+            flex-direction: column;
+            width: 100%;
+            pointer-events: auto;
+            background-color: #FFF;
+            background-clip: padding-box;
+            border: 1px solid rgba(0, 0, 0, 0.2);
+            border-radius: 0.3rem;
+            outline: 0;
+        }
+
+        .modal-backdrop {
+            position: fixed;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            left: 0;
+            z-index: 0;
+            background-color: #000;
+        }
+
+        .modal-backdrop.fade {
+            opacity: 0;
+        }
+
+        .modal-backdrop.show {
+            opacity: 0.5;
+        }
+
+        .modal-header {
+            display: -webkit-box;
+            display: -ms-flexbox;
+            display: flex;
+            -webkit-box-align: start;
+            -ms-flex-align: start;
+            align-items: flex-start;
+            -webkit-box-pack: justify;
+            -ms-flex-pack: justify;
+            justify-content: space-between;
+            padding: 1rem;
+            border-radius: .357rem;
+        }
+
+        .modal-header .close {
+            padding: 8px;
+            margin: 0px 0px 0px auto;
+        }
+
+        .modal-title {
+            margin-bottom: 0;
+            line-height: 1.5;
+        }
+
+        .modal-body {
+            position: relative;
+            -webkit-box-flex: 1;
+            -ms-flex: 1 1 auto;
+            flex: 1 1 auto;
+            padding: 1rem;
+        }
+
+        .modal-footer {
+            display: -webkit-box;
+            display: -ms-flexbox;
+            display: flex;
+            -webkit-box-align: center;
+            -ms-flex-align: center;
+            align-items: center;
+            -webkit-box-pack: end;
+            -ms-flex-pack: end;
+            justify-content: flex-end;
+            padding: 1rem;
+            border-radius: .357rem;
+        }
+
+        .modal-footer > :not(:first-child) {
+            margin-left: .25rem;
+        }
+
+        .modal-footer > :not(:last-child) {
+            margin-right: .25rem;
+        }
+
+        .modal-scrollbar-measure {
+            position: absolute;
+            top: -9999px;
+            width: 50px;
+            height: 50px;
+            overflow: scroll;
+        }
+
+        @media (min-width: 576px) {
+            .modal-dialog {
+                max-width: 500px;
+                margin: 1.75rem auto;
+            }
+            .modal-dialog-centered {
+                min-height: calc(100% - (1.75rem * 2));
+            }
+            .modal-sm {
+                max-width: 300px;
+            }
+        }
+
+        @media (min-width: 992px) {
+            .modal-lg {
+                max-width: 800px;
+            }
+        }
+        
+        .highlight {
+            color: gold; /* Or any other style you want to apply */
+        }
 
 
     </style>
@@ -483,7 +690,7 @@
         <!--product details end-->
         <!-- Form for adding rating -->
 
-            <c:if test="${user_comment}">
+    <c:if test="${user_comment}">
         <div class="form-container">
             <form action="search" method="POST">
                 <input type="hidden" name="action" value="addComment">
@@ -507,60 +714,91 @@
 
 
 
-    <c:if test="${not empty comments}">
+    <c:if test="${numberOfComments != 0}">
         <div class="product_reviews">
-        <h3>Đánh giá và Bình luận</h3>
-        <h5>Bình luận:</h5>
-        <c:forEach items="${comments}" var="c">
-            <div class="comment" style="position: relative;">
-                <c:if test="${c.user_name == user.user_name}">
-                    <button class="btn btn-primary btn-sm edit" type="button" data-toggle="modal" data-target="#ModalEditComment${c.user_name}" class="edit-icon" title="Chỉnh sửa">
-                        <i class="fas fa-edit"></i></button>
-                    <button class="btn btn-primary btn-sm trash" type="button" title="xóa" value="${c.id}">
-                                                <i class="fas fa-trash"></i></button>
-                </c:if>
-                <p>Bởi: ${c.user_name}</p> 
-                <p>Đánh giá: ${c.rating}&#9733</p>
-                <p>Ngày: <fmt:formatDate value="${c.createdAt}" pattern="dd/MM/yyyy"/></p>
-                <p>${c.comment}</p>
-            </div>
-            <div class="modal fade" id="ModalEditComment${c.user_name}" tabindex="-1" role="dialog" aria-hidden="true">
-                                    <div class="modal-dialog modal-dialog-centered" role="document">
-                                        <div class="modal-content">
-                                            <div class="modal-body">
-                                                <form action="search?action=productdetail&product_id=${ProductData.product_id}" method="POST">
-                                                    <input type="hidden" name="action" value="updatecmt">
-                                                    <div class="row">
-                                                        <div class="form-group col-md-12">
-                                                            <span class="thong-tin-thanh-toan">
-                                                                <h5>Chỉnh sửa đánh giá</h5>
-                                                            </span>
-                                                        </div>
-                                                    </div>
-                                                    <div class="row">
-                                                       <h3>Đánh giá sản phẩm</h3>
-                <select name="rating" id="star-rating-update">
+            <h3>Đánh giá và Bình luận</h3>
+                        <div class="dropdown" style="width: 100%; text-align: right">
+                                  <c:choose>
+            
+                <a class="btn ${comment_filter == '6' ? 'highlight' : ''}" href="search?action=productdetail&product_id=${ProductData.product_id}">
+                    Tất cả (${numberOfComments})
+                </a>
+                <a class="btn ${comment_filter == '1' ? 'highlight' : ''}" href="search?action=productdetail&product_id=${ProductData.product_id}&comment_filter=1">
+                    1&#9733; (${numberOfComments})
+                </a>
+                <a class="btn ${comment_filter == '2' ? 'highlight' : ''}" href="search?action=productdetail&product_id=${ProductData.product_id}&comment_filter=2">
+                    2&#9733;&#9733; (${numberOfComments})
+                </a>
+                <a class="btn ${comment_filter == '3' ? 'highlight' : ''}" href="search?action=productdetail&product_id=${ProductData.product_id}&comment_filter=3">
+                    3&#9733;&#9733;&#9733; (${numberOfComments})
+                </a>
+                <a class="btn ${comment_filter == '4' ? 'highlight' : ''}" href="search?action=productdetail&product_id=${ProductData.product_id}&comment_filter=4">
+                    4&#9733;&#9733;&#9733;&#9733; (${numberOfComments})
+                </a>
+                <a class="btn ${comment_filter == '5' ? 'highlight' : ''}" href="search?action=productdetail&product_id=${ProductData.product_id}&comment_filter=5">
+                    5&#9733;&#9733;&#9733;&#9733;&#9733; (${numberOfComments})
+                </a>
+                        </div>
 
-                    <option value="1">1&#9733;</option>
-                    <option value="2">2&#9733;&#9733;</option>
-                    <option value="3">3&#9733;&#9733;&#9733;</option>
-                    <option value="4">4&#9733;&#9733;&#9733;&#9733;</option>
-                    <option value="5">5&#9733;&#9733;&#9733;&#9733;&#9733;</option>
-                </select>
-                <textarea name="comment-update" rows="4" cols="50" placeholder="Nhập bình luận của bạn" value="${c.comment}"></textarea>
-                                                    </div>
-                                                    <button class="btn btn-save" type="submit">Lưu lại</button>
-                                                    <a class="btn btn-cancel" data-dismiss="modal" href="#">Hủy bỏ</a>
-                                                </form>
-                                            </div>
+            <h5>Bình luận:</h5>
+            <c:forEach items="${comments}" var="c">
+                <div class="comment" style="position: relative; display: flex">
+
+                    <div style="width: 90%; text-align: left">
+                        <p>Bởi: ${c.user_name}</p> 
+                        <p>Đánh giá: ${c.rating}&#9733</p>
+                        <p>Ngày: <fmt:formatDate value="${c.createdAt}" pattern="dd/MM/yyyy"/></p>
+                        <p>${c.comment}</p>
+                    </div>
+                    <c:if test="${c.user_name == user.user_name}">
+                        <div style="width:10%; text-align: right; display: flex;">
+                            <button class="btn btn-primary btn-sm edit" style="margin-right: 10px" type="button" data-toggle="modal" data-target="#ModalEditComment${c.user_name}" class="edit-icon" title="Chỉnh sửa">
+                                <i class="fas fa-edit"></i></button>
+                            <button class="btn btn-primary btn-sm trash" type="button" title="xóa" value="${c.id}">
+                                <i class="fas fa-trash"></i></button>
+                        </div>
+
+                    </c:if>
+                </div>
+                <div class="modal fade" id="ModalEditComment${c.user_name}" tabindex="-1" role="dialog" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered" role="document">
+                        <div class="modal-content">
+                            <div class="modal-body">
+                                <form action="search?action=productdetail&product_id=${ProductData.product_id}" method="POST">
+                                    <input type="hidden" name="action" value="updatecmt">
+                                    <div class="row">
+                                        <div class="form-group col-md-12">
+                                            <span class="thong-tin-thanh-toan">
+                                                <h5>Chỉnh sửa đánh giá</h5>
+                                            </span>
                                         </div>
                                     </div>
-                                </div>
-        </c:forEach>
+                                    <div class="row" style="padding: 0 1rem">
+                                        <h3>Đánh giá sản phẩm</h3>
+                                        <select name="rating_filter" id="star-rating">     
+                                            <option value="1">1&#9733;</option>
+                                            <option value="2">2&#9733;&#9733;</option>
+                                            <option value="3">3&#9733;&#9733;&#9733;</option>
+                                            <option value="4">4&#9733;&#9733;&#9733;&#9733;</option>
+                                            <option value="5">5&#9733;&#9733;&#9733;&#9733;&#9733;</option>
+                                        </select>
+                                        <textarea name="comment-update" style="margin-top: 10px" rows="4" cols="50" placeholder="Nhập bình luận của bạn" value="${c.comment}"></textarea>
+                                    </div>
+                                    <div style="margin-top: 10px">
+                                        <button class="btn btn-save" type="submit">Lưu lại</button>
+                                        <a class="btn btn-cancel" data-dismiss="modal" href="#">Hủy bỏ</a>
+                                    </div>
+
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </c:forEach>
         </div>
     </c:if>
-            
-    
+
+
 
 
 
@@ -608,29 +846,29 @@
     <!-- Main JS -->
     <script src="assets/js/main.js"></script>
     <script>
-        jQuery(document).ready(function () {
-            // Event delegation for delete buttons
-            jQuery(document).on('click', '.trash', function () {
-                var cmtId = $(this).attr("value");
-                swal({
-                    title: "Cảnh báo",
-                    text: "Bạn có chắc chắn là muốn xóa danh mục này?",
-                    buttons: ["Hủy bỏ", "Đồng ý"],
-                }).then((willDelete) => {
-                    if (willDelete) {
-                        window.location = "search?action=productdetail&cmt_id=" + cmtId;
-                        swal("Đã xóa thành công!", {
-                            icon: "success",
-                        });
-                    }
-                });
-            });
-        });
-        
-                                        function setActionAndSubmit(action) {
-                                            document.getElementById('action').value = action;
-                                            document.getElementById('productForm').submit();
-                                        }
+                                            jQuery(document).ready(function () {
+                                                // Event delegation for delete buttons
+                                                jQuery(document).on('click', '.trash', function () {
+                                                    var cmtId = $(this).attr("value");
+                                                    swal({
+                                                        title: "Cảnh báo",
+                                                        text: "Bạn có chắc chắn là muốn xóa danh mục này?",
+                                                        buttons: ["Hủy bỏ", "Đồng ý"],
+                                                    }).then((willDelete) => {
+                                                        if (willDelete) {
+                                                            window.location = "search?action=productdetail&cmt_id=" + cmtId;
+                                                            swal("Đã xóa thành công!", {
+                                                                icon: "success",
+                                                            });
+                                                        }
+                                                    });
+                                                });
+                                            });
+
+                                            function setActionAndSubmit(action) {
+                                                document.getElementById('action').value = action;
+                                                document.getElementById('productForm').submit();
+                                            }
     </script>
     <div id="size-guide-popup" style="display: none; position: fixed; left: 50%; top: 50%; transform: translate(-50%, -50%); background-color: white; padding: 20px; border: 1px solid black; z-index: 1000;">
         <h3>Bảng size</h3>
