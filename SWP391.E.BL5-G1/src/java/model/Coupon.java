@@ -18,6 +18,28 @@ public class Coupon {
     private int couponTypeId;
     private String code;
     private String couponDescription;
+     private double discountAmount;
+
+    // Constructor bao gồm discountAmount
+    public Coupon(int couponId, Date startDate, Date endDate, int usageLimit, int couponTypeId, String code, String couponDescription, double discountAmount) {
+        this.couponId = couponId;
+        this.startDate = startDate;
+        this.endDate = endDate;
+        this.usageLimit = usageLimit;
+        this.couponTypeId = couponTypeId;
+        this.code = code;
+        this.couponDescription = couponDescription;
+        this.discountAmount = discountAmount;
+    }
+
+    // Getter và Setter cho discountAmount
+    public double getDiscountAmount() {
+        return discountAmount;
+    }
+
+    public void setDiscountAmount(double discountAmount) {
+        this.discountAmount = discountAmount;
+    }
 
     public Coupon(int couponId, Date startDate, Date endDate, int usageLimit, int couponTypeId, String code) {
         this.couponId = couponId;

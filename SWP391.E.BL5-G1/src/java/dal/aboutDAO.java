@@ -69,23 +69,35 @@ public class aboutDAO extends DBContext {
         }
     }
 
-    public void updateAbout(String title, String img, String content,int id) {
-        try {
-            String sql = "UPDATE About SET Title=?,Content=?, ImageURL=? WHERE AboutId=? ";
-            conn = new DBContext().getConnection();
-            ps = conn.prepareStatement(sql);
-            ps.setString(1, title);
-            ps.setString(2, content);
-            if (!img.isEmpty()) {
-                ps.setString(3, img);
-            }
-            ps.setInt(4, id);
-            ps.executeUpdate();
-            conn.close();
-        } catch (Exception e) {
-            e.printStackTrace();
+    public void updateAbout(String title, String content, String img, int id) {
+    try {
+        String sql;
+        conn = new DBContext().getConnection();
+
+        if (!img.isEmpty()) {
+            sql = "UPDATE About SET Title=?, Content=?, ImageURL=? WHERE AboutId=?";
+        } else {
+            sql = "UPDATE About SET Title=?, Content=? WHERE AboutId=?";
         }
+
+        ps = conn.prepareStatement(sql);
+        ps.setString(1, title);
+        ps.setString(2, content);
+
+        if (!img.isEmpty()) {
+            ps.setString(3, img);
+            ps.setInt(4, id);
+        } else {
+            ps.setInt(3, id);
+        }
+
+        ps.executeUpdate();
+        conn.close();
+    } catch (Exception e) {
+        e.printStackTrace();
     }
+}
+
 
     public About getAboutById(String aboutId) {
         About about = null;
@@ -104,13 +116,5 @@ public class aboutDAO extends DBContext {
             System.out.println(e);
         }
         return about;
-    }
-    
-    public static void main(String[] args) {
-        aboutDAO d = new aboutDAO();
-        d.updateAbout("Mô Hình Kinh Doanhhhh", 
-                "Chúng tôi hoạt động theo mô hình cửa hàng thời trang trực tuyến, cung cấp các sản phẩm quần áo và phụ kiện chất lượng cao. Mô hình kinh doanh của chúng tôi tập trung vào việc kết nối trực tiếp với khách hàng qua nền tảng trực tuyến, giúp họ dễ dàng lựa chọn và mua sắm sản phẩm yêu thích từ mọi nơi.Chúng tôi cam kết mang đến trải nghiệm mua sắm dễ dàng và tiện lợi với dịch vụ khách hàng tận tâm và chính sách đổi trả linh hoạt.", 
-                "https://c0.wallpaperflare.com/preview/506/226/547/store-shop-interor-retail-thumbnail.jpg", 
-                1);
     }
 }

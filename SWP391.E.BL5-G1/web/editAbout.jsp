@@ -75,7 +75,7 @@
             
             <label for="img">Ảnh:</label>
             <input type="file" id="img" name="img">
-            <img src="${img}" alt="${title}" style="max-width: 150px; height: auto;">
+            <img src="web/images/about/${img}" alt="${title}" style="max-width: 150px; height: auto;">
             
             <label for="content">Nội Dung:</label>
             <textarea id="content" name="content" rows="4" required>${content}</textarea>
