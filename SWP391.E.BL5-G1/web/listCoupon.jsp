@@ -116,7 +116,7 @@
                         <td>${coupon.startDate}</td>
                         <td>${coupon.endDate}</td>
                         <td>${coupon.usageLimit}</td>
-                        <td>${coupon.couponTypeId}</td>
+                        <td>${coupon.couponDescription}</td>
                         <td>
                             <a href="couponmanager?action=delete&couponId=${coupon.couponId}" class="btn btn-delete" onclick="return confirm('Bạn có chắc chắn muốn xóa không?');">Xóa</a>
                         </td>
