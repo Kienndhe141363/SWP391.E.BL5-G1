@@ -85,6 +85,38 @@ public class couponDAO extends DBContext {
             closeResources();
         }
     }
+    
+    public Coupon getCouponByCode(String code) throws Exception {
+        Coupon coupon = null;
+        String sql = "SELECT c.CouponId, c.StartDate, c.EndDate, c.UsageLimit, c.CouponTypeId, c.Code, ct.CouponDescription, ct.DiscountAmount " +
+                     "FROM Coupon c " +
+                     "JOIN CouponType ct ON c.CouponTypeId = ct.CouponTypeId " +
+                     "WHERE c.Code = ?";
+        try {
+            conn = getConnection();
+            ps = conn.prepareStatement(sql);
+            ps.setString(1, code);
+            rs = ps.executeQuery();
+            if (rs.next()) {
+                coupon = new Coupon(
+                    rs.getInt("CouponId"),
+                    rs.getDate("StartDate"),
+                    rs.getDate("EndDate"),
+                    rs.getInt("UsageLimit"),
+                    rs.getInt("CouponTypeId"),
+                    rs.getString("Code"),
+                    rs.getString("CouponDescription")
+                );
+                coupon.setCouponDescription(rs.getString("CouponDescription"));
+                coupon.setDiscountAmount(rs.getDouble("DiscountAmount"));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            closeResources();
+        }
+        return coupon;
+    }
 
     private void closeResources() {
         try {
