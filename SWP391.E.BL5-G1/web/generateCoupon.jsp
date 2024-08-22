@@ -89,7 +89,7 @@
     </head>
     <body>
         <h1>Tạo Mã Giảm Giá</h1>
-        <form action="couponManager" method="post">
+        <form action="couponmanager" method="post">
             <input type="hidden" name="action" value="create" />
 
             <label for="couponTypeId">Coupon Type:</label>
@@ -113,7 +113,7 @@
             <br />
 
             <input type="submit" value="Generate Coupon" />
-            <a href="couponManager?action=list" class="btn btn-back">Back to List</a>
+            <a href="couponmsanager?action=list" class="btn btn-back">Back to List</a>
         </form>
 
     </body>
