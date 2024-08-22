@@ -337,6 +337,7 @@
                     </div>
                 </div>
             </div>
+<div class="elfsight-app-94027198-7458-4351-8ca9-9bf86706a713" data-elfsight-app-lazy></div>
         </div>
     </main>
 
@@ -356,6 +357,8 @@
     <script type="text/javascript" src="admin/js/plugins/jquery.dataTables.min.js"></script>
     <script type="text/javascript" src="admin/js/plugins/dataTables.bootstrap.min.js"></script>
     <script type="text/javascript">$('#sampleTable').DataTable();</script>
+<script src="https://static.elfsight.com/platform/platform.js" data-use-service-core defer></script>
+
     <script>
 
         jQuery(document).ready(function () {
