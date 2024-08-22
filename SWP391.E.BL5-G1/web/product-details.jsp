@@ -752,8 +752,7 @@
                 <div class="modal fade" id="ModalEditComment${c.user_name}" tabindex="-1" role="dialog" aria-hidden="true">
                     <div class="modal-dialog modal-dialog-centered" role="document">
                         <div class="modal-content">
-                            <div class="modal-body">
-                                ${ProductData.product_id}
+                            <div class="modal-body" style="padding:0 1rem">
                                 <form action="search?action=updatecmt&product_id=${ProductData.product_id}" method="POST">
                                     <input type="hidden" name="action" value="updatecmt">
                                     <div class="row">
@@ -764,7 +763,7 @@
                                         </div>
                                     </div>
                                     <div class="row" style="padding: 0 1rem">
-                                        <h3>Đánh giá sản phẩm</h3>
+                                        <h5>Đánh giá sản phẩm <b>#${ProductData.product_id}</b></h5>
 <!--                                        <select name="rating_filter" id="star-rating">     
                                             <option value="1">1&#9733;</option>
                                             <option value="2">2&#9733;&#9733;</option>
@@ -772,11 +771,12 @@
                                             <option value="4">4&#9733;&#9733;&#9733;&#9733;</option>
                                             <option value="5">5&#9733;&#9733;&#9733;&#9733;&#9733;</option>
                                         </select>-->
+                                        <input name="idproduct" value="${c.id}" hidden="true">
                                         <textarea name="comment-update" style="margin-top: 10px" rows="4" cols="50" placeholder="Nhập bình luận của bạn"></textarea>
                                     </div>
-                                    <div style="margin-top: 10px">
-                                        <button class="btn btn-save" type="submit">Lưu lại</button>
-                                        <a class="btn btn-cancel" data-dismiss="modal" href="#">Hủy bỏ</a>
+                                    <div style="margin-top: 10px; text-align: right">
+                                        <button class="btn btn-save" style="background-color:green" type="submit">Lưu lại</button>
+                                        <a class="btn btn-cancel"  style="background-color:red" data-dismiss="modal" href="#">Hủy bỏ</a>
                                     </div>
 
                                 </form>

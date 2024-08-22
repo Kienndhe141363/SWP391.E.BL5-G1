@@ -172,28 +172,19 @@ public class Product_Search extends HttpServlet {
             response.sendRedirect("search?action=productdetail&product_id=" + productId);
         } //update comment
         else if (action.equalsIgnoreCase("updatecmt")) {
-            String productId = request.getParameter("product_id");
-//            String comment_update_rating = request.getParameter("rating_filter");
+            String productId = request.getParameter("idproduct");
             String comment = request.getParameter("comment-update");
-
-            if (comment != null && !comment.isEmpty()) {
-                try {
-                    int id = Integer.parseInt(productId);
-                    commentRatingDAO crDAO = new commentRatingDAO();
-                    crDAO.updateComment(id, comment);
-            response.sendRedirect("search?action=productdetail&product_id=" + productId);
-                    return;
-                } catch (NumberFormatException e) {
-                    request.setAttribute("error", "Invalid Rating.");
-                } catch (Exception e) {
-                    request.setAttribute("error", "An error occurred while updating the comment.");
-                }
+            int id = Integer.parseInt(productId);
+            if(comment !=null || !comment.isEmpty()){
+            commentRatingDAO crDAO = new commentRatingDAO();
+            crDAO.updateComment(id, comment);
+            response.sendRedirect("search?action=productdetail&product_id=" + productId); 
             } else {
-                // Handle validation errors or missing parameters
-                request.setAttribute("error", "Rating and cmt cannot be empty.");
+                HttpSession session = request.getSession();
+                session.setAttribute("errorMessage", "Không được để trống nội dung comment");
             }
-            // Forward back to the category manager page with an error message
-            response.sendRedirect("search?action=productdetail&product_id=" + productId);
+
+            return;
 
         } //delete cmt
         else if (action.equalsIgnoreCase("delete")) {
