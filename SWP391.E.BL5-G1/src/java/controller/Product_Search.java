@@ -20,12 +20,13 @@ import model.Category;
 import javax.mail.*;
 import javax.mail.internet.*;
 import java.util.Properties;
+
 /**
  *
  * @author ADMIN
  */
 @WebServlet(name = "Product_Search", urlPatterns = {"/search"})
-public class Product_Search extends HttpServlet { 
+public class Product_Search extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -69,7 +70,7 @@ public class Product_Search extends HttpServlet {
         }
         if (action.equalsIgnoreCase("productdetail")) {
             boolean user_comment = false;
-            if(request.getParameter("comment") !=  null){
+            if (request.getParameter("comment") != null) {
                 user_comment = true;
             }
             String product_id = request.getParameter("product_id");
@@ -81,15 +82,63 @@ public class Product_Search extends HttpServlet {
             List<model.Product> productByCategory = c.getProductByCategory(category_id);
             commentRatingDAO crDAO = new commentRatingDAO();
             List<model.Comment> comments = null;
+            List<model.Comment> comments1 = null;
+            List<model.Comment> comments2 = null;
+            List<model.Comment> comments3 = null;
+            List<model.Comment> comments4 = null;
+            List<model.Comment> comments5 = null;
+
             int ratingCmt = 6;
-            if(request.getParameter("comment_filter") != null){
+            boolean haveCmt = false;
+            if (request.getParameter("comment_filter") != null) {
                 String comment_filter = request.getParameter("comment_filter");
-                 ratingCmt = Integer.parseInt(comment_filter);
+                ratingCmt = Integer.parseInt(comment_filter);
                 comments = crDAO.getCommentsByRating(product_id, ratingCmt);
+                comments1 = crDAO.getCommentsByRating1(product_id);
+                comments2 = crDAO.getCommentsByRating2(product_id);
+                comments3 = crDAO.getCommentsByRating3(product_id);
+                comments4 = crDAO.getCommentsByRating4(product_id);
+                comments5 = crDAO.getCommentsByRating5(product_id);
+                haveCmt = true;
+
             } else {
                 comments = crDAO.getCommentsByProductId(product_id);
+                if (comments.size() > 0) {
+                    haveCmt = true;
+                }
+                comments1 = crDAO.getCommentsByRating1(product_id);
+                comments2 = crDAO.getCommentsByRating2(product_id);
+                comments3 = crDAO.getCommentsByRating3(product_id);
+                comments4 = crDAO.getCommentsByRating4(product_id);
+                comments5 = crDAO.getCommentsByRating5(product_id);
             }
             int numberOfComments = comments.size();
+            int numberOfComments1 = comments1.size();
+            int numberOfComments2 = comments2.size();
+            int numberOfComments3 = comments3.size();
+            int numberOfComments4 = comments4.size();
+            int numberOfComments5 = comments5.size();
+
+            if (comments1.size() > 0) {
+                numberOfComments1 = comments1.size();
+                request.setAttribute("numberOfComments1", numberOfComments1);
+            }
+            if (comments2.size() > 0) {
+                numberOfComments2 = comments2.size();
+                request.setAttribute("numberOfComments2", numberOfComments2);
+            }
+            if (comments3.size() > 0) {
+                numberOfComments3 = comments3.size();
+                request.setAttribute("numberOfComments3", numberOfComments3);
+            }
+            if (comments4.size() > 0) {
+                numberOfComments4 = comments4.size();
+                request.setAttribute("numberOfComments4", numberOfComments4);
+            }
+            if (comments5.size() > 0) {
+                numberOfComments5 = comments5.size();
+                request.setAttribute("numberOfComments5", numberOfComments5);
+            }
             double averageRating = crDAO.getAverageRatingForProduct(product_id);
             request.setAttribute("ProductData", product);
             request.setAttribute("SizeData", sizeList);
@@ -100,8 +149,9 @@ public class Product_Search extends HttpServlet {
             request.setAttribute("averageRating", averageRating);
             request.setAttribute("user_comment", user_comment);
             request.setAttribute("comment_filter", ratingCmt);
+            request.setAttribute("haveCmt", haveCmt);
             request.getRequestDispatcher("product-details.jsp").forward(request, response);
-       
+
         } else if (action.equalsIgnoreCase("addComment")) {
             String productId = request.getParameter("product_id");
             String userId = request.getParameter("user_id");  // Retrieve userId from session
@@ -122,39 +172,38 @@ public class Product_Search extends HttpServlet {
             response.sendRedirect("search?action=productdetail&product_id=" + productId);
         } //update comment
         else if (action.equalsIgnoreCase("updatecmt")) {
-                    String productId = request.getParameter("product_id");
-                    String comment_update_rating = request.getParameter("rating-update");
-                    String comment = request.getParameter("comment-update");
+            String productId = request.getParameter("product_id");
+//            String comment_update_rating = request.getParameter("rating_filter");
+            String comment = request.getParameter("comment-update");
 
-                    if (comment_update_rating != null && comment != null && !comment_update_rating.isEmpty() && !comment.isEmpty()) {
-                        try {
-                            int cmt_rating = Integer.parseInt(comment_update_rating); 
-                            commentRatingDAO crDAO = new commentRatingDAO();
-                            crDAO.updateComment(cmt_rating, comment);
-                            response.sendRedirect("product");
-                            return;
-                        } catch (NumberFormatException e) {
-                            request.setAttribute("error", "Invalid Rating.");
-                        } catch (Exception e) {
-                            request.setAttribute("error", "An error occurred while updating the comment.");
-                        }
-                    } else {
-                        // Handle validation errors or missing parameters
-                        request.setAttribute("error", "Rating and cmt cannot be empty.");
-                    }
-                    // Forward back to the category manager page with an error message
+            if (comment != null && !comment.isEmpty()) {
+                try {
+                    int id = Integer.parseInt(productId);
+                    commentRatingDAO crDAO = new commentRatingDAO();
+                    crDAO.updateComment(id, comment);
+            response.sendRedirect("search?action=productdetail&product_id=" + productId);
+                    return;
+                } catch (NumberFormatException e) {
+                    request.setAttribute("error", "Invalid Rating.");
+                } catch (Exception e) {
+                    request.setAttribute("error", "An error occurred while updating the comment.");
+                }
+            } else {
+                // Handle validation errors or missing parameters
+                request.setAttribute("error", "Rating and cmt cannot be empty.");
+            }
+            // Forward back to the category manager page with an error message
             response.sendRedirect("search?action=productdetail&product_id=" + productId);
 
-
-                } //delete cmt
-                else if (action.equalsIgnoreCase("delete")) {
-                    String cmt_id = request.getParameter("cmt_id");
-                    int id = Integer.parseInt(cmt_id);
-                    commentRatingDAO crDAO = new commentRatingDAO();
-                    crDAO.deleteComment(id);
-                    response.sendRedirect("product");
-                    return;
-                }
+        } //delete cmt
+        else if (action.equalsIgnoreCase("delete")) {
+            String cmt_id = request.getParameter("cmt_id");
+            int id = Integer.parseInt(cmt_id);
+            commentRatingDAO crDAO = new commentRatingDAO();
+            crDAO.deleteComment(id);
+            response.sendRedirect("product");
+            return;
+        }
 
         if (action.equals("sort")) {
             String type = request.getParameter("type");
