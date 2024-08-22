@@ -66,14 +66,14 @@ public class DeleteAbout extends HttpServlet {
         }
 
         model.User user = (model.User) session.getAttribute("user");
-        if (!user.getIsStoreStaff().equals("1")) {
+        if (!user.getIsStoreStaff().equalsIgnoreCase("true")) {
             response.sendRedirect("home");
             return;
         }
         String aboutId = request.getParameter("id");
         aboutDAO dao = new aboutDAO();
         dao.deleteAbout(aboutId);
-        response.sendRedirect("aboutManager");
+        response.sendRedirect("aboutmanager");
     }
 
     /**

@@ -2,27 +2,25 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
-package admin;
+package controller;
 
-import dal.aboutDAO;
-import model.About;
+import dal.userDAO;
+import java.io.IOException;
+import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
-import jakarta.servlet.http.Part;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.PrintWriter;
+import model.UserC;
 
 /**
  *
- * @author ThangNPHE151263
+ * @author Admin
  */
-@WebServlet(name = "EditAbout", urlPatterns = {"/editAbout"})
-public class EditAbout extends HttpServlet {
+@WebServlet(name = "VerifyEmail", urlPatterns = {"/verify"})
+public class VerifyEmail extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -36,15 +34,15 @@ public class EditAbout extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
+        try ( PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet EditAbout</title>");
+            out.println("<title>Servlet VerifyEmail</title>");
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet EditAbout at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet VerifyEmail at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -62,25 +60,7 @@ public class EditAbout extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        HttpSession session = request.getSession(false);
-        if (session == null || session.getAttribute("user") == null) {
-            response.sendRedirect("user?action=login");
-            return;
-        }
-
-        model.User user = (model.User) session.getAttribute("user");
-        if (!user.getIsStoreStaff().equalsIgnoreCase("true")) {
-            response.sendRedirect("home");
-            return;
-        }
-        String aboutId = request.getParameter("id");
-        aboutDAO dao = new aboutDAO();
-        About about = dao.getAboutById(aboutId);
-        request.setAttribute("aboutId", about.getAboutId());
-        request.setAttribute("title", about.getTitle());
-        request.setAttribute("img", about.getImg());
-        request.setAttribute("content", about.getContent());
-        request.getRequestDispatcher("editAbout.jsp").forward(request, response);
+        processRequest(request, response);
     }
 
     /**
@@ -94,20 +74,23 @@ public class EditAbout extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        HttpSession session = request.getSession(false);
-        if (session == null || session.getAttribute("user") == null) {
-            response.sendRedirect("user?action=login");
-            return;
+        userDAO dao = new userDAO();
+        HttpSession session = request.getSession();
+        UserC userc = (UserC) session.getAttribute("userc");
+        String name = (String) session.getAttribute("name");
+        String pass = (String) session.getAttribute("pass");
+        String email = (String) session.getAttribute("email");
+        String authcode = request.getParameter("authcode");
+        if (authcode.equals(userc.getCode())) {
+            session.setAttribute("signupMessage", "Đăng ký thành công!");
+            dao.signup(name, email, pass);
+            response.sendRedirect("login.jsp");
+        } else {
+            String mess = "Vui lòng nhập mã cho email này:" + email;
+            session.setAttribute("msg2", mess);
+            response.sendRedirect("verify.jsp");
         }
-        model.User user = (model.User) session.getAttribute("user");
 
-        aboutDAO dao = new aboutDAO();
-        int aboutId = Integer.parseInt(request.getParameter("aboutId"));
-        String title = request.getParameter("title");
-        String img = request.getParameter("img");
-        String content = request.getParameter("content");
-        dao.updateAbout(title,content,img,aboutId);
-        response.sendRedirect("aboutmanager");
     }
 
     /**

@@ -2,27 +2,24 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
-package admin;
+package controller;
 
-import dal.aboutDAO;
-import model.About;
+import dal.userDAO;
+import java.io.IOException;
+import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
-import jakarta.servlet.http.Part;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.PrintWriter;
 
 /**
  *
- * @author ThangNPHE151263
+ * @author Admin
  */
-@WebServlet(name = "EditAbout", urlPatterns = {"/editAbout"})
-public class EditAbout extends HttpServlet {
+@WebServlet(name = "ResetPass", urlPatterns = {"/resetPass"})
+public class ResetPass extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -41,10 +38,10 @@ public class EditAbout extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet EditAbout</title>");
+            out.println("<title>Servlet ResetPass</title>");
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet EditAbout at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet ResetPass at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -62,25 +59,7 @@ public class EditAbout extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        HttpSession session = request.getSession(false);
-        if (session == null || session.getAttribute("user") == null) {
-            response.sendRedirect("user?action=login");
-            return;
-        }
-
-        model.User user = (model.User) session.getAttribute("user");
-        if (!user.getIsStoreStaff().equalsIgnoreCase("true")) {
-            response.sendRedirect("home");
-            return;
-        }
-        String aboutId = request.getParameter("id");
-        aboutDAO dao = new aboutDAO();
-        About about = dao.getAboutById(aboutId);
-        request.setAttribute("aboutId", about.getAboutId());
-        request.setAttribute("title", about.getTitle());
-        request.setAttribute("img", about.getImg());
-        request.setAttribute("content", about.getContent());
-        request.getRequestDispatcher("editAbout.jsp").forward(request, response);
+        processRequest(request, response);
     }
 
     /**
@@ -94,20 +73,40 @@ public class EditAbout extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        HttpSession session = request.getSession(false);
-        if (session == null || session.getAttribute("user") == null) {
-            response.sendRedirect("user?action=login");
-            return;
-        }
-        model.User user = (model.User) session.getAttribute("user");
+        String email = (String) request.getSession().getAttribute("email");
+        String code = (String) request.getSession().getAttribute("code");
+        String enteredCode = request.getParameter("code");
+        String newPass = request.getParameter("Pass");
+        String rePass = request.getParameter("Repass");
 
-        aboutDAO dao = new aboutDAO();
-        int aboutId = Integer.parseInt(request.getParameter("aboutId"));
-        String title = request.getParameter("title");
-        String img = request.getParameter("img");
-        String content = request.getParameter("content");
-        dao.updateAbout(title,content,img,aboutId);
-        response.sendRedirect("aboutmanager");
+// Định nghĩa biểu thức chính quy cho mật khẩu
+        String passwordRegex = "^(?=.*[A-Z])(?=.*\\d)[A-Za-z\\d]{6,}$";
+
+        HttpSession session = request.getSession();
+        userDAO dao = new userDAO();
+
+        if (code.equals(enteredCode)) {
+            if (newPass.equals(rePass)) {
+                // Kiểm tra mật khẩu mới theo biểu thức chính quy
+                if (!newPass.matches(passwordRegex)) {
+                    session.setAttribute("msg", "Mật khẩu phải có ít nhất 6 ký tự, bao gồm ít nhất một chữ cái viết hoa và một chữ số");
+                    request.getRequestDispatcher("resetPassword.jsp").forward(request, response);
+                    return;
+                }
+
+                // Thay đổi mật khẩu
+                dao.updatePasswordbyEmail(email, newPass);
+                // Nếu cập nhật thành công
+                session.setAttribute("signupMessage", "Mật khẩu đã được thay đổi thành công!");
+                response.sendRedirect("login.jsp");
+            } else {
+                session.setAttribute("msg", "Mật khẩu nhập lại không khớp!");
+                response.sendRedirect("resetPassword.jsp");
+            }
+        } else {
+            session.setAttribute("msg", "Mã xác nhận không đúng!");
+            response.sendRedirect("resetPassword.jsp");
+        }
     }
 
     /**

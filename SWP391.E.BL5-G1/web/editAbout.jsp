@@ -81,7 +81,7 @@
             <textarea id="content" name="content" rows="4" required>${content}</textarea>
             
             <input type="submit" value="Cập Nhật">
-            <input type="button" value="Hủy" onclick="window.location.href='aboutManager';">
+            <input type="button" value="Hủy" onclick="window.location.href='aboutmanager';">
         </form>
     </div>
 

@@ -17,6 +17,7 @@ public class Coupon {
     private int usageLimit;
     private int couponTypeId;
     private String code;
+    private String couponDescription;
 
     public Coupon(int couponId, Date startDate, Date endDate, int usageLimit, int couponTypeId, String code) {
         this.couponId = couponId;
@@ -26,6 +27,17 @@ public class Coupon {
         this.couponTypeId = couponTypeId;
         this.code = code;
     }
+
+    public Coupon(int couponId, Date startDate, Date endDate, int usageLimit, int couponTypeId, String code, String couponDescription) {
+        this.couponId = couponId;
+        this.startDate = startDate;
+        this.endDate = endDate;
+        this.usageLimit = usageLimit;
+        this.couponTypeId = couponTypeId;
+        this.code = code;
+        this.couponDescription = couponDescription;
+    }
+
 
     public int getCouponId() {
         return couponId;
@@ -73,5 +85,13 @@ public class Coupon {
 
     public void setCode(String code) {
         this.code = code;
+    }
+
+    public String getCouponDescription() {
+        return couponDescription;
+    }
+
+    public void setCouponDescription(String couponDescription) {
+        this.couponDescription = couponDescription;
     }
 }

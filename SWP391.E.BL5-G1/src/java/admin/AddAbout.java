@@ -67,7 +67,7 @@ public class AddAbout extends HttpServlet {
         }
 
         model.User user = (model.User) session.getAttribute("user");
-        if (!user.getIsStoreStaff().equals("1")) {
+        if (!user.getIsStoreStaff().equalsIgnoreCase("true")) {
             response.sendRedirect("home");
             return;
         }
@@ -85,12 +85,18 @@ public class AddAbout extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        HttpSession session = request.getSession(false);
+        if (session == null || session.getAttribute("user") == null) {
+            response.sendRedirect("user?action=login");
+            return;
+        }
+        model.User user = (model.User) session.getAttribute("user");
         aboutDAO dao = new aboutDAO();
         String title = request.getParameter("title");
         String img = request.getParameter("img");
         String content = request.getParameter("content");
-        dao.addAbout(title,img,content);
-        response.sendRedirect("aboutManager");
+        dao.addAbout(title,img,content,user.getUser_id());
+        response.sendRedirect("aboutmanager");
     }
 
     /**

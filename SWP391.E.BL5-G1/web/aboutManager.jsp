@@ -26,6 +26,7 @@
             <thead>
                 <tr>
                     <th>ID</th>
+                    <th>Tác giả</th>
                     <th>Tiêu Đề</th>
                     <th>Ảnh</th>
                     <th>Nội Dung</th>
@@ -36,6 +37,7 @@
                 <c:forEach var="item" items="${listAbout}">
                     <tr>
                         <td id="id">${item.aboutId}</td>
+                        <td>${item.userName}</td>
                         <td>${item.title}</td>
                         <td><img src="${item.img}" alt="${item.title}" style="width:100px;"/></td>
                         <td>${item.content}</td>

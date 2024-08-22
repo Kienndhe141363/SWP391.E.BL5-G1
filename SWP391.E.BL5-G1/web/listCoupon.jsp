@@ -95,7 +95,7 @@
     </header>
 
     <div class="container">
-        <a href="couponManager?action=generate" class="btn btn-add">Tạo Mới</a>
+        <a href="couponmanager?action=generate" class="btn btn-add">Tạo Mới</a>
         <table>
             <thead>
                 <tr>
@@ -116,9 +116,9 @@
                         <td>${coupon.startDate}</td>
                         <td>${coupon.endDate}</td>
                         <td>${coupon.usageLimit}</td>
-                        <td>${coupon.couponTypeId}</td>
+                        <td>${coupon.couponDescription}</td>
                         <td>
-                            <a href="couponManager?action=delete&couponId=${coupon.couponId}" class="btn btn-delete" onclick="return confirm('Bạn có chắc chắn muốn xóa không?');">Xóa</a>
+                            <a href="couponmanager?action=delete&couponId=${coupon.couponId}" class="btn btn-delete" onclick="return confirm('Bạn có chắc chắn muốn xóa không?');">Xóa</a>
                         </td>
                     </tr>
                 </c:forEach>
