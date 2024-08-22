@@ -108,7 +108,7 @@ public class aboutDAO extends DBContext {
     
     public static void main(String[] args) {
         aboutDAO d = new aboutDAO();
-        d.updateAbout("Mô Hình Kinh Doanhh", 
+        d.updateAbout("Mô Hình Kinh Doanhhhh", 
                 "Chúng tôi hoạt động theo mô hình cửa hàng thời trang trực tuyến, cung cấp các sản phẩm quần áo và phụ kiện chất lượng cao. Mô hình kinh doanh của chúng tôi tập trung vào việc kết nối trực tiếp với khách hàng qua nền tảng trực tuyến, giúp họ dễ dàng lựa chọn và mua sắm sản phẩm yêu thích từ mọi nơi.Chúng tôi cam kết mang đến trải nghiệm mua sắm dễ dàng và tiện lợi với dịch vụ khách hàng tận tâm và chính sách đổi trả linh hoạt.", 
                 "https://c0.wallpaperflare.com/preview/506/226/547/store-shop-interor-retail-thumbnail.jpg", 
                 1);
