@@ -309,6 +309,8 @@
                 </div>
             </div>
         </section>
+        <div class="elfsight-app-94027198-7458-4351-8ca9-9bf86706a713" data-elfsight-app-lazy></div>
+
 
 
 
@@ -328,6 +330,7 @@
     <!-- Main JS -->
     <script src="assets/js/main.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://static.elfsight.com/platform/platform.js" data-use-service-core defer></script>
     <script>
         function showNotification(message, isSuccess) {
             Swal.fire({

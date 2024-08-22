@@ -245,6 +245,8 @@
                     </nav>
                 </div>
             </div>
+                        <div class="elfsight-app-94027198-7458-4351-8ca9-9bf86706a713" data-elfsight-app-lazy></div>
+
         </div>
 
         <%--<jsp:include page="layout/footer.jsp"/>--%>
@@ -253,5 +255,7 @@
 
         <!-- Main JS -->
         <script src="assets/js/main.js"></script>
+        <script src="https://static.elfsight.com/platform/platform.js" data-use-service-core defer></script>
+
     </body>
 </html>

@@ -797,6 +797,8 @@
             </c:forEach>
         </div>
     </c:if>
+                                    <div class="elfsight-app-94027198-7458-4351-8ca9-9bf86706a713" data-elfsight-app-lazy></div>
+
 
 
 
@@ -845,6 +847,8 @@
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
     <!-- Main JS -->
     <script src="assets/js/main.js"></script>
+    <script src="https://static.elfsight.com/platform/platform.js" data-use-service-core defer></script>
+
     <script>
                                             jQuery(document).ready(function () {
                                                 // Event delegation for delete buttons

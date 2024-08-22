@@ -84,6 +84,7 @@
                         </div>
                     </div>
                 </form> 
+                <div class="elfsight-app-94027198-7458-4351-8ca9-9bf86706a713" data-elfsight-app-lazy></div>
             </div>     
         </div>
         <!-- shopping cart area end -->
@@ -100,7 +101,7 @@
         <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAdWLY_Y6FL7QGW5vcO3zajUEsrKfQPNzI"></script>
         <script  src="https://www.google.com/jsapi"></script>
         <script src="assets/js/map.js"></script>
-
+        <script src="https://static.elfsight.com/platform/platform.js" data-use-service-core defer></script>
 
         <!-- Plugins JS -->
         <script src="assets/js/plugins.js"></script>
