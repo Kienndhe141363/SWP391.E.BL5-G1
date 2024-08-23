@@ -25,34 +25,34 @@ public class couponDAO extends DBContext {
     ResultSet rs = null;
 
     public List<Coupon> getAllCoupons() throws Exception {
-    List<Coupon> list = new ArrayList<>();
-    String sql = "SELECT c.CouponId, c.StartDate, c.EndDate, c.UsageLimit, c.CouponTypeId, c.Code, ct.CouponDescription " +
-                 "FROM Coupon c " +
-                 "JOIN CouponType ct ON c.CouponTypeId = ct.CouponTypeId";
-    try {
-        conn = getConnection();
-        ps = conn.prepareStatement(sql);
-        rs = ps.executeQuery();
-        while (rs.next()) {
-            Coupon coupon = new Coupon(
-                    rs.getInt("CouponId"),
-                    rs.getDate("StartDate"),
-                    rs.getDate("EndDate"),
-                    rs.getInt("UsageLimit"),
-                    rs.getInt("CouponTypeId"),
-                    rs.getString("Code"),
-                    rs.getString("CouponDescription")
-            );
-            list.add(coupon);
+        List<Coupon> list = new ArrayList<>();
+        String sql = "SELECT c.CouponId, c.StartDate, c.EndDate, c.UsageLimit, c.CouponTypeId, c.Code,c.user_id, ct.CouponDescription "
+                + "FROM Coupon c "
+                + "JOIN CouponType ct ON c.CouponTypeId = ct.CouponTypeId";
+        try {
+            conn = getConnection();
+            ps = conn.prepareStatement(sql);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                Coupon coupon = new Coupon(
+                        rs.getInt("CouponId"),
+                        rs.getDate("StartDate"),
+                        rs.getDate("EndDate"),
+                        rs.getInt("UsageLimit"),
+                        rs.getInt("CouponTypeId"),
+                        rs.getString("Code"),
+                        rs.getInt("user_id"),
+                        rs.getString("CouponDescription")
+                );
+                list.add(coupon);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            closeResources();
         }
-    } catch (SQLException e) {
-        e.printStackTrace();
-    } finally {
-        closeResources();
+        return list;
     }
-    return list;
-}
-
 
     public void deleteCoupon(int couponId) throws Exception {
         String sql = "DELETE FROM Coupon WHERE CouponId = ?";
@@ -69,7 +69,7 @@ public class couponDAO extends DBContext {
     }
 
     public void addCoupon(Coupon coupon) throws Exception {
-        String sql = "INSERT INTO Coupon (StartDate, EndDate, UsageLimit, CouponTypeId, Code) VALUES (?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO Coupon (StartDate, EndDate, UsageLimit, CouponTypeId, Code, user_id) VALUES (?, ?, ?, ?, ?, ?)";
         try {
             conn = getConnection();
             ps = conn.prepareStatement(sql);
@@ -78,6 +78,7 @@ public class couponDAO extends DBContext {
             ps.setInt(3, coupon.getUsageLimit());
             ps.setInt(4, coupon.getCouponTypeId());
             ps.setString(5, coupon.getCode());
+            ps.setInt(6, coupon.getUserid());
             ps.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -85,13 +86,13 @@ public class couponDAO extends DBContext {
             closeResources();
         }
     }
-    
+
     public Coupon getCouponByCode(String code) throws Exception {
         Coupon coupon = null;
-        String sql = "SELECT c.CouponId, c.StartDate, c.EndDate, c.UsageLimit, c.CouponTypeId, c.Code, ct.CouponDescription, ct.DiscountAmount " +
-                     "FROM Coupon c " +
-                     "JOIN CouponType ct ON c.CouponTypeId = ct.CouponTypeId " +
-                     "WHERE c.Code = ?";
+        String sql = "SELECT c.CouponId, c.StartDate, c.EndDate, c.UsageLimit, c.CouponTypeId, c.Code,c.user_id, ct.CouponDescription, ct.DiscountAmount "
+                + "FROM Coupon c "
+                + "JOIN CouponType ct ON c.CouponTypeId = ct.CouponTypeId "
+                + "WHERE c.Code = ?";
         try {
             conn = getConnection();
             ps = conn.prepareStatement(sql);
@@ -99,13 +100,14 @@ public class couponDAO extends DBContext {
             rs = ps.executeQuery();
             if (rs.next()) {
                 coupon = new Coupon(
-                    rs.getInt("CouponId"),
-                    rs.getDate("StartDate"),
-                    rs.getDate("EndDate"),
-                    rs.getInt("UsageLimit"),
-                    rs.getInt("CouponTypeId"),
-                    rs.getString("Code"),
-                    rs.getString("CouponDescription")
+                        rs.getInt("CouponId"),
+                        rs.getDate("StartDate"),
+                        rs.getDate("EndDate"),
+                        rs.getInt("UsageLimit"),
+                        rs.getInt("CouponTypeId"),
+                        rs.getString("Code"),
+                        rs.getInt("user_id"),
+                        rs.getString("CouponDescription")
                 );
                 coupon.setCouponDescription(rs.getString("CouponDescription"));
                 coupon.setDiscountAmount(rs.getDouble("DiscountAmount"));
