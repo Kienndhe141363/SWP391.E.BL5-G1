@@ -87,12 +87,20 @@
                                 <c:if test="${isUpdate != null}">
                                     <input type="hidden" name="blog_id" value="${blog.blog_id}">
                                 </c:if>
-                                <div class="form-group col-md-12">
-                                    <label class="control-label">Ảnh bìa blog</label>
-                                    <div id="myfileupload">
-                                        <input type="file" id="uploadfiletest" name="images" onchange="readURL(this);" />
+                                    <div class="form-group col-md-12">
+                                        <label class="control-label">Ảnh blog</label>
+                                        <div id="myfileupload">
+                                            <input type="file" id="uploadfile" name="images" onchange="readURL(this);" />
+                                        </div>
+                                        <div id="thumbbox">
+                                            <img width="300" alt="Thumb image" id="thumbimage" style="display: none" />
+                                            <a class="removeimg" href="javascript:"></a>
+                                        </div>
+                                        <div id="boxchoice">
+                                            <a href="javascript:" class="Choicefile"><i class="fas fa-cloud-upload-alt"></i> Chọn ảnh</a>
+                                            <p style="clear:both"></p>
+                                        </div>
                                     </div>
-                                </div>
                                 <div class="form-group col-md-12">
                                     <label class="control-label">Tiêu đề</label>
                                     <input class="form-control" name="title" type="text" placeholder="" value="${blog.title}" required maxlength="255">
@@ -150,6 +158,7 @@
             $(document).ready(function () {
                 $(".Choicefile").bind('click', function () {
                     $("#uploadfile").click();
+
                 });
                 $(".removeimg").click(function () {
                     $("#thumbimage").attr('src', '').hide();
