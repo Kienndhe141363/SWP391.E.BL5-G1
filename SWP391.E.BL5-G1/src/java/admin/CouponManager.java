@@ -127,6 +127,12 @@ public class CouponManager extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        HttpSession session = request.getSession(false);
+        if (session == null || session.getAttribute("user") == null) {
+            response.sendRedirect("user?action=login");
+            return;
+        } 
+        model.User user = (model.User) session.getAttribute("user");
         String action = request.getParameter("action");
 
         if ("create".equals(action)) {
@@ -140,7 +146,7 @@ public class CouponManager extends HttpServlet {
 
             if (startDate != null && endDate != null) {
                 String code = generateCouponCode();
-                Coupon coupon = new Coupon(0, startDate, endDate, usageLimit, couponTypeId, code);
+                Coupon coupon = new Coupon(0, startDate, endDate, usageLimit, couponTypeId, code, user.getUser_id());
 
                 try {
                     couponDAO.addCoupon(coupon);

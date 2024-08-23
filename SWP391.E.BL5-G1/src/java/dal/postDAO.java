@@ -1,0 +1,132 @@
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+ */
+package dal;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+import model.Post;
+
+/**
+ *
+ * @author ThangNPHE151263
+ */
+
+public class postDAO extends DBContext {
+
+    // Method to get all posts
+    public List<Post> getAllPosts() throws Exception {
+        List<Post> posts = new ArrayList<>();
+        String sql = "SELECT p.id AS postId, p.title, p.content, p.created_at AS createAt, p.updated_at AS updateAt, p.posttype_id AS postTypeId, p.user_id AS userid "
+                   + "FROM [SU24_BL5_SWP391_G1].[dbo].[post] p";
+
+        try (Connection conn = getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql);
+             ResultSet rs = ps.executeQuery()) {
+
+            while (rs.next()) {
+                Post post = new Post(
+                    rs.getInt("postId"),
+                    rs.getString("title"),
+                    rs.getString("content"),
+                    rs.getInt("postTypeId"),
+                    rs.getInt("userid"),
+                    rs.getDate("createAt"),
+                    rs.getDate("updateAt")
+                );
+                posts.add(post);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return posts;
+    }
+
+    // Method to get a post by ID
+    public Post getPostById(int postId) throws Exception {
+        Post post = null;
+        String sql = "SELECT p.id AS postId, p.title, p.content, p.created_at AS createAt, p.updated_at AS updateAt, p.posttype_id AS postTypeId, p.user_id AS userid "
+                   + "FROM [SU24_BL5_SWP391_G1].[dbo].[post] p "
+                   + "WHERE p.id = ?";
+
+        try (Connection conn = getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+
+            ps.setInt(1, postId);
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) {
+                    post = new Post(
+                        rs.getInt("postId"),
+                        rs.getString("title"),
+                        rs.getString("content"),
+                        rs.getInt("postTypeId"),
+                        rs.getInt("userid"),
+                        rs.getDate("createAt"),
+                        rs.getDate("updateAt")
+                    );
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return post;
+    }
+
+    // Method to add a new post
+    public void addPost(Post post) throws Exception {
+        String sql = "INSERT INTO [SU24_BL5_SWP391_G1].[dbo].[post] (title, content, created_at, updated_at, user_id, posttype_id) VALUES (?, ?, ?, ?, ?, ?)";
+
+        try (Connection conn = getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+
+            ps.setString(1, post.getTitle());
+            ps.setString(2, post.getContent());
+            ps.setDate(3, new java.sql.Date(post.getCreateAt().getTime()));
+            ps.setDate(4, new java.sql.Date(post.getUpdateAt().getTime()));
+            ps.setInt(5, post.getUserid());
+            ps.setInt(6, post.getPostTypeId());
+
+            ps.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    // Method to update a post
+    public void updatePost(Post post) throws Exception {
+        String sql = "UPDATE [SU24_BL5_SWP391_G1].[dbo].[post] SET title = ?, content = ?, updated_at = ?, posttype_id = ? WHERE id = ?";
+
+        try (Connection conn = getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+
+            ps.setString(1, post.getTitle());
+            ps.setString(2, post.getContent());
+            ps.setDate(3, new java.sql.Date(post.getUpdateAt().getTime()));
+            ps.setInt(4, post.getPostTypeId());
+            ps.setInt(5, post.getPostId());
+
+            ps.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    // Method to delete a post by ID
+    public void deletePost(int postId) throws Exception {
+        String sql = "DELETE FROM [SU24_BL5_SWP391_G1].[dbo].[post] WHERE id = ?";
+
+        try (Connection conn = getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+
+            ps.setInt(1, postId);
+            ps.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+}

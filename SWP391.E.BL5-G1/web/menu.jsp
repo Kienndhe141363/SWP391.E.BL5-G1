@@ -79,6 +79,9 @@
                 <li class="menu-item-has-children">
                     <a href="contact">Liên hệ</a> 
                 </li>
+                <li class="menu-item-has-children">
+                    <a href="post">Bài viết</a> 
+                </li>
             </ul>
         </div>
         <div class="offcanvas_footer">
