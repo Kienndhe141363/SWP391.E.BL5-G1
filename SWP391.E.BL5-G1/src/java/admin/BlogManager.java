@@ -141,10 +141,7 @@ public class BlogManager extends HttpServlet {
                     String title = request.getParameter("title");
                     String summary = request.getParameter("summary");
                     String content = request.getParameter("content");
-                   String images =  "capmanhinhCapture.PNG";
-                    
-                  
-
+                    String images = "images/" + request.getParameter("images");
                     //Lấy ảnh
 //                    Collection<Part> parts = request.getParts();
 //                    Optional<Part> imageObject = parts.stream().filter(i -> i.getName().equalsIgnoreCase("images")).findFirst();
@@ -155,7 +152,7 @@ public class BlogManager extends HttpServlet {
 
                     new blogDAO().insertBlog(new Blog(0, title, summary, content, new Date(), null, user, images));
                     response.sendRedirect("blogmanager");
-                 return;
+                    return;
                 }
                 case "update" -> {
                     int blog_id = Integer.parseInt(request.getParameter("blog_id"));
