@@ -107,7 +107,7 @@
                                     <c:forEach items="${blogs}" var="blog" varStatus="loop">
                                         <tr>
                                             <td>${loop.index + 1}</td>
-                                            <td><img src="${pageContext.request.contextPath}/admin/images/${blog.images}" width="60px" height="40px"/></td>
+                                            <td><img src="${blog.images}" width="60px" height="40px"/></td>
                                             <td>${blog.title}</td>
                                             <td>${blog.summary}</td>
                                             <td>${blog.created_at}</td>

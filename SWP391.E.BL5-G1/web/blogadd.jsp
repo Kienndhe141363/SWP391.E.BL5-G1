@@ -5,6 +5,7 @@
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -18,15 +19,13 @@
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css">
         <!-- or -->
         <link rel="stylesheet" href="https://unpkg.com/boxicons@latest/css/boxicons.min.css">
-        <!-- Font-icon css-->
-        <link rel="stylesheet" type="text/css"
-              href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
         <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js"></script>
         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.css">
-        <script src="https://cdn.ckeditor.com/4.22.1/standard/ckeditor.js"></script>
-        <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
-        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+        <link rel="stylesheet" type="text/css"
+              href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+        <script src="http://code.jquery.com/jquery.min.js" type="text/javascript"></script>
+        <script src="https://cdn.ckeditor.com/4.16.2/standard/ckeditor.js"></script>
     </head>
     <body onload="time()" class="app sidebar-mini rtl">
         <!-- Navbar-->
@@ -83,7 +82,7 @@
                     <div class="tile">
                         <h3 class="tile-title">${isUpdate == null ? "Tạo mới blog" : "Chỉnh sửa blog"}</h3>
                         <div class="tile-body">
-                            <form class="row" action="blogmanager" method="POST" enctype="multipart/form-data">
+                            <form class="row" action="blogmanager" method="POST">
                                 <input type="hidden" name="action" value="${isUpdate == null ? "insertblog" : "updateblog"}">
                                 <c:if test="${isUpdate != null}">
                                     <input type="hidden" name="blog_id" value="${blog.blog_id}">
@@ -91,15 +90,7 @@
                                 <div class="form-group col-md-12">
                                     <label class="control-label">Ảnh bìa blog</label>
                                     <div id="myfileupload">
-                                        <input type="file" id="uploadfile" name="images" onchange="readURL(this);" />
-                                    </div>
-                                    <div id="thumbbox">
-                                        <img height="300" alt="Thumb image" id="thumbimage" style="display: none" />
-                                        <a class="removeimg" href="javascript:"></a>
-                                    </div>
-                                    <div id="boxchoice">
-                                        <a href="javascript:" class="Choicefile"><i class="fas fa-cloud-upload-alt"></i>Chọn ảnh</a>
-                                        <p style="clear:both"></p>
+                                        <input type="file" id="uploadfiletest" name="images" onchange="readURL(this);" />
                                     </div>
                                 </div>
                                 <div class="form-group col-md-12">
