@@ -44,7 +44,7 @@
         </header>
         <!-- Sidebar menu-->
         <div class="app-sidebar__overlay" data-toggle="sidebar"></div>
-         <aside class="app-sidebar">
+        <aside class="app-sidebar">
             <div class="app-sidebar__user"><img class="app-sidebar__user-avatar" src="admin/images/user.png" width="50px"
                                                 alt="User Image">
                 <div>
@@ -66,6 +66,8 @@
                     <li><a class="app-menu__item" href="aboutmanager"><i class='app-menu__icon bx bx-receipt'></i><span class="app-menu__label">Quản lý trang giới thiệu</span></a></li>
                     <li><a class="app-menu__item" href="commentmanager"><i class='app-menu__icon bx bx-receipt'></i><span class="app-menu__label">Quản lý bình luận</span></a></li>
                     <li><a class="app-menu__item" href="couponmanager"><i class='app-menu__icon bx bx-receipt'></i><span class="app-menu__label">Quản lý coupon</span></a></li>
+                    <li><a class="app-menu__item" href="blogmanager"><i class='app-menu__icon bx bx-task'></i><span class="app-menu__label">Quản lý blog</span></a></li>
+
                 </c:if>
             </ul>
         </aside>
@@ -241,33 +243,33 @@
                 google.charts.setOnLoadCallback(drawMonthlyTotalChart);
     </script>
 
-<!--    <script type="text/javascript">
-        function drawLineChart() {
-            var data = new google.visualization.DataTable();
-            data.addColumn('date', 'Date');
-            data.addColumn('number', 'Paid');
-            data.addColumn('number', 'Unpaid');
+    <!--    <script type="text/javascript">
+            function drawLineChart() {
+                var data = new google.visualization.DataTable();
+                data.addColumn('date', 'Date');
+                data.addColumn('number', 'Paid');
+                data.addColumn('number', 'Unpaid');
+    
+                var rows = [];
+    <c:if test="${not empty dateList}">
+        <c:forEach var="i" begin="0" end="${dateList.size() - 1}">
+        rows.push([new Date('${dateList[i]}'), ${paidList[i] != null ? paidList[i] : 0}, ${unpaidList[i] != null ? unpaidList[i] : 0}]);
+        </c:forEach>
+    </c:if>
 
-            var rows = [];
-        <c:if test="${not empty dateList}">
-            <c:forEach var="i" begin="0" end="${dateList.size() - 1}">
-            rows.push([new Date('${dateList[i]}'), ${paidList[i] != null ? paidList[i] : 0}, ${unpaidList[i] != null ? unpaidList[i] : 0}]);
-            </c:forEach>
-        </c:if>
+        data.addRows(rows);
 
-            data.addRows(rows);
+        var options = {
+            title: 'Paid vs Unpaid Amount by Date',
+            curveType: 'function',
+            legend: {position: 'bottom'}
+        };
 
-            var options = {
-                title: 'Paid vs Unpaid Amount by Date',
-                curveType: 'function',
-                legend: {position: 'bottom'}
-            };
+        var chart = new google.visualization.LineChart(document.getElementById('curve_chart'));
+        chart.draw(data, options);
 
-            var chart = new google.visualization.LineChart(document.getElementById('curve_chart'));
-            chart.draw(data, options);
-
-        }
-    </script>-->
+    }
+</script>-->
     <!--       <script type="text/javascript">
             // Function to update statistics based on checkbox selection
             function updateStatistics() {
