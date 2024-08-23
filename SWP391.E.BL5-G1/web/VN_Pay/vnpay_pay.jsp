@@ -5,6 +5,7 @@
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
+        <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
         <meta name="description" content="">
         <meta name="author" content="">
         <title>Tạo mới đơn hàng</title>
@@ -17,6 +18,21 @@
         <style>
             body {
                 background-color: #f8f9fa;
+            }
+            .card {
+                transition: all 0.3s ease-in-out;
+            }
+            .card:hover {
+                transform: translateY(-5px);
+                box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            }
+            .form-check-input:checked {
+                background-color: #0d6efd;
+                border-color: #0d6efd;
+            }
+            body {
+                background-color: #f8f9fa;
+                font-family: 'Arial', sans-serif;
             }
             .card {
                 transition: all 0.3s ease-in-out;
@@ -50,6 +66,7 @@
                 background-clip: text;
                 color: transparent;
             }
+
             .header-subtitle {
                 color: #6c757d;
             }
@@ -58,11 +75,27 @@
                 font-family: 'Arial', sans-serif;
                 min-height: 100vh;
             }
+
             .container {
                 background-color: rgba(255, 255, 255, 0.8);
                 border-radius: 20px;
                 box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
                 padding: 40px;
+            }
+
+            .header-gradient {
+                background: linear-gradient(45deg, #0d6efd, #fd7e14);
+                -webkit-background-clip: text;
+                background-clip: text;
+                color: transparent;
+            }
+
+            .header-subtitle {
+                color: #6c757d;
+            }
+
+            .card {
+                background-color: rgba(255, 255, 255, 0.9);
             }
             .header-bg {
                 background: linear-gradient(135deg, #0d6efd, #fd7e14);
@@ -71,10 +104,12 @@
                 margin-bottom: 40px;
                 box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
             }
+
             .header-title {
                 color: white;
                 text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
             }
+
             .header-subtitle {
                 color: rgba(255, 255, 255, 0.9);
             }
@@ -87,7 +122,7 @@
             <header class="text-center mb-5 header-bg">
                 <h1 class="display-4 mb-3 header-title">
                     <i class="fas fa-store me-3"></i>
-                    SWP_Group1
+                    Shop You and Me
                 </h1>
                 <h2 class="h3 header-subtitle">
                     VNPAY Payment Gateway
@@ -157,42 +192,34 @@
             </footer>
         </div>
 
+
         <link href="https://pay.vnpay.vn/lib/vnpay/vnpay.css" rel="stylesheet" />
         <script src="https://pay.vnpay.vn/lib/vnpay/vnpay.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
         <script type="text/javascript">
-            $("#frmCreateOrder").submit(function (event) {
-                event.preventDefault(); // Ngăn chặn gửi biểu mẫu mặc định
-
+            $("#frmCreateOrder").submit(function () {
                 var postData = $("#frmCreateOrder").serialize();
                 var submitUrl = $("#frmCreateOrder").attr("action");
-
                 $.ajax({
                     type: "POST",
                     url: submitUrl,
                     data: postData,
-                    dataType: 'json',
-                    success: function (response) {
-                        if (response.code === '00') {
+                    dataType: 'JSON',
+                    success: function (x) {
+                        if (x.code === '00') {
                             if (window.vnpay) {
-                                vnpay.open({width: 768, height: 600, url: response.data});
+                                vnpay.open({width: 768, height: 600, url: x.data});
                             } else {
-                                location.href = response.data;
+                                location.href = x.data;
                             }
+                            return false;
                         } else {
-                            console.error("Response Error:", response);
-                            alert(response.Message || "Lỗi không xác định.");
+                            alert(x.Message);
                         }
-                    },
-                    error: function (xhr, status, error) {
-                        console.error("AJAX Error:", status, error);
-                        alert("Đã xảy ra lỗi khi gửi yêu cầu. Vui lòng kiểm tra console để biết thêm thông tin.");
                     }
                 });
-
-                return false; // Ngăn chặn gửi biểu mẫu thêm một lần nữa
+                return false;
             });
-
-        </script>
+        </script>       
     </body>
 </html>

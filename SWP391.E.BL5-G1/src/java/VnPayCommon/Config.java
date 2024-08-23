@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package VNPay;
+package VnPayCommon;
 
 import jakarta.servlet.http.HttpServletRequest;
 import java.io.UnsupportedEncodingException;
@@ -23,9 +23,9 @@ import javax.crypto.spec.SecretKeySpec;
  * @author ThangNPHE151263
  */
 public class Config {
-
+ 
     public static String vnp_PayUrl = "https://sandbox.vnpayment.vn/paymentv2/vpcpay.html";
-    public static String vnp_ReturnUrl = "http://localhost:9999/shop/VN_Pay/vnpay_return.jsp";
+    public static String vnp_ReturnUrl = "http://localhost:8080/SWP391.E.BL5-G1/VN_Pay/vnpay_return.jsp";
     public static String vnp_TmnCode = "4QSJV088";
     public static String secretKey = "GOPK8JQ7C07EAPHXATR3TZXHTBR9SDSS";
     public static String vnp_ApiUrl = "https://sandbox.vnpayment.vn/merchant_webapi/api/transaction";
