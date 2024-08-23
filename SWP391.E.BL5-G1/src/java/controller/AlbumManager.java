@@ -75,6 +75,7 @@ public class AlbumManager extends HttpServlet {
                 albumDAO c = new albumDAO();
                 c.addAlbum(user_id, album_name, description);
                 response.sendRedirect("album");
+                return;
             } else if (action.equalsIgnoreCase("addProduct")) {
                 albumDAO c = new albumDAO();
                 String product_name = request.getParameter("product_name");
@@ -86,18 +87,18 @@ public class AlbumManager extends HttpServlet {
                 String product_id = request.getParameter("product_id");
                 c.addProductAlbum(album_id, product_id, product_name, price, product_img);
                 response.sendRedirect("album");
+                return;
             } else if (action.equalsIgnoreCase("deleteProduct")) {
                 String product_id = request.getParameter("product_id");
                 albumDAO c = new albumDAO();
                 c.ProductDelete(product_id);
-                page = "album.jsp";
                 response.sendRedirect("album");
-                RequestDispatcher dd = request.getRequestDispatcher(page);
-                dd.forward(request, response);
                 return;
             } else if (action.equalsIgnoreCase("deleteAlbum")) {
                 albumDAO c = new albumDAO();
-                c.AlbumDelete(album_id);
+                String id2 = request.getParameter("album_id");
+                int album_id2 =  Integer.parseInt(id2);
+                c.AlbumDelete(album_id2);
                 response.sendRedirect("album");
                 return;
             } else if (action.equalsIgnoreCase("filter")) {
@@ -113,7 +114,7 @@ public class AlbumManager extends HttpServlet {
                 request.setAttribute("AlbumData", album);
                 request.setAttribute("ProductData", product);
                 request.setAttribute("album_id", album_id);
-                page = "album.jsp";
+                request.getRequestDispatcher("album.jsp").forward(request, response);
             }
         } else {
             if (action == null || action.equalsIgnoreCase("filter")) {
@@ -129,10 +130,12 @@ public class AlbumManager extends HttpServlet {
                 request.setAttribute("AlbumData", album);
                 request.setAttribute("ProductData", product);
                 request.setAttribute("album_id", album_id);
-                page = "album.jsp";
+                request.getRequestDispatcher("album.jsp").forward(request, response);
 
             }
         }
+        request.getRequestDispatcher("album.jsp").forward(request, response);
+
         RequestDispatcher dd = request.getRequestDispatcher(page);
         dd.forward(request, response);
     }

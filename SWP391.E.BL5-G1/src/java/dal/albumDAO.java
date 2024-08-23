@@ -91,7 +91,7 @@ public class albumDAO extends DBContext {
     }
     
     public void addAlbum(int user_id, String album_name, String description) {
-    String sql = "INSERT INTO album_product (album_name,user_id,description) VALUES(?,?,?)";
+    String sql = "INSERT INTO user_album (album_name,user_id,description) VALUES(?,?,?)";
         try {
             conn = new DBContext().getConnection();
             ps = conn.prepareStatement(sql);

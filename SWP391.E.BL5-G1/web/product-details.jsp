@@ -659,7 +659,7 @@
                                             <div class="modal-dialog modal-dialog-centered" role="document">
                                                 <div class="modal-content">
                                                     <div class="modal-body" style="padding:0.5rem 1rem">
-                                                        <form id="contact-form" action="search?action=addProductAlbum" method="POST">
+                                                        <form id="contact-form" action="search?action=addProductAlbum&product_id=${ProductData.product_id}" method="POST">
                                                             <input type="hidden" name="action" value="addProduct">
                                                             <div class="row">   
                                                                 <div class="form-group col-md-12">
@@ -684,7 +684,7 @@
                                                                 </select>
                                                             <div style="margin-top: 10px; text-align: center">
                                                                 <button class="btn" style="background-color: green; color:white" type="submit">Gửi</button>
-                                                                <a class="btn" style="background-color: red; color:white"  data-dismiss="modal" href="#">Hủy bỏ</a>
+                                                                <a class="btn" style="background-color: red; color:white"  data-dismiss="modal">Hủy bỏ</a>
                                                             </div>
                                                         </form>
                                                     </div>

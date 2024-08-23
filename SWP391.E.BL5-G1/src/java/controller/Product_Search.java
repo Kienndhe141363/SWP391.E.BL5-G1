@@ -217,7 +217,7 @@ public class Product_Search extends HttpServlet {
             String product_img = request.getParameter("product_img");
             String product_id = request.getParameter("product_id");
             c.addProductAlbum(_id, product_id, product_name, price, product_img);
-            response.sendRedirect("product");
+                request.getRequestDispatcher("product-detail.jsp").forward(request, response);
             return;
         }
 

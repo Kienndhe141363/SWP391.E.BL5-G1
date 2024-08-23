@@ -155,41 +155,45 @@
                                                     </div>
                                                 </div>-->
                         <div class="dropdown">
-                        <button type="button" data-toggle="modal" data-target="#Modal${album_id}" class="edit-icon" title="Thêm">
-                                                    <i class="fas fa-plus"></i>Thêm Album</button>
+                            <button type="button" data-toggle="modal" data-target="#Modal${album_id}" class="btn btn-save"  title="Thêm">
+                                <i class="fas fa-plus"></i>Thêm Album</button>
                             <div class="modal fade" id="Modal${album_id}" tabindex="-1" role="dialog" aria-hidden="true">
-                                    <div class="modal-dialog modal-dialog-centered" role="document">
-                                        <div class="modal-content">
-                                            <div class="modal-body" style="padding:0.5rem 1rem">
-                                                <form id="contact-form" action="album?action=addAlbum?album_id=${album_id}" method="POST">
-                                                    <input type="hidden" name="action" value="addAlbum">
-                                                    <div class="row">   
-                                                        <div class="form-group col-md-12">
-                                                            <span class="thong-tin-thanh-toan">
-                                                                <h4>Thêm mới BST</h4>
-                                                            </span>
-                                                        </div>
+                                <div class="modal-dialog modal-dialog-centered" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-body" style="padding:0.5rem 1rem">
+                                            <form id="contact-form2" action="album" method="POST">
+                                                <input type="hidden" name="action" value="addAlbum">
+                                                <div class="row">   
+                                                    <div class="form-group col-md-12">
+                                                        <span class="thong-tin-thanh-toan">
+                                                            <h4>Thêm mới BST</h4>
+                                                        </span>
                                                     </div>
-                                                    <div class="row" style="padding: 0.5rem 1rem; width:100%">
-                                                        <input style="font-weight: bolder" name="user_id" readonly type="text" hidden="true">
-                                                        Tên Album:
-                                                        <input style="font-weight: bolder; margin-bottom: 10px" name="album_name"  type="text">
-                                                        Nội dung mô tả:
-                                                        <textarea  style="margin-top: 10px; width:100%" rows="4" cols="50" name="album_description" type="text"></textarea>
+                                                </div>
+                                                <div class="row" style="padding: 0.5rem 1rem; width:100%">
+                                                    <input style="font-weight: bolder" name="user_id" readonly type="text" hidden="true">
+                                                    Tên Album:
+                                                    <input style="font-weight: bolder; margin-bottom: 10px" name="album_name"  type="text">
+                                                    Nội dung mô tả:
+                                                    <textarea  style="margin-top: 10px; width:100%" rows="4" cols="50" name="album_description" type="text"></textarea>
 
-                                                    </div>
-                                                    <div style="margin-top: 10px; text-align: center">
-                                                        <button class="btn btn-save" style="background-color: green; color:white" type="submit">Gửi</button>
-                                                        <a class="btn btn-cancel" style="background-color: red; color:white"  data-dismiss="modal" href="#">Hủy bỏ</a>
-                                                    </div>
-                                                </form>
-                                            </div>
+                                                </div>
+                                                <div style="margin-top: 10px; text-align: center">
+                                                    <button class="btn btn-save" style="background-color: green; color:white" type="submit">Gửi</button>
+                                                    <a class="btn btn-cancel" style="background-color: red; color:white"  data-dismiss="modal">Hủy bỏ</a>
+                                                </div>
+                                            </form>
                                         </div>
                                     </div>
                                 </div>
-                        <button value="${album_id}" class="btn btn-trash btn-sm trash" style="background-color:red; color: white" >
-                            <i class="fas fa-trash"></i>
-                        </button>
+                            </div>
+<!--                        <button value="${album_id}" class="btn btn-trash btn-sm trash" style="background-color:red; color: white" >
+                        <i class="fas fa-trash"></i>
+                    </button>-->
+                            <%--<c:if test="${album_id}">--%>
+                                <a class="btn btn-cancel" href="album?action=deleteAlbum&album_id=${album_id}" style="background-color: red; color:white"  data-dismiss="modal"><i class="fas fa-trash"></i></a>
+                                <%--</c:if>--%>
+
                         </div>
                     </div>
                     <div class="row">
@@ -248,24 +252,24 @@
         <script src="assets/js/main.js"></script>
         <script src="https://static.elfsight.com/platform/platform.js" data-use-service-core defer></script>
         <script>
-         jQuery(document).ready(function () {
-        // Event delegation for delete buttons
-        jQuery(document).on('click', '.trash', function () {
-        var id = $(this).attr("value");
-        swal({
-        title: "Cảnh báo",
-                text: "Bạn có chắc chắn là muốn xóa phản hồi này?",
-                buttons: ["Hủy bỏ", "Đồng ý"],
-        }).then((willDelete) => {
-        if (willDelete) {
-        window.location = "album?action=deleteAlbum&product_id=" + id;
-        swal("Đã xóa thành công!", {
-        icon: "success",
-        });
-        }
-        });
-        });
-        });
+            jQuery(document).ready(function () {
+                // Event delegation for delete buttons
+                jQuery(document).on('click', '.aaa', function () {
+                    var id = $(this).attr("value");
+                    swal({
+                        title: "Cảnh báo",
+                        text: "Bạn có chắc chắn là muốn xóa phản hồi này?",
+                        buttons: ["Hủy bỏ", "Đồng ý"],
+                    }).then((willDelete) => {
+                        if (willDelete) {
+                            window.location = "album?action=deleteAlbum&product_id=" + id;
+                            swal("Đã xóa thành công!", {
+                                icon: "success",
+                            });
+                        }
+                    });
+                });
+            });
         </script>
     </body>
 </html>
