@@ -668,7 +668,7 @@
                                                                     </span>
                                                                 </div>
                                                             </div>
-                                                            <div class="row" style="padding: 0.5rem 1rem; width:100%">
+                                                            <div    class="row" style="padding: 0.5rem 1rem; width:100%">
                                                                 Chọn album mà bạn muốn bổ sung vào:
                                                                 
                                                             <input type="hidden" name="product_id" value="${ProductData.product_id}">

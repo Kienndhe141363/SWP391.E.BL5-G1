@@ -90,13 +90,17 @@ public class AlbumManager extends HttpServlet {
                 String product_id = request.getParameter("product_id");
                 albumDAO c = new albumDAO();
                 c.ProductDelete(product_id);
+                page = "album.jsp";
                 response.sendRedirect("album");
+                RequestDispatcher dd = request.getRequestDispatcher(page);
+                dd.forward(request, response);
+                return;
             } else if (action.equalsIgnoreCase("deleteAlbum")) {
                 albumDAO c = new albumDAO();
-
                 c.AlbumDelete(album_id);
                 response.sendRedirect("album");
-            } else if(action.equalsIgnoreCase("filter")){
+                return;
+            } else if (action.equalsIgnoreCase("filter")) {
                 albumDAO c = new albumDAO();
                 if (request.getParameter("album_id") != null) {
                     id = request.getParameter("album_id");
