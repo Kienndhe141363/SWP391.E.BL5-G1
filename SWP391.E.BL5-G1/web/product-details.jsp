@@ -353,7 +353,7 @@
 
         <!-- Main Wrapper Start -->
         <div class="off_canvars_overlay"></div>
-        <%--<jsp:include page="layout/menu.jsp"/>--%>
+        <jsp:include page="menu.jsp"/>
 
         <!--breadcrumbs area start-->
         <div class="breadcrumbs_area product_bread">
@@ -557,7 +557,7 @@
     <!--product section area end-->
 
     <!--footer area start-->
-    <%--<jsp:include page="layout/footer.jsp"/>--%>
+    <jsp:include page="footer.jsp"/>
     <!--footer area end-->
 
     <!-- Plugins JS -->
