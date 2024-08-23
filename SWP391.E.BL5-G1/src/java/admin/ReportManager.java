@@ -27,6 +27,7 @@ import model.User;
  * @author admin
  */
 @WebServlet(name = "reportManager", urlPatterns = {"/reportmanager"})
+
 public class ReportManager extends HttpServlet {
 
     /**

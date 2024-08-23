@@ -4,6 +4,7 @@
  */
 package controller;
 
+import dal.albumDAO;
 import dal.commentRatingDAO;
 import dal.productDAO;
 import java.io.IOException;
@@ -20,6 +21,7 @@ import model.Category;
 import javax.mail.*;
 import javax.mail.internet.*;
 import java.util.Properties;
+import model.Album;
 
 /**
  *
@@ -41,6 +43,7 @@ public class Product_Search extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         String action = request.getParameter("action");
+
         if (action.equalsIgnoreCase("listByCategory")) {
             String category_id = request.getParameter("category_id");
             int category_id1 = Integer.parseInt(category_id);
@@ -80,6 +83,11 @@ public class Product_Search extends HttpServlet {
             model.Product product = c.getProductByID(product_id);
             int category_id = product.getCate().getCategory_id();
             List<model.Product> productByCategory = c.getProductByCategory(category_id);
+            HttpSession session = request.getSession();
+            model.User user = (model.User) session.getAttribute("user");
+            int user_id = user.getUser_id();
+            albumDAO a = new albumDAO();
+            List<Album> album = a.getList(user_id);
             commentRatingDAO crDAO = new commentRatingDAO();
             List<model.Comment> comments = null;
             List<model.Comment> comments1 = null;
@@ -150,6 +158,8 @@ public class Product_Search extends HttpServlet {
             request.setAttribute("user_comment", user_comment);
             request.setAttribute("comment_filter", ratingCmt);
             request.setAttribute("haveCmt", haveCmt);
+            request.setAttribute("AlbumData", album);
+
             request.getRequestDispatcher("product-details.jsp").forward(request, response);
 
         } else if (action.equalsIgnoreCase("addComment")) {
@@ -175,10 +185,10 @@ public class Product_Search extends HttpServlet {
             String productId = request.getParameter("idproduct");
             String comment = request.getParameter("comment-update");
             int id = Integer.parseInt(productId);
-            if(comment !=null || !comment.isEmpty()){
-            commentRatingDAO crDAO = new commentRatingDAO();
-            crDAO.updateComment(id, comment);
-            response.sendRedirect("search?action=productdetail&product_id=" + productId); 
+            if (comment != null || !comment.isEmpty()) {
+                commentRatingDAO crDAO = new commentRatingDAO();
+                crDAO.updateComment(id, comment);
+                response.sendRedirect("search?action=productdetail&product_id=" + productId);
             } else {
                 HttpSession session = request.getSession();
                 session.setAttribute("errorMessage", "Không được để trống nội dung comment");
@@ -194,6 +204,20 @@ public class Product_Search extends HttpServlet {
             crDAO.deleteComment(id);
             response.sendRedirect("product");
             return;
+        } else if (action.equalsIgnoreCase("addProductAlbum")) {
+            HttpSession session = request.getSession();
+            model.User user = (model.User) session.getAttribute("user");
+            int user_id = user.getUser_id();
+            albumDAO c = new albumDAO();
+            String product_name = request.getParameter("product_name");
+            String product_price = request.getParameter("product_price");
+            float price = Float.parseFloat(product_price);
+            String album_ID = request.getParameter("album_id");
+            int _id = Integer.parseInt(album_ID);
+            String product_img = request.getParameter("product_img");
+            String product_id = request.getParameter("product_id");
+            c.addProductAlbum(_id, product_id, product_name, price, product_img);
+            response.sendRedirect("search?action=productdetail&product_id=" + product_id);
         }
 
         if (action.equals("sort")) {

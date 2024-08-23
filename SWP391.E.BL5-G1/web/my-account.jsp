@@ -190,6 +190,7 @@
                             <div class="dashboard_tab_button">
                                 <ul role="tablist" class="nav flex-column dashboard-list">
                                     <li><a href="#account-details" data-toggle="tab" class="nav-link">Tài khoản của tôi</a></li>
+                                    <li><a href="/album" data-toggle="tab" class="nav-link">Xem BST</a></li>
                                     <li><a href="#edit-profile" data-toggle="tab" class="nav-link">Chỉnh sửa hồ sơ</a></li>
                                     <li><a href="#password" data-toggle="tab" class="nav-link">Đổi mật khẩu</a></li>
                                     <li><a href="#orders" data-toggle="tab" class="nav-link">Đơn hàng</a></li>

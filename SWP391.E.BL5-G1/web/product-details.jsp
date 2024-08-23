@@ -23,7 +23,7 @@
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.19/dist/sweetalert2.min.css">
         <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.19/dist/sweetalert2.all.min.js"></script>
-                <!-- Font-icon css-->
+        <!-- Font-icon css-->
         <link rel="stylesheet" type="text/css"
               href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
         <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js"></script>
@@ -538,11 +538,11 @@
                 max-width: 800px;
             }
         }
-        
+
         .highlight {
             color: gold; /* Or any other style you want to apply */
         }
-        
+
         .btn .highlight{
             color: gold;
         }
@@ -638,13 +638,59 @@
                                     <div class="product-buttons">
                                         <button class="button" type="submit">Thêm vào giỏ hàng</button>
                                         <button class="button button-secondary" type="button" onclick="setActionAndSubmit('buynow')">Mua ngay</button>
+                                        
+                                       
                                     </div>
+                                    
                                 </div>
+                                    
 
 
                             </form>
+                                    <div  class="product_variant quantity" style="width: 100%">
+                                        <div class="product-buttons">
+                                            <button type="button" data-toggle="modal" data-target="#ModalAddAlbum${ProductData.product_id}" class="button" title="Thêm">Thêm vào Album</button>
+                                        
+                                        </div>
+                                    </div>
                         </div>
                     </div>
+                                            <div class="modal fade" id="ModalAddAlbum${ProductData.product_id}" tabindex="-1" role="dialog" aria-hidden="true">
+                                            <div class="modal-dialog modal-dialog-centered" role="document">
+                                                <div class="modal-content">
+                                                    <div class="modal-body" style="padding:0.5rem 1rem">
+                                                        <form id="contact-form" action="search?action=addProductAlbum" method="POST">
+                                                            <input type="hidden" name="action" value="addProduct">
+                                                            <div class="row">   
+                                                                <div class="form-group col-md-12">
+                                                                    <span class="thong-tin-thanh-toan">
+                                                                        <h4>Thêm mới BST</h4>
+                                                                    </span>
+                                                                </div>
+                                                            </div>
+                                                            <div class="row" style="padding: 0.5rem 1rem; width:100%">
+                                                                Chọn album mà bạn muốn bổ sung vào:
+                                                                
+                                                            <input type="hidden" name="product_id" value="${ProductData.product_id}">
+                                                            <input type="hidden" name="product_name" value="${ProductData.product_name}">
+                                                            <input type="hidden" name="product_price" value="${ProductData.product_price}">
+                                                            <input type="hidden" name="product_img" value="${ProductData.img}">
+
+                                                            </div>
+                                                            <select style="width: 20%" name="album_id" id="album_id">
+                                                                    <c:forEach items="${AlbumData}" var="a">
+                                                                        <option value="${a.album_id}">${a.album_name}</option>
+                                                                    </c:forEach>
+                                                                </select>
+                                                            <div style="margin-top: 10px; text-align: center">
+                                                                <button class="btn" style="background-color: green; color:white" type="submit">Gửi</button>
+                                                                <a class="btn" style="background-color: red; color:white"  data-dismiss="modal" href="#">Hủy bỏ</a>
+                                                            </div>
+                                                        </form>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div> 
                     <ul class="features-list">
                         <li>
                             <div class="icon"><img src="https://routine.vn/static/version1718856864/frontend/Magenest/routine/vi_VN/images/free.png" alt="Freeship toàn quốc từ 399k"></div>
@@ -683,116 +729,116 @@
         </div>
         <!--product details end-->
         <!-- Form for adding rating -->
-         <c:if test="${user_comment}">
-        <div class="form-container">
-            <form action="search?action=addComment&product_id=${ProductData.product_id}" method="POST">
-                <input type="hidden" name="action" value="addComment">
-                <input type="hidden" name="product_id" value="${ProductData.product_id}">
-                <input type="hidden" name="user_id" value="${user.user_id}">                
-                <input type="hidden" name="user_name" value="${user.user_name}">  
-                <h3>Đánh giá sản phẩm</h3>
-                <select name="rating" id="star-rating">
+        <c:if test="${user_comment}">
+            <div class="form-container">
+                <form action="search?action=addComment&product_id=${ProductData.product_id}" method="POST">
+                    <input type="hidden" name="action" value="addComment">
+                    <input type="hidden" name="product_id" value="${ProductData.product_id}">
+                    <input type="hidden" name="user_id" value="${user.user_id}">                
+                    <input type="hidden" name="user_name" value="${user.user_name}">  
+                    <h3>Đánh giá sản phẩm</h3>
+                    <select name="rating" id="star-rating">
 
-                    <option value="1">1&#9733;</option>
-                    <option value="2">2&#9733;&#9733;</option>
-                    <option value="3">3&#9733;&#9733;&#9733;</option>
-                    <option value="4">4&#9733;&#9733;&#9733;&#9733;</option>
-                    <option value="5">5&#9733;&#9733;&#9733;&#9733;&#9733;</option>
-                </select>
-                <textarea name="comment" rows="4" cols="50" placeholder="Nhập bình luận của bạn"></textarea>
-                <button type="submit">Gửi bình luận</button>
-            </form>
-        </div>
-    </c:if>
+                        <option value="1">1&#9733;</option>
+                        <option value="2">2&#9733;&#9733;</option>
+                        <option value="3">3&#9733;&#9733;&#9733;</option>
+                        <option value="4">4&#9733;&#9733;&#9733;&#9733;</option>
+                        <option value="5">5&#9733;&#9733;&#9733;&#9733;&#9733;</option>
+                    </select>
+                    <textarea name="comment" rows="4" cols="50" placeholder="Nhập bình luận của bạn"></textarea>
+                    <button type="submit">Gửi bình luận</button>
+                </form>
+            </div>
+        </c:if>
 
 
 
-    <c:if test="${haveCmt}">
-        <div class="product_reviews">
-            <h3>Đánh giá và Bình luận</h3>
-                        <div class="dropdown" style="width: 100%; text-align: right;">            
-                            <a class="${comment_filter == '6' ? 'highlight' : ''}" style="margin-right: 10px;" href="search?action=productdetail&product_id=${ProductData.product_id}">
-                    Tất cả (${numberOfComments})
-                </a>
-                <a class="${comment_filter == '1' ? 'highlight' : ''}" style="margin-right: 10px;" href="search?action=productdetail&product_id=${ProductData.product_id}&comment_filter=1">
-                    1&#9733; (${numberOfComments1})
-                </a>
-                <a class="${comment_filter == '2' ? 'highlight' : ''}" style="margin-right: 10px;" href="search?action=productdetail&product_id=${ProductData.product_id}&comment_filter=2">
-                    2&#9733;&#9733; (${numberOfComments2})
-                </a>
-                <a class="${comment_filter == '3' ? 'highlight' : ''}" style="margin-right: 10px;" href="search?action=productdetail&product_id=${ProductData.product_id}&comment_filter=3">
-                    3&#9733;&#9733;&#9733; (${numberOfComments3})
-                </a>
-                <a class="${comment_filter == '4' ? 'highlight' : ''}" style="margin-right: 10px;" href="search?action=productdetail&product_id=${ProductData.product_id}&comment_filter=4">
-                    4&#9733;&#9733;&#9733;&#9733; (${numberOfComments4})
-                </a>
-                <a class="${comment_filter == '5' ? 'highlight' : ''}" style="margin-right: 10px;" href="search?action=productdetail&product_id=${ProductData.product_id}&comment_filter=5">
-                    5&#9733;&#9733;&#9733;&#9733;&#9733; (${numberOfComments5})
-                </a>
-                        </div>
-            <h5>Bình luận:</h5>
-            <c:forEach items="${comments}" var="c">
-                <div class="comment" style="position: relative; display: flex">
-                    <div style="width: 90%; text-align: left">
-                        <p>Bởi: ${c.user_name}</p> 
-                        <p>Đánh giá: ${c.rating}&#9733</p>
-                        <p>Ngày: <fmt:formatDate value="${c.createdAt}" pattern="dd/MM/yyyy"/></p>
-                        <p>${c.comment}</p>
-                    </div>
-                    <c:if test="${c.user_name == user.user_name}">
-                        <div style="width:10%; text-align: right; display: flex;">
-                            <button class="btn btn-primary btn-sm edit" style="margin-right: 10px;  max-height: 34px; background-color: green" type="button" data-toggle="modal" data-target="#ModalEditComment${c.user_name}" class="edit-icon" title="Chỉnh sửa">
-                                <i class="fas fa-edit"></i></button>
-                            <button class="btn btn-primary btn-sm trash" style="max-height: 34px; background-color: red" type="button" title="xóa" value="${c.id}">
-                                <i class="fas fa-trash"></i></button>
-                        </div>
-
-                    </c:if>
+        <c:if test="${haveCmt}">
+            <div class="product_reviews">
+                <h3>Đánh giá và Bình luận</h3>
+                <div class="dropdown" style="width: 100%; text-align: right;">            
+                    <a class="${comment_filter == '6' ? 'highlight' : ''}" style="margin-right: 10px;" href="search?action=productdetail&product_id=${ProductData.product_id}">
+                        Tất cả (${numberOfComments})
+                    </a>
+                    <a class="${comment_filter == '1' ? 'highlight' : ''}" style="margin-right: 10px;" href="search?action=productdetail&product_id=${ProductData.product_id}&comment_filter=1">
+                        1&#9733; (${numberOfComments1})
+                    </a>
+                    <a class="${comment_filter == '2' ? 'highlight' : ''}" style="margin-right: 10px;" href="search?action=productdetail&product_id=${ProductData.product_id}&comment_filter=2">
+                        2&#9733;&#9733; (${numberOfComments2})
+                    </a>
+                    <a class="${comment_filter == '3' ? 'highlight' : ''}" style="margin-right: 10px;" href="search?action=productdetail&product_id=${ProductData.product_id}&comment_filter=3">
+                        3&#9733;&#9733;&#9733; (${numberOfComments3})
+                    </a>
+                    <a class="${comment_filter == '4' ? 'highlight' : ''}" style="margin-right: 10px;" href="search?action=productdetail&product_id=${ProductData.product_id}&comment_filter=4">
+                        4&#9733;&#9733;&#9733;&#9733; (${numberOfComments4})
+                    </a>
+                    <a class="${comment_filter == '5' ? 'highlight' : ''}" style="margin-right: 10px;" href="search?action=productdetail&product_id=${ProductData.product_id}&comment_filter=5">
+                        5&#9733;&#9733;&#9733;&#9733;&#9733; (${numberOfComments5})
+                    </a>
                 </div>
-                <div class="modal fade" id="ModalEditComment${c.user_name}" tabindex="-1" role="dialog" aria-hidden="true">
-                    <div class="modal-dialog modal-dialog-centered" role="document">
-                        <div class="modal-content">
-                            <div class="modal-body" style="padding:0 1rem">
-                                <form action="search?action=updatecmt&product_id=${ProductData.product_id}" method="POST">
-                                    <input type="hidden" name="action" value="updatecmt">
-                                    <div class="row">
-                                        <div class="form-group col-md-12">
-                                            <span class="thong-tin-thanh-toan">
-                                                <h5>Chỉnh sửa đánh giá</h5>
-                                            </span>
-                                        </div>
-                                    </div>
-                                    <div class="row" style="padding: 0 1rem">
-                                        <h5>Đánh giá sản phẩm <b>#${ProductData.product_id}</b></h5>
-<!--                                        <select name="rating_filter" id="star-rating">     
-                                            <option value="1">1&#9733;</option>
-                                            <option value="2">2&#9733;&#9733;</option>
-                                            <option value="3">3&#9733;&#9733;&#9733;</option>
-                                            <option value="4">4&#9733;&#9733;&#9733;&#9733;</option>
-                                            <option value="5">5&#9733;&#9733;&#9733;&#9733;&#9733;</option>
-                                        </select>-->
-                                        <input name="idproduct" value="${c.id}" hidden="true">
-                                        <textarea name="comment-update" style="margin-top: 10px" rows="4" cols="50" placeholder="Nhập bình luận của bạn"></textarea>
-                                    </div>
-                                    <div style="margin-top: 10px; text-align: right">
-                                        <button class="btn btn-save" style="background-color:green" type="submit">Lưu lại</button>
-                                        <a class="btn btn-cancel"  style="background-color:red" data-dismiss="modal" href="#">Hủy bỏ</a>
-                                    </div>
+                <h5>Bình luận:</h5>
+                <c:forEach items="${comments}" var="c">
+                    <div class="comment" style="position: relative; display: flex">
+                        <div style="width: 90%; text-align: left">
+                            <p>Bởi: ${c.user_name}</p> 
+                            <p>Đánh giá: ${c.rating}&#9733</p>
+                            <p>Ngày: <fmt:formatDate value="${c.createdAt}" pattern="dd/MM/yyyy"/></p>
+                            <p>${c.comment}</p>
+                        </div>
+                        <c:if test="${c.user_name == user.user_name}">
+                            <div style="width:10%; text-align: right; display: flex;">
+                                <button class="btn btn-primary btn-sm edit" style="margin-right: 10px;  max-height: 34px; background-color: green" type="button" data-toggle="modal" data-target="#ModalEditComment${c.user_name}" class="edit-icon" title="Chỉnh sửa">
+                                    <i class="fas fa-edit"></i></button>
+                                <button class="btn btn-primary btn-sm trash" style="max-height: 34px; background-color: red" type="button" title="xóa" value="${c.id}">
+                                    <i class="fas fa-trash"></i></button>
+                            </div>
 
-                                </form>
+                        </c:if>
+                    </div>
+                    <div class="modal fade" id="ModalEditComment${c.user_name}" tabindex="-1" role="dialog" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered" role="document">
+                            <div class="modal-content">
+                                <div class="modal-body" style="padding:0 1rem">
+                                    <form action="search?action=updatecmt&product_id=${ProductData.product_id}" method="POST">
+                                        <input type="hidden" name="action" value="updatecmt">
+                                        <div class="row">
+                                            <div class="form-group col-md-12">
+                                                <span class="thong-tin-thanh-toan">
+                                                    <h5>Chỉnh sửa đánh giá</h5>
+                                                </span>
+                                            </div>
+                                        </div>
+                                        <div class="row" style="padding: 0 1rem">
+                                            <h5>Đánh giá sản phẩm <b>#${ProductData.product_id}</b></h5>
+                                            <!--                                        <select name="rating_filter" id="star-rating">     
+                                                                                        <option value="1">1&#9733;</option>
+                                                                                        <option value="2">2&#9733;&#9733;</option>
+                                                                                        <option value="3">3&#9733;&#9733;&#9733;</option>
+                                                                                        <option value="4">4&#9733;&#9733;&#9733;&#9733;</option>
+                                                                                        <option value="5">5&#9733;&#9733;&#9733;&#9733;&#9733;</option>
+                                                                                    </select>-->
+                                            <input name="idproduct" value="${c.id}" hidden="true">
+                                            <textarea name="comment-update" style="margin-top: 10px" rows="4" cols="50" placeholder="Nhập bình luận của bạn"></textarea>
+                                        </div>
+                                        <div style="margin-top: 10px; text-align: right">
+                                            <button class="btn btn-save" style="background-color:green" type="submit">Lưu lại</button>
+                                            <a class="btn btn-cancel"  style="background-color:red" data-dismiss="modal" href="#">Hủy bỏ</a>
+                                        </div>
+
+                                    </form>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
-            </c:forEach>
-        </div>
-    </c:if>
-                                    <div class="elfsight-app-94027198-7458-4351-8ca9-9bf86706a713" data-elfsight-app-lazy></div>
+                </c:forEach>
+            </div>
+        </c:if>
+        <div class="elfsight-app-94027198-7458-4351-8ca9-9bf86706a713" data-elfsight-app-lazy></div>
 
 
 
 
-        
+
 
 
 
@@ -947,25 +993,25 @@
             <% session.removeAttribute("errorMessage"); %>
                 }
             });
-            
+
             jQuery(document).ready(function () {
-        // Event delegation for delete buttons
-        jQuery(document).on('click', '.trash', function () {
-        var id = $(this).attr("value");
-        swal({
-        title: "Cảnh báo",
-                text: "Bạn có chắc chắn là muốn xóa phản hồi này?",
-                buttons: ["Hủy bỏ", "Đồng ý"],
-        }).then((willDelete) => {
-        if (willDelete) {
-        window.location = "search?action=delete&cmt_id=" + id;
-        swal("Đã xóa thành công!", {
-        icon: "success",
-        });
-        }
-        });
-        });
-        });
+                // Event delegation for delete buttons
+                jQuery(document).on('click', '.trash', function () {
+                    var id = $(this).attr("value");
+                    swal({
+                        title: "Cảnh báo",
+                        text: "Bạn có chắc chắn là muốn xóa phản hồi này?",
+                        buttons: ["Hủy bỏ", "Đồng ý"],
+                    }).then((willDelete) => {
+                        if (willDelete) {
+                            window.location = "search?action=delete&cmt_id=" + id;
+                            swal("Đã xóa thành công!", {
+                                icon: "success",
+                            });
+                        }
+                    });
+                });
+            });
         </script>
     </body>
 </html>
