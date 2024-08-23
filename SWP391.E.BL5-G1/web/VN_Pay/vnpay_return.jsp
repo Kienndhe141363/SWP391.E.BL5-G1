@@ -132,7 +132,7 @@
                                 if ("00".equals(request.getParameter("vnp_TransactionStatus"))) {
                                     out.println("Payment success!");
                                     try {
-                                        BillRubish bill = (BillRubish) request.getSession().getAttribute("pendingBill");
+                                        CheckBill bill = (CheckBill) request.getSession().getAttribute("pendingBill");
                                         billDAO dao = new billDAO();
                                         if (bill != null) {
                                             dao.addOrder(bill.getUser(), bill.getCart(), bill.getPayment(), bill.getAddress(), Integer.parseInt(bill.getPhone()));
@@ -166,7 +166,7 @@
                     
                 </div> 
             </div>
-            <a  href="http://localhost:9999/shop/home">Cảm ơn quý khách đã mua hàng</a>
+            <a  href="http://localhost:8080/home">Cảm ơn quý khách đã mua hàng</a>
             <p>
                 &nbsp;
             </p>
