@@ -142,6 +142,7 @@ public class BlogManager extends HttpServlet {
                     String summary = request.getParameter("summary");
                     String content = request.getParameter("content");
                     String images = "images/" + request.getParameter("images");
+                    System.out.println(images +"------");
                     //Lấy ảnh
 //                    Collection<Part> parts = request.getParts();
 //                    Optional<Part> imageObject = parts.stream().filter(i -> i.getName().equalsIgnoreCase("images")).findFirst();
@@ -166,7 +167,8 @@ public class BlogManager extends HttpServlet {
                     String title = request.getParameter("title");
                     String summary = request.getParameter("summary");
                     String content = request.getParameter("content");
-                    String images = null;
+                    String images = "images/" + request.getParameter("images");
+                    System.out.println(images +"*******");
                     
                     //Lấy ảnh
 //                    Collection<Part> parts = request.getParts();
