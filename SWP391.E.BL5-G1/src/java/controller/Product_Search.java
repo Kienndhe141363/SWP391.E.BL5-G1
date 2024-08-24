@@ -84,10 +84,6 @@ public class Product_Search extends HttpServlet {
             int category_id = product.getCate().getCategory_id();
             List<model.Product> productByCategory = c.getProductByCategory(category_id);
             PrintWriter out = response.getWriter();
-            out.print(productByCategory);            
-            out.print(sizeList);            
-            out.print(colorList);
-
             HttpSession session = request.getSession();
             model.User user = (model.User) session.getAttribute("user");
             int user_id = user.getUser_id();
