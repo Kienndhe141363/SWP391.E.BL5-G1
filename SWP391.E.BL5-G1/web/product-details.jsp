@@ -644,13 +644,15 @@
                                     
 
 
-                            </form>
+                            </form> 
+                                    <c:if test="${not empty AlbumData}">
                                     <div  class="product_variant quantity" style="width: 100%">
                                         <div class="product-buttons">
                                             <button type="button" data-toggle="modal" data-target="#ModalAddAlbum${ProductData.product_id}" class="button" title="Thêm">Thêm vào Album</button>
                                         
                                         </div>
                                     </div>
+                                    </c:if>
                         </div>
                     </div>
                                             <div class="modal fade" id="ModalAddAlbum${ProductData.product_id}" tabindex="-1" role="dialog" aria-hidden="true">

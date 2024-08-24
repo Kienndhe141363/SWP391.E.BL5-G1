@@ -58,8 +58,6 @@ public class Blog extends HttpServlet {
         String action = request.getParameter("action");
         String page = "";
         HttpSession session = request.getSession();
-        model.User user = (model.User) session.getAttribute("user");
-        int user_id = user.getUser_id();
 //        String id = request.getParameter("blog_id");
 //        int blog_id = 1;
 //        if (id == null || id.isEmpty()) {
@@ -71,38 +69,7 @@ public class Blog extends HttpServlet {
         page = "blog_user.jsp";
 
         if (action != null) {
-            if (action.equalsIgnoreCase("addBlog")) {
-                String title = request.getParameter("title");
-                String blog_id = request.getParameter("blog_id");
-                String content = request.getParameter("content");
-                String summary = request.getParameter("summary");
-                Date currentDate = new Date();
-                blogDAO c = new blogDAO();
-                c.addBlog(title, summary, content,currentDate,currentDate,user_id, "images/blog" + blog_id);
-                response.sendRedirect("blog_user");
-                return;
-            } else if (action.equalsIgnoreCase("deleteBlog")) {
-                String blog_id = request.getParameter("blog_id");
-                blogDAO c = new blogDAO();
-                c.BlogDelete(blog_id);
-                response.sendRedirect("blog_user");
-                return;
-            } 
-//            else if (action.equalsIgnoreCase("filter")) {
-//                albumDAO c = new albumDAO();
-//                if (request.getParameter("album_id") != null) {
-//                    id = request.getParameter("album_id");
-//                    album_id = Integer.parseInt(id);
-//                } else {
-//                    album_id = c.getFirstAlbum(user_id);
-//                }
-//                List<Product> product = c.getProduct(album_id);
-//                List<Album> album = c.getList(user_id);
-//                request.setAttribute("AlbumData", album);
-//                request.setAttribute("ProductData", product);
-//                request.setAttribute("album_id", album_id);
-//                request.getRequestDispatcher("album.jsp").forward(request, response);
-//            }
+            
         } else {
             if (action == null) {
                 blogDAO c = new blogDAO();
