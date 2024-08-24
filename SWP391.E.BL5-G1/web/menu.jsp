@@ -80,7 +80,7 @@
                     <a href="contact">Liên hệ</a> 
                 </li>
                 <li class="menu-item-has-children">
-                    <a href="post">Bài viết</a> 
+                    <a href="blog_user">Bài viết</a> 
                 </li>
                 <li class="menu-item-has-children">
                     <a href="listPosts">Bài đăng</a>
@@ -201,7 +201,7 @@
                             <ul>
                                 <li><a href="about">Chúng tôi</a></li>
                                 <li><a href="contact">Liên hệ</a></li>
-                                <li><a href="blog">Blog</a></li>
+                                <li><a href="blog_user">Blog</a></li>
                                 <li><a href="listPosts">Bài đăng</a></li>
 
                             </ul> 
@@ -227,7 +227,7 @@
                                     <li><a href="about">Chúng tôi</a></li>
                                     <li><a href="listPosts">Bài đăng</a></li>
                                     <li><a href="contact">Liên hệ</a></li>
-                                    <li><a href="blog">Blog</a></li>
+                                    <li><a href="blog_user">Blog</a></li>
 
                                 </ul>   
                             </nav> 

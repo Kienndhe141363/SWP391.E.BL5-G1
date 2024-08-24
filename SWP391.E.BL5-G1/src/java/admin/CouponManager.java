@@ -79,10 +79,11 @@ public class CouponManager extends HttpServlet {
         }
 
         model.User user = (model.User) session.getAttribute("user");
-        if (!user.getIsStoreStaff().equalsIgnoreCase("true")) {
+        if (!user.getIsStoreStaff().equalsIgnoreCase("true")|| !user.getIsAdmin().equalsIgnoreCase("true") ) {
             response.sendRedirect("home");
             return;
         }
+        
         String action = request.getParameter("action");
         List<Coupon> coupons = null;
         List<CouponType> couponTypes = null;

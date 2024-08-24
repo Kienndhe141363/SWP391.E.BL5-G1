@@ -1,5 +1,6 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html class="no-js" lang="vi">
 
@@ -210,8 +211,9 @@
                                             </div>
                                         </div>
                                         <div class="product_content">
+                                            <fmt:formatNumber value="${top10.product_price}" minFractionDigits="0" maxFractionDigits="2" var="formattedPrice"/>
                                             <h3><a href="search?action=productdetail&product_id=${top10.product_id}">${top10.product_name}</a></h3>
-                                            <span class="current_price">${top10.product_price}đ</span>
+                                            <span class="current_price">${formattedPrice} VND</span>
                                         </div>
                                     </div>
                                 </div>
@@ -272,8 +274,9 @@
                                             </div>
                                         </div>
                                         <div class="product_content">
+                                            <fmt:formatNumber value="${td.product_price}" minFractionDigits="0" maxFractionDigits="2" var="td_product_price"/>
                                             <h3><a href="search?action=productdetail&product_id=${td.product_id}">${td.product_name}</a></h3>
-                                            <span class="current_price">${td.product_price}đ</span>
+                                            <span class="current_price">${td_product_price} VND</span>
                                         </div>
                                     </div>
                                 </div>
@@ -335,8 +338,11 @@
                                             </div>
                                         </div>
                                         <div class="product_content">
+                                            <fmt:formatNumber value="${newProducts.product_price}" minFractionDigits="0" maxFractionDigits="2" var="newProducts_product_price"/>
+                                            
+                                            
                                             <h3><a href="search?action=productdetail&product_id=${newProducts.product_id}">${newProducts.product_name}</a></h3>
-                                            <span class="current_price">${newProducts.product_price}đ</span>
+                                            <span class="current_price">${newProducts_product_price} VND</span>
                                         </div>
                                     </div>
                                 </div>

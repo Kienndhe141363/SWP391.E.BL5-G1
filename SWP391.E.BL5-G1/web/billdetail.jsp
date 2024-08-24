@@ -73,8 +73,10 @@
                                                     <td class="product-price">${d.size}</td>
                                                     <td class="product-price">${d.color}</td>
                                                     <td class="product_quantity">${d.quantity}</td>
-                                                    <td class="product_total"> <fmt:formatNumber pattern="##########" value="${d.price}"/></td>
-                                                    <td> <a class="btn btn-primary btn-sm edit"  href="search?action=productdetail&product_id=${d.product.product_id}&comment=true" type="button" title="Sửa"><i class="fas fa-edit"></i></a></td>
+
+                                                    <td class="product_total"> <fmt:formatNumber value="${d.price}" minFractionDigits="0" maxFractionDigits="2" var="d_price"/>
+                                                    <span class="current_price">${d_price} VND</span></td>
+
                                                 </tr>
                                             </c:forEach>
                                         </tbody>
