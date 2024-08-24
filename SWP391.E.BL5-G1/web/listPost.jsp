@@ -116,7 +116,7 @@
                         </div>
                     </div>
                     <div class="post-title">
-                        ${post.title}
+                       <span>${post.type}</span> - ${post.title}
                     </div>
                     <div class="post-content">
                         <p>${post.content}</p>

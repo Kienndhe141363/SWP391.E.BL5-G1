@@ -5,6 +5,7 @@
 package controller;
 
 import dal.postDAO;
+import dal.postTypeDAO;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -14,6 +15,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.List;
 import model.Post;
+import model.PostType;
 
 /**
  *
