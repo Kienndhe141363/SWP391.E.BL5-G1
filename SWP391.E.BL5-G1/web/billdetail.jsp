@@ -72,7 +72,8 @@
                                                     <td class="product-price">${d.size}</td>
                                                     <td class="product-price">${d.color}</td>
                                                     <td class="product_quantity">${d.quantity}</td>
-                                                    <td class="product_total"> <fmt:formatNumber pattern="##########" value="${d.price}"/></td>
+                                                    <td class="product_total"> <fmt:formatNumber value="${d.price}" minFractionDigits="0" maxFractionDigits="2" var="d_price"/>
+                                                    <span class="current_price">${d_price} VND</span></td>
                                                 </tr>
                                             </c:forEach>
                                         </tbody>
