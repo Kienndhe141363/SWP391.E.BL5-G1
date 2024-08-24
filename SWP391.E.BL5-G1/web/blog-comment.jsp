@@ -666,6 +666,7 @@
                     </div>
                 </div>
             </c:if>
+            <c:if test="${sessionScope.user}">
             <div class="form-container" style="margin-top: 10px">
                 <form action="blog-comment?action=addBlogComment&blog_id=${blogId}" method="POST">
                     <input type="hidden" name="action" value="addBlogComment">
@@ -676,6 +677,7 @@
                     </c:if>
                 </form>
             </div>
+            </c:if>
         </div>
 
         <%--<jsp:include page="layout/footer.jsp"/>--%>
