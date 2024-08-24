@@ -2,6 +2,7 @@
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@page import="model.Product" %>
 <%@page import="model.Product_Active" %>
 <!DOCTYPE html>
@@ -65,7 +66,7 @@
                     <li><a class="app-menu__item" href="aboutmanager"><i class='app-menu__icon bx bx-receipt'></i><span class="app-menu__label">Quản lý trang giới thiệu</span></a></li>
                     <li><a class="app-menu__item" href="commentmanager"><i class='app-menu__icon bx bx-receipt'></i><span class="app-menu__label">Quản lý bình luận</span></a></li>
                     <li><a class="app-menu__item" href="saleoff"><i class='app-menu__icon bx bx-receipt'></i><span class="app-menu__label">Quản lý sale</span></a></li>
-                </c:if>
+                            </c:if>
             </ul>
         </aside>
         <main class="app-content">
@@ -83,12 +84,6 @@
                                 <div class="col-sm-2">
                                     <a class="btn btn-add btn-sm" href="productmanager?action=insert" title="Thêm"><i class="fas fa-plus"></i>
                                         Tạo mới sản phẩm</a>
-                                </div>
-                                <!-- UploadExcelBtn -->
-                                <div class="col-sm-2">
-                                    <a class="btn btn-add btn-sm"  title="ThêmExcel"
-                                       data-toggle="modal" data-target="#uploadModal"><i class="fas fa-plus"></i>
-                                        Tạo mới sản phẩm bằng Excel(chỉ xlsx)</a>
                                 </div>
                                 <!-- UploadExcelBtn -->
                                 <!-- uploadModal -->
@@ -144,7 +139,7 @@
                                                 <td>${p.product_id}</td>
                                                 <td>${p.cate.category_name}</td>
                                                 <td>${p.product_name}</td>
-                                                <td>${p.product_price}</td>
+                                                <td><fmt:formatNumber value="${p.product_price}" minFractionDigits="0" maxFractionDigits="2"/></td>
                                                 <td>
                                                     <c:forEach items="${SizeData}" var="s">
                                                         <c:if test="${p.product_id==s.product_id}">
@@ -217,7 +212,8 @@
                                                                 </div>
                                                                 <div class="form-group col-md-6">
                                                                     <label class="control-label">Giá</label>
-                                                                    <input class="form-control" type="number" name="product_price" required value="${p.product_price}">
+                                                                    <fmt:formatNumber value="${p.product_price}" minFractionDigits="0" maxFractionDigits="2" var="formattedPrice"/>
+                                                                    <input class="form-control" type="text" name="product_price" required value="${formattedPrice}"  oninput="validateQuantity(this)">
                                                                 </div>
                                                                 <div class="form-group col-md-6">
                                                                     <label class="control-label">Màu</label>
@@ -301,47 +297,47 @@
         <script type="text/javascript" src="admin/js/plugins/jquery.dataTables.min.js"></script>
         <script type="text/javascript" src="admin/js/plugins/dataTables.bootstrap.min.js"></script>
         <script type="text/javascript">
-            $('#sampleTable').DataTable();
-            //Thời Gian
-            function time() {
-                var today = new Date();
-                var weekday = new Array(7);
-                weekday[0] = "Chủ Nhật";
-                weekday[1] = "Thứ Hai";
-                weekday[2] = "Thứ Ba";
-                weekday[3] = "Thứ Tư";
-                weekday[4] = "Thứ Năm";
-                weekday[5] = "Thứ Sáu";
-                weekday[6] = "Thứ Bảy";
-                var day = weekday[today.getDay()];
-                var dd = today.getDate();
-                var mm = today.getMonth() + 1;
-                var yyyy = today.getFullYear();
-                var h = today.getHours();
-                var m = today.getMinutes();
-                var s = today.getSeconds();
-                m = checkTime(m);
-                s = checkTime(s);
-                nowTime = h + " giờ " + m + " phút " + s + " giây";
-                if (dd < 10) {
-                    dd = '0' + dd
-                }
-                if (mm < 10) {
-                    mm = '0' + mm
-                }
-                today = day + ', ' + dd + '/' + mm + '/' + yyyy;
-                tmp = '<span class="date"> ' + today + ' - ' + nowTime +
-                        '</span>';
-                document.getElementById("clock").innerHTML = tmp;
-                clocktime = setTimeout("time()", "1000", "Javascript");
+                                                                            $('#sampleTable').DataTable();
+                                                                            //Thời Gian
+                                                                            function time() {
+                                                                                var today = new Date();
+                                                                                var weekday = new Array(7);
+                                                                                weekday[0] = "Chủ Nhật";
+                                                                                weekday[1] = "Thứ Hai";
+                                                                                weekday[2] = "Thứ Ba";
+                                                                                weekday[3] = "Thứ Tư";
+                                                                                weekday[4] = "Thứ Năm";
+                                                                                weekday[5] = "Thứ Sáu";
+                                                                                weekday[6] = "Thứ Bảy";
+                                                                                var day = weekday[today.getDay()];
+                                                                                var dd = today.getDate();
+                                                                                var mm = today.getMonth() + 1;
+                                                                                var yyyy = today.getFullYear();
+                                                                                var h = today.getHours();
+                                                                                var m = today.getMinutes();
+                                                                                var s = today.getSeconds();
+                                                                                m = checkTime(m);
+                                                                                s = checkTime(s);
+                                                                                nowTime = h + " giờ " + m + " phút " + s + " giây";
+                                                                                if (dd < 10) {
+                                                                                    dd = '0' + dd
+                                                                                }
+                                                                                if (mm < 10) {
+                                                                                    mm = '0' + mm
+                                                                                }
+                                                                                today = day + ', ' + dd + '/' + mm + '/' + yyyy;
+                                                                                tmp = '<span class="date"> ' + today + ' - ' + nowTime +
+                                                                                        '</span>';
+                                                                                document.getElementById("clock").innerHTML = tmp;
+                                                                                clocktime = setTimeout("time()", "1000", "Javascript");
 
-                function checkTime(i) {
-                    if (i < 10) {
-                        i = "0" + i;
-                    }
-                    return i;
-                }
-            }
+                                                                                function checkTime(i) {
+                                                                                    if (i < 10) {
+                                                                                        i = "0" + i;
+                                                                                    }
+                                                                                    return i;
+                                                                                }
+                                                                            }
         </script>
         <script>
 
@@ -373,6 +369,17 @@
                     win.print();
                 };
             };
+        </script>
+        <script>
+            function validateQuantity(input) {
+                if (input.value < 1) {
+                    input.value = 1;
+                }
+                if (input.value === "-") {
+                    input.value = "";
+                }
+            }
+
         </script>
     </body>
 
