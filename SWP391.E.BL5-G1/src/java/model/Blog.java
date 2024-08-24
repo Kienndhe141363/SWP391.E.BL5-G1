@@ -9,21 +9,21 @@ public class Blog {
     private String content;
     private Date createdAt;
     private Date updatedAt;
-    private Long userId;
+    private Long user_id;
     private String images;
 
     // Default constructor
     public Blog() {}
 
     // Parameterized constructor
-    public Blog(Long blogId, String title, String summary, String content, Date createdAt, Date updatedAt, Long userId, String images) {
+    public Blog(Long blogId, String title, String summary, String content, Date createdAt, Date updatedAt, Long user_id, String images) {
         this.blogId = blogId;
         this.title = title;
         this.summary = summary;
         this.content = content;
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
-        this.userId = userId;
+        this.user_id = user_id;
         this.images = images;
     }
 
@@ -83,11 +83,11 @@ public class Blog {
 
     // Getter and Setter for userId
     public Long getUserId() {
-        return userId;
+        return user_id;
     }
 
     public void setUserId(Long userId) {
-        this.userId = userId;
+        this.user_id = userId;
     }
 
     // Getter and Setter for images

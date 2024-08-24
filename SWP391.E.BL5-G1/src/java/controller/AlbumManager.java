@@ -35,7 +35,6 @@ import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
-@WebServlet(name = "albumManager", urlPatterns = {"/album"})
 public class AlbumManager extends HttpServlet {
 
     /**

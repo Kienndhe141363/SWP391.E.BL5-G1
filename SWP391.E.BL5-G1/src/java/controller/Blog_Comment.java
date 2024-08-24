@@ -31,14 +31,15 @@ import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.util.Date;
 import java.util.Objects;
+import model.BlogCmt;
 import model.Product_Active;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
-@WebServlet(name = "Blog", urlPatterns = {"/blog"})
-public class Blog extends HttpServlet {
+@WebServlet(name = "Blog_Comment", urlPatterns = {"/blog-comment"})
+public class Blog_Comment extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -60,57 +61,75 @@ public class Blog extends HttpServlet {
         HttpSession session = request.getSession();
         model.User user = (model.User) session.getAttribute("user");
         int user_id = user.getUser_id();
-//        String id = request.getParameter("blog_id");
-//        int blog_id = 1;
-//        if (id == null || id.isEmpty()) {
-//            blogDAO c = new blogDAO();
-//            blog_id = c.getFirstAlbum(user_id);
-//        } else {
-//            album_id = Integer.parseInt(id);
-//        }
-        page = "blog.jsp";
+        String blog_id = request.getParameter("blog_id");
+        int idBlog = 3;
+        if (blog_id != null) {
+            idBlog = Integer.parseInt(blog_id);
+        }
+        page = "blog-comment.jsp";
 
         if (action != null) {
-            if (action.equalsIgnoreCase("addBlog")) {
+            if (action.equalsIgnoreCase("addBlogComment")) {
+//                String comment_id = request.getParameter("comment_id");
+//                Long commentId = Long.valueOf(comment_id);
+                String comment_text = request.getParameter("comment_text");
+                Date currentDate = new Date();
+                blogDAO c = new blogDAO();
+                c.addComment(idBlog, user_id, comment_text, currentDate, currentDate);
+                response.sendRedirect("blog-comment?action=blogdetail&blog_id=" + blog_id);
+                return;
+            } else if (action.equalsIgnoreCase("deleteBlogComment")) {
+                blogDAO c = new blogDAO();
+                String comment_id = request.getParameter("comment_id");
+                int commentId = Integer.parseInt(comment_id);
+                c.BlogCommentDelete(commentId);
+                response.sendRedirect("blog-comment?action=blogdetail&blog_id=" + blog_id);
+                return;
+            } else if (action.equalsIgnoreCase("updateBlog")) {
                 String title = request.getParameter("title");
-                String blog_id = request.getParameter("blog_id");
+//                int userId =  Integer.parseInt(user_id);
                 String content = request.getParameter("content");
                 String summary = request.getParameter("summary");
                 Date currentDate = new Date();
                 blogDAO c = new blogDAO();
-                c.addBlog(title, summary, content,currentDate,currentDate,user_id, "images/blog" + blog_id);
+                c.updateBlog(idBlog, title, summary, content, currentDate, currentDate, user_id, "images/blog" + blog_id);
+                request.getRequestDispatcher("blog.jsp").forward(request, response);
                 response.sendRedirect("blog");
                 return;
-            } else if (action.equalsIgnoreCase("deleteBlog")) {
-                String blog_id = request.getParameter("blog_id");
+            } else if (action.equalsIgnoreCase("updateBlogComment")) {
+                String comment_id = request.getParameter("comment_id");
+                Long commentId = Long.valueOf(comment_id);
+                String comment_text = request.getParameter("comment_text");
+                Long userId = Long.valueOf(user_id);
+                Date currentDate = new Date();
                 blogDAO c = new blogDAO();
-                c.BlogDelete(blog_id);
-                response.sendRedirect("blog");
+                c.updateBlogComment(idBlog, userId, comment_text, currentDate, currentDate, commentId);
+                response.sendRedirect("blog-comment?action=blogdetail&blog_id=" + blog_id);
                 return;
-            } 
-//            else if (action.equalsIgnoreCase("filter")) {
-//                albumDAO c = new albumDAO();
-//                if (request.getParameter("album_id") != null) {
-//                    id = request.getParameter("album_id");
-//                    album_id = Integer.parseInt(id);
-//                } else {
-//                    album_id = c.getFirstAlbum(user_id);
-//                }
-//                List<Product> product = c.getProduct(album_id);
-//                List<Album> album = c.getList(user_id);
-//                request.setAttribute("AlbumData", album);
-//                request.setAttribute("ProductData", product);
-//                request.setAttribute("album_id", album_id);
-//                request.getRequestDispatcher("album.jsp").forward(request, response);
-//            }
+            } else if (action.equalsIgnoreCase("blogdetail")) {
+                blogDAO c = new blogDAO();
+                List<model.Blog> blog = c.getBlogsByBlogId(idBlog);
+                List<BlogCmt> blogcomment = c.getListBlogComment(idBlog);
+                request.setAttribute("BlogData", blog);
+                request.setAttribute("CommentData", blogcomment);
+                request.setAttribute("blogId", idBlog);
+                request.setAttribute("idUser", user_id);
+                RequestDispatcher dd = request.getRequestDispatcher(page);
+                dd.forward(request, response);
+                return;
+            }
         } else {
             if (action == null) {
                 blogDAO c = new blogDAO();
-                List<model.Blog> blog = c.getList();
-                request.setAttribute("BlogData", blog);
-                request.getRequestDispatcher("blog.jsp").forward(request, response);
-                return;
 
+                List<model.Blog> blog = c.getBlogsByBlogId(idBlog);
+                List<BlogCmt> blogcomment = c.getListBlogComment(idBlog);
+                request.setAttribute("BlogData", blog);
+                request.setAttribute("CommentData", blogcomment);
+                request.setAttribute("blogId", idBlog);
+                request.setAttribute("idUser", user_id);
+                RequestDispatcher dd = request.getRequestDispatcher(page);
+                dd.forward(request, response);
             }
         }
         RequestDispatcher dd = request.getRequestDispatcher(page);
