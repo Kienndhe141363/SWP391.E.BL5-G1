@@ -135,11 +135,8 @@ public class BlogManager extends HttpServlet {
             response.sendRedirect("user?action=login");
             return;
         }
-        if (user.getIsAdmin() == null || !Boolean.parseBoolean(user.getIsAdmin())) {    //Nếu ko phải admin
-            if (user.getIsStoreStaff() != null && Boolean.parseBoolean(user.getIsStoreStaff())) {  //Nếu là Store Staff
-                response.sendRedirect("dashboard");
-                return;
-            }
+        if (user.getIsAdmin() == null || !Boolean.parseBoolean(user.getIsAdmin()) && user.getIsStoreStaff()== null || !Boolean.parseBoolean(user.getIsStoreStaff()) ) {    //Nếu ko phải admin
+            
             //Role còn lại: Client
             response.sendRedirect("home");
             return;
