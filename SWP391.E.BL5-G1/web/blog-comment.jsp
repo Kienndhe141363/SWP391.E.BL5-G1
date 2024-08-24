@@ -529,6 +529,10 @@
                 color: white;
                 background-color: cornflowerblue;
             }
+            
+            .boldTitle{
+                font-weight: 700;
+            }
 
         </style>
 
@@ -614,12 +618,12 @@
                         <h4 style="text-align: left">Thảo luận đề tài:</h4>
                         <c:forEach items="${CommentData}" var="c">
                             <div style="width: 100%;margin-top: 10px;">
-                                    <h5 class="card-title product-title">Người dùng #${c.userId}</h5>
+                                    <h5 class="card-title product-title ${c.userId == idUser ? 'boldTitle' : ''}">Người dùng #${c.userId}</h5>
                                 </div>
-                            <div class="col-md-9 mb-9 ${c.userId == idUser ? 'highlight' : ''}" style="display: flex;">
+                            <div class="col-md-9 mb-9" style="display: flex; border: 0.5px solid; border-radius: 5px;">
                                 
 
-                                <div class="card-body" style="width: 80%">
+                                <div class="card-body" style="width: 80%; color: black">
                                     <p class="card-text product-price">${c.commentText}</p>
                                 </div>
                                 <c:if test="${c.userId == idUser}">

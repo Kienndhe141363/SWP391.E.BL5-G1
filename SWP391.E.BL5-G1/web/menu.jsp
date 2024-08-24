@@ -60,7 +60,7 @@
         <div class="cart_area">
             <div class="cart_link">
                 <c:if test="${!user.isAdmin == 'True' && !user.isStoreStaff=='True'}">
-                <a href="cart?action=showcart"><i class="fa fa-shopping-basket">${sessionScope.size}</i>Giỏ Hàng</a>
+                    <a href="cart?action=showcart"><i class="fa fa-shopping-basket">${sessionScope.size}</i>Giỏ Hàng</a>
                 </c:if>
             </div>
         </div>
@@ -81,6 +81,9 @@
                 </li>
                 <li class="menu-item-has-children">
                     <a href="blog">Blog</a> 
+                </li>
+                <li class="menu-item-has-children">
+                    <a href="listPosts">Bài đăng</a>
                 </li>
             </ul>
         </div>
@@ -172,7 +175,7 @@
                         <div class="cart_area">
                             <div class="cart_link">
                                 <c:if test="${!user.isAdmin == 'True' && !user.isStoreStaff=='True'}">
-                                <a href="cart?action=showcart"><i class="fa fa-shopping-basket"></i>${sessionScope.size} Giỏ hàng</a>
+                                    <a href="cart?action=showcart"><i class="fa fa-shopping-basket"></i>${sessionScope.size} Giỏ hàng</a>
                                 </c:if>
                             </div>
                         </div>
@@ -198,7 +201,8 @@
                             <ul>
                                 <li><a href="about">Chúng tôi</a></li>
                                 <li><a href="contact">Liên hệ</a></li>
-                                                                <li><a href="blog">Blog</a></li>
+                                <li><a href="blog">Blog</a></li>
+                                <li><a href="listPosts">Bài đăng</a></li>
 
                             </ul> 
                         </nav> 
@@ -223,6 +227,7 @@
                                     <li><a href="about">Chúng tôi</a></li>
                                     <li><a href="contact">Liên hệ</a></li>
                                     <li><a href="blog">Blog</a></li>
+                                    <li><a href="listPosts">Bài đăng</a></li>
 
                                 </ul>   
                             </nav> 
