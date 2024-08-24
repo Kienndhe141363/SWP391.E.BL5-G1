@@ -559,10 +559,10 @@
                         <div class="d-flex justify-content-between align-items-center mb-4">
                             <p class="mb-0">Lượt xem Blog (1000)</p>
                             <div class="dropdown">
-                                <c:if test="${sessionScope.user.isAdmin}">
+                                <!-- <c:if test="${sessionScope.user.isAdmin}">
                                     <button type="button" data-toggle="modal" data-target="#ModalUpdate${blogId}" class="btn btn-save"  title="Thêm">
                                         <i class="fas fa-edit"></i>Chỉnh sửa nội dung Blog</button>
-                                    </c:if>
+                                    </c:if>-->
                                 <div class="modal fade" id="ModalUpdate${blogId}" tabindex="-1" role="dialog" aria-hidden="true">
                                     <div class="modal-dialog modal-dialog-centered" role="document">
                                         <div class="modal-content">

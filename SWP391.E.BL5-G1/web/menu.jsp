@@ -79,6 +79,9 @@
                 <li class="menu-item-has-children">
                     <a href="contact">Liên hệ</a> 
                 </li>
+                <li class="menu-item-has-children">
+                    <a href="blog">Blog</a> 
+                </li>
             </ul>
         </div>
         <div class="offcanvas_footer">
@@ -195,6 +198,8 @@
                             <ul>
                                 <li><a href="about">Chúng tôi</a></li>
                                 <li><a href="contact">Liên hệ</a></li>
+                                                                <li><a href="blog">Blog</a></li>
+
                             </ul> 
                         </nav> 
                     </div>
@@ -217,6 +222,8 @@
                                     <li><a href="product">Sản phẩm</a></li>
                                     <li><a href="about">Chúng tôi</a></li>
                                     <li><a href="contact">Liên hệ</a></li>
+                                    <li><a href="blog">Blog</a></li>
+
                                 </ul>   
                             </nav> 
                         </div>

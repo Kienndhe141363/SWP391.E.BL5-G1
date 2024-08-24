@@ -131,15 +131,15 @@
             <div class="row">
 
 
-                <div class="col-lg-12">
-                    <h1 class="mb-4">Danh sách các mục Blog</h1>
+                <div class="col-lg-12" style="margin-top: 30px">
+                    <h1 class="mb-4">Danh sách các mục thảo luận</h1>
                     <div class="d-flex justify-content-between align-items-center mb-4">
                         <p class="mb-0">Hiển thị ${BlogData.size()} Blog</p>
                         <div class="dropdown">
-                            <%--<c:if test="${isAdmin}">--%>
+                                 <!--<c:if test="${sessionScope.user.isAdmin}">
                             <button type="button" data-toggle="modal" data-target="#ModalAdd" class="btn btn-save"  title="Thêm">
                                 <i class="fas fa-plus"></i>Thêm mới Blog</button>
-                                <%--</c:if>--%>
+                                </c:if>-->
                             <div class="modal fade" id="ModalAdd" tabindex="-1" role="dialog" aria-hidden="true">
                                 <div class="modal-dialog modal-dialog-centered" role="document">
                                     <div class="modal-content">
@@ -199,7 +199,7 @@
                                                 <h5 class="card-title product-title">${p.title}</h5>
                                                 <p class="card-text product-price">${p.summary}</p>
                                                 <a href="blog-comment?action=blogdetail&blog_id=${p.blogId}" class="btn btn-primary btn-sm">Đọc nội dung</a>
-                                                <a href="blog?action=deleteBlog&blog_id=${p.blogId}" class="btn btn-trash btn-sm" style="background-color:red"><i class="fas fa-trash"></i></a>
+                                                <!--<a href="blog?action=deleteBlog&blog_id=${p.blogId}" class="btn btn-trash btn-sm" style="background-color:red"><i class="fas fa-trash"></i></a>-->
                                             </div>
                                         </div>
                                     </div>

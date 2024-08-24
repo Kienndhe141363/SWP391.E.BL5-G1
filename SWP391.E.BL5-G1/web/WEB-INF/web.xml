@@ -22,7 +22,7 @@
     </servlet>
     <servlet>
         <servlet-name>Contact</servlet-name>
-        <servlet-class>Coontroller.Home.Contact</servlet-class>
+        <servlet-class>controller.Contact</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>ProductManager</servlet-name>
