@@ -9,7 +9,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Post List</title>
+    <title>Post List - Facebook Style</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -17,33 +17,43 @@
             margin: 0;
             padding: 20px;
         }
-        .container {
-            max-width: 1000px;
-            margin: 0 auto;
+        .post-container {
+            max-width: 600px;
+            margin: 20px auto;
             background-color: #fff;
-            padding: 20px;
             border-radius: 8px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            padding: 15px;
         }
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-bottom: 20px;
+        .post-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 10px;
         }
-        th, td {
-            padding: 10px;
-            text-align: left;
-            border-bottom: 1px solid #ddd;
+        .post-user {
+            font-weight: bold;
+            margin-right: 10px;
         }
-        th {
-            background-color: #007bff;
-            color: white;
+        .post-time {
+            color: #666;
+            font-size: 0.9em;
         }
-        tr:hover {
-            background-color: #f1f1f1;
+        .post-title {
+            font-size: 1.2em;
+            font-weight: bold;
+            margin-bottom: 10px;
         }
-        button {
-            padding: 10px 15px;
+        .post-content {
+            margin-bottom: 10px;
+        }
+        .post-actions {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 10px;
+        }
+        .post-actions button {
+            padding: 8px 12px;
             background-color: #007bff;
             color: white;
             border: none;
@@ -51,46 +61,45 @@
             cursor: pointer;
             text-decoration: none;
         }
-        button:hover {
+        .post-actions button:hover {
             background-color: #0056b3;
+        }
+        .post-actions a {
+            color: #007bff;
+            text-decoration: none;
+            margin-right: 10px;
+        }
+        .post-actions a:hover {
+            text-decoration: underline;
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <h2>Post List</h2>
-        <a href="addPost.jsp" class="button">Add Post</a> <!-- Nút thêm bài viết -->
-        <table>
-            <thead>
-                <tr>
-                    <th>ID</th>
-                    <th>Title</th>
-                    <th>Content</th>
-                    <th>Created At</th>
-                    <th>Updated At</th>
-                    <th>Post Type</th>
-                    <th>User ID</th>
-                    <th>Actions</th>
-                </tr>
-            </thead>
-            <tbody>
-                <c:forEach var="post" items="${posts}">
-                    <tr>
-                        <td>${post.postId}</td>
-                        <td>${post.title}</td>
-                        <td>${post.content}</td>
-                        <td>${post.createAt}</td>
-                        <td>${post.updateAt}</td>
-                        <td>${post.postTypeId}</td>
-                        <td>${post.userid}</td>
-                        <td>
-                            <a href="editPost?postId=${post.postId}" class="button">Edit</a>
-                            <a href="deletePost?postId=${post.postId}" class="button" onclick="return confirm('Are you sure you want to delete this post?');">Delete</a>
-                        </td>
-                    </tr>
-                </c:forEach>
-            </tbody>
-        </table>
+        <h2>Danh sách bài viết</h2>
+        <a href="addPost" class="button">Thêm bài viết</a>
+        <c:forEach var="post" items="${posts}">
+            <div class="post-container">
+                <div class="post-header">
+                    <span class="post-user">${post.username}</span>
+                    <span class="post-time">${post.createAt}</span>
+                </div>
+                <div class="post-title">
+                    ${post.title}
+                </div>
+                <div class="post-content">
+                    <p>${post.content}</p>
+                </div>
+                <div class="post-actions">
+                    <a href="#">Thích</a>
+                    <a href="#">Bình luận</a>
+                    <c:if test="${user.user_id == post.userid || user.isAdmin == 'TRUE'}">
+                        <a href="editPost?postId=${post.postId}" class="button">Chỉnh sửa</a>
+                        <a href="deletePost?postId=${post.postId}" class="button" onclick="return confirm('Bạn có chắc chắn muốn xóa bài viết này?');">Xóa</a>
+                    </c:if>
+                </div>
+            </div>
+        </c:forEach>
     </div>
 </body>
 </html>

@@ -69,7 +69,6 @@
 
             <label for="postTypeId">Post Type:</label>
             <select id="postTypeId" name="postTypeId" required>
-                <!-- Hiển thị tùy chọn post type từ cơ sở dữ liệu -->
                 <c:forEach var="type" items="${postTypes}">
                     <option value="${type.id}">${type.type}</option>
                 </c:forEach>

@@ -70,17 +70,12 @@ public class EditPost extends HttpServlet {
         postTypeDAO postTypeDAO = new postTypeDAO();
 
         try {
-            // Lấy thông tin bài viết theo ID
             Post post = postDAO.getPostById(postId);
 
-            // Lấy danh sách tất cả các loại bài viết
             List<PostType> postTypes = postTypeDAO.getAllPostTypes();
-
-            // Gán thông tin bài viết và các loại bài viết vào thuộc tính request
             request.setAttribute("post", post);
             request.setAttribute("postTypes", postTypes);
 
-            // Chuyển tiếp đến trang editPost.jsp
             request.getRequestDispatcher("editPost.jsp").forward(request, response);
 
         } catch (Exception e) {
@@ -100,6 +95,12 @@ public class EditPost extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        HttpSession session = request.getSession(false);
+        if (session == null || session.getAttribute("user") == null) {
+            response.sendRedirect("user?action=login");
+            return;
+        }
+        model.User user = (model.User) session.getAttribute("user");
         String postIdStr = request.getParameter("postId");
         int postId = Integer.parseInt(postIdStr);
         String title = request.getParameter("title");
@@ -107,8 +108,6 @@ public class EditPost extends HttpServlet {
         String postTypeIdStr = request.getParameter("postTypeId");
         int postTypeId = Integer.parseInt(postTypeIdStr);
         java.sql.Date updateAt = new java.sql.Date(System.currentTimeMillis());
-        HttpSession session = request.getSession();
-        model.User user = (model.User) session.getAttribute("user");
         postDAO postDAO = new postDAO();
 
         try {

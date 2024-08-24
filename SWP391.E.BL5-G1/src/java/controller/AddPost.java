@@ -11,8 +11,10 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.Date;
 import java.util.List;
 import model.Post;
 import model.PostType;
@@ -62,8 +64,8 @@ public class AddPost extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-            try {
-            postTypeDAO postTypeDAO = new postTypeDAO();
+        postTypeDAO postTypeDAO = new postTypeDAO();
+        try {
             List<PostType> postTypes = postTypeDAO.getAllPostTypes();
             request.setAttribute("postTypes", postTypes);
             request.getRequestDispatcher("/addPost.jsp").forward(request, response);
@@ -85,18 +87,25 @@ public class AddPost extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         postDAO postDao = new postDAO();
+        HttpSession session = request.getSession(false);
+        if (session == null || session.getAttribute("user") == null) {
+            response.sendRedirect("user?action=login");
+            return;
+        }
+        model.User user = (model.User) session.getAttribute("user");
         try {
             String title = request.getParameter("title");
             String content = request.getParameter("content");
             int postTypeId = Integer.parseInt(request.getParameter("postTypeId"));
-            int userId = Integer.parseInt(request.getParameter("userId")); 
-
+            Date creAt = new java.sql.Date(System.currentTimeMillis());
+            Date upAt = new java.sql.Date(System.currentTimeMillis());
             Post newPost = new Post();
             newPost.setTitle(title);
             newPost.setContent(content);
             newPost.setPostTypeId(postTypeId);
-            newPost.setUserid(userId);
-
+            newPost.setUserid(user.getUser_id());
+            newPost.setCreateAt(creAt);
+            newPost.setUpdateAt(upAt);
             postDao.addPost(newPost);
             response.sendRedirect("listPosts");
         } catch (Exception e) {
