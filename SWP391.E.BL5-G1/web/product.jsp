@@ -199,7 +199,7 @@
                                                                 </div>
                                                                 <div class="form-group col-md-6">
                                                                     <label for="exampleSelect1" class="control-label">Danh mục</label>
-                                                                    <select name="category_id" class="form-control"  id="exampleSelect1">
+                                                                    <select name="category_id" class="form-control"  id="exampleSelect1" required>
                                                                         <option value="">-- Chọn danh mục --</option>
                                                                         <c:forEach items="${CategoryData}" var="cat">
                                                                             <option value="${cat.category_id}" <c:if test="${cat.category_id == p.cate.category_id}">selected</c:if>>${cat.category_name}</option>
@@ -213,21 +213,24 @@
                                                                 <div class="form-group col-md-6">
                                                                     <label class="control-label">Giá</label>
                                                                     <fmt:formatNumber value="${p.product_price}" minFractionDigits="0" maxFractionDigits="2" var="formattedPrice"/>
-                                                                    <input class="form-control" type="text" name="product_price" required value="${formattedPrice}"  oninput="validateQuantity(this)">
+                                                                    <input class="form-control" type="text" name="product_price" required value="${formattedPrice}"  oninput="validateQuantity(this)" required>
                                                                 </div>
                                                                 <div class="form-group col-md-6">
                                                                     <label class="control-label">Màu</label>
-                                                                    <input class="form-control" name="product_color" type="text" value="<c:forEach items="${ColorData}" var="c"><c:if test="${p.product_id==c.product_id}">${c.color},</c:if></c:forEach>">
+                                                                    <input class="form-control" name="product_color" type="text" required value="<c:forEach items="${ColorData}" var="c"><c:if test="${p.product_id==c.product_id}">${c.color},</c:if></c:forEach>">
                                                                         </div>
 
                                                                         <div class="form-group col-md-6">
                                                                             <label class="control-label">Size</label>
-                                                                            <input class="form-control" name="product_size" type="text" value="<c:forEach items="${SizeData}" var="s"><c:if test="${p.product_id==s.product_id}">${s.size},</c:if></c:forEach>">
+                                                                            <input class="form-control" name="product_size" type="text" required value="<c:forEach items="${SizeData}" var="s"><c:if test="${p.product_id==s.product_id}">${s.size},</c:if></c:forEach>">
                                                                         </div>
 
                                                                         <div class="form-group col-md-6">
-                                                                            <label class="control-label">Thông tin</label>
-                                                                            <textarea class="ckeditor" name="product_describe">${p.product_describe}</textarea>
+                                                                            <div class="row" style="margin-left: 0px;"><label class="control-label">Thông tin</label></div>                                                                            
+                                                                            <div class="row" style="margin-left: 0px;"><textarea style="width: 730px;" class="ckeditor" name="product_describe">${p.product_describe}</textarea></div>
+
+                                                                            
+                                                                            
                                                                     <script>
                                                                         CKEDITOR.replace('product_describe');
                                                                     </script>
