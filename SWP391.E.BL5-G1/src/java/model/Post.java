@@ -19,8 +19,20 @@ public class Post {
     private Date updateAt;
     private int postTypeId;
     private int userid;
+    private String username;
 
-    public Post(int postId, String title, String content, int postTypeId,int userid, Date creDate, Date upDate) {
+    public Post(int postId, String title, String content, int postTypeId, int userid, Date creDate, Date upDate, String username) {
+        this.postId = postId;
+        this.title = title;
+        this.content = content;
+        this.postTypeId = postTypeId;
+        this.userid = userid;
+        this.createAt = creDate;
+        this.updateAt = upDate;
+        this.username = username;
+    }
+    
+    public Post(int postId, String title, String content, int postTypeId, int userid, Date creDate, Date upDate) {
         this.postId = postId;
         this.title = title;
         this.content = content;
@@ -33,9 +45,14 @@ public class Post {
     public Post() {
     }
 
-    
+    public String getUsername() {
+        return username;
+    }
 
-    // Getters and setters
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
     public int getPostId() {
         return postId;
     }

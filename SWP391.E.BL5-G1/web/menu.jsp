@@ -60,7 +60,7 @@
         <div class="cart_area">
             <div class="cart_link">
                 <c:if test="${!user.isAdmin == 'True' && !user.isStoreStaff=='True'}">
-                <a href="cart?action=showcart"><i class="fa fa-shopping-basket">${sessionScope.size}</i>Giỏ Hàng</a>
+                    <a href="cart?action=showcart"><i class="fa fa-shopping-basket">${sessionScope.size}</i>Giỏ Hàng</a>
                 </c:if>
             </div>
         </div>
@@ -172,7 +172,7 @@
                         <div class="cart_area">
                             <div class="cart_link">
                                 <c:if test="${!user.isAdmin == 'True' && !user.isStoreStaff=='True'}">
-                                <a href="cart?action=showcart"><i class="fa fa-shopping-basket"></i>${sessionScope.size} Giỏ hàng</a>
+                                    <a href="cart?action=showcart"><i class="fa fa-shopping-basket"></i>${sessionScope.size} Giỏ hàng</a>
                                 </c:if>
                             </div>
                         </div>
@@ -197,6 +197,7 @@
                         <nav>  
                             <ul>
                                 <li><a href="about">Chúng tôi</a></li>
+                                <li><a href="listPosts">Bài đăng</a></li>
                                 <li><a href="contact">Liên hệ</a></li>
                             </ul> 
                         </nav> 
@@ -219,6 +220,7 @@
                                     <li class="active"><a href="home">Trang chủ</a></li>
                                     <li><a href="product">Sản phẩm</a></li>
                                     <li><a href="about">Chúng tôi</a></li>
+                                    <li><a href="listPosts">Bài đăng</a></li>
                                     <li><a href="contact">Liên hệ</a></li>
                                 </ul>   
                             </nav> 

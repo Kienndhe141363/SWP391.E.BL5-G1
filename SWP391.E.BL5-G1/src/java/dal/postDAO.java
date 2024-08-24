@@ -16,28 +16,31 @@ import model.Post;
  *
  * @author ThangNPHE151263
  */
-
 public class postDAO extends DBContext {
 
     // Method to get all posts
     public List<Post> getAllPosts() throws Exception {
         List<Post> posts = new ArrayList<>();
-        String sql = "SELECT p.id AS postId, p.title, p.content, p.created_at AS createAt, p.updated_at AS updateAt, p.posttype_id AS postTypeId, p.user_id AS userid "
-                   + "FROM [SU24_BL5_SWP391_G1].[dbo].[post] p";
+        String sql = "SELECT p.id AS postId, p.title, p.content, p.created_at AS createAt, "
+                + "p.updated_at AS updateAt, p.posttype_id AS postTypeId, p.user_id AS userid, "
+                + "u.user_name AS user_name "
+                + "FROM [SU24_BL5_SWP391_G1].[dbo].[post] p "
+                + "JOIN [SU24_BL5_SWP391_G1].[dbo].[users] u ON p.user_id = u.user_id"; 
 
-        try (Connection conn = getConnection();
-             PreparedStatement ps = conn.prepareStatement(sql);
-             ResultSet rs = ps.executeQuery()) {
+        try (Connection conn = getConnection(); 
+                PreparedStatement ps = conn.prepareStatement(sql); 
+                ResultSet rs = ps.executeQuery()) {
 
             while (rs.next()) {
                 Post post = new Post(
-                    rs.getInt("postId"),
-                    rs.getString("title"),
-                    rs.getString("content"),
-                    rs.getInt("postTypeId"),
-                    rs.getInt("userid"),
-                    rs.getDate("createAt"),
-                    rs.getDate("updateAt")
+                        rs.getInt("postId"),
+                        rs.getString("title"),
+                        rs.getString("content"),
+                        rs.getInt("postTypeId"),
+                        rs.getInt("userid"),
+                        rs.getDate("createAt"),
+                        rs.getDate("updateAt"),
+                        rs.getString("user_name")
                 );
                 posts.add(post);
             }
@@ -51,23 +54,22 @@ public class postDAO extends DBContext {
     public Post getPostById(int postId) throws Exception {
         Post post = null;
         String sql = "SELECT p.id AS postId, p.title, p.content, p.created_at AS createAt, p.updated_at AS updateAt, p.posttype_id AS postTypeId, p.user_id AS userid "
-                   + "FROM [SU24_BL5_SWP391_G1].[dbo].[post] p "
-                   + "WHERE p.id = ?";
+                + "FROM [SU24_BL5_SWP391_G1].[dbo].[post] p "
+                + "WHERE p.id = ?";
 
-        try (Connection conn = getConnection();
-             PreparedStatement ps = conn.prepareStatement(sql)) {
+        try (Connection conn = getConnection(); PreparedStatement ps = conn.prepareStatement(sql)) {
 
             ps.setInt(1, postId);
             try (ResultSet rs = ps.executeQuery()) {
                 if (rs.next()) {
                     post = new Post(
-                        rs.getInt("postId"),
-                        rs.getString("title"),
-                        rs.getString("content"),
-                        rs.getInt("postTypeId"),
-                        rs.getInt("userid"),
-                        rs.getDate("createAt"),
-                        rs.getDate("updateAt")
+                            rs.getInt("postId"),
+                            rs.getString("title"),
+                            rs.getString("content"),
+                            rs.getInt("postTypeId"),
+                            rs.getInt("userid"),
+                            rs.getDate("createAt"),
+                            rs.getDate("updateAt")
                     );
                 }
             }
@@ -81,8 +83,7 @@ public class postDAO extends DBContext {
     public void addPost(Post post) throws Exception {
         String sql = "INSERT INTO [SU24_BL5_SWP391_G1].[dbo].[post] (title, content, created_at, updated_at, user_id, posttype_id) VALUES (?, ?, ?, ?, ?, ?)";
 
-        try (Connection conn = getConnection();
-             PreparedStatement ps = conn.prepareStatement(sql)) {
+        try (Connection conn = getConnection(); PreparedStatement ps = conn.prepareStatement(sql)) {
 
             ps.setString(1, post.getTitle());
             ps.setString(2, post.getContent());
@@ -101,8 +102,7 @@ public class postDAO extends DBContext {
     public void updatePost(Post post) throws Exception {
         String sql = "UPDATE [SU24_BL5_SWP391_G1].[dbo].[post] SET title = ?, content = ?, updated_at = ?, posttype_id = ? WHERE id = ?";
 
-        try (Connection conn = getConnection();
-             PreparedStatement ps = conn.prepareStatement(sql)) {
+        try (Connection conn = getConnection(); PreparedStatement ps = conn.prepareStatement(sql)) {
 
             ps.setString(1, post.getTitle());
             ps.setString(2, post.getContent());
@@ -120,8 +120,7 @@ public class postDAO extends DBContext {
     public void deletePost(int postId) throws Exception {
         String sql = "DELETE FROM [SU24_BL5_SWP391_G1].[dbo].[post] WHERE id = ?";
 
-        try (Connection conn = getConnection();
-             PreparedStatement ps = conn.prepareStatement(sql)) {
+        try (Connection conn = getConnection(); PreparedStatement ps = conn.prepareStatement(sql)) {
 
             ps.setInt(1, postId);
             ps.executeUpdate();

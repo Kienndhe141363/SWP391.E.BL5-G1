@@ -3,18 +3,18 @@
     Created on : Aug 8, 2024, 1:44:54 AM
     Author     : ThangNPHE151263
 --%>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html lang="vi">
+
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>About Us</title>
-        <link rel="stylesheet" href="css/about.css">
+        <title>Giới Thiệu | You&Me</title>
+        <link rel="shortcut icon" type="image/x-icon" href="assets/img/favicon.ico">
         <link rel="stylesheet" href="assets/css/plugins.css">
         <link rel="stylesheet" href="assets/css/style.css">
-        <link rel="shortcut icon" type="image/x-icon" href="assets/img/favicon.ico">
         <style>
             body {
                 font-family: Arial, sans-serif;
@@ -91,10 +91,6 @@
                 padding: 10px;
             }
 
-            .content-image {
-                max-width: 100%;
-            }
-
             .content-image img {
                 width: 100%;
                 height: auto;
@@ -108,12 +104,13 @@
             .c-even .content-wrapper {
                 flex-direction: row;
             }
-
         </style>
     </head>
+
     <body>
         <div class="off_canvars_overlay"></div>
         <jsp:include page="menu.jsp"/>
+
         <!--breadcrumbs area start-->
         <div class="breadcrumbs_area other_bread">
             <div class="container">   
@@ -130,6 +127,7 @@
                 </div>
             </div>         
         </div>
+
         <header>
             <h1>Giới Thiệu</h1>
         </header>
@@ -155,10 +153,16 @@
                     </div>
                 </section>
             </c:forEach>
+
         </div>
 
-        <footer>
-            <jsp:include page="footer.jsp"/>
-        </footer>
+        <jsp:include page="footer.jsp"/>
+
+        <!-- Plugins JS -->
+        <script src="assets/js/plugins.js"></script>
+
+        <!-- Main JS -->
+        <script src="assets/js/main.js"></script>
     </body>
 </html>
+

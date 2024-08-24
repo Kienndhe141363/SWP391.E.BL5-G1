@@ -20,7 +20,7 @@ import model.PostType;
 
 /**
  *
- * @author Putaa
+ * @author ThangNPHE151263
  */
 @WebServlet(name = "EditPost", urlPatterns = {"/editPost"})
 public class EditPost extends HttpServlet {
@@ -73,7 +73,6 @@ public class EditPost extends HttpServlet {
             Post post = postDAO.getPostById(postId);
 
             List<PostType> postTypes = postTypeDAO.getAllPostTypes();
-
             request.setAttribute("post", post);
             request.setAttribute("postTypes", postTypes);
 
@@ -96,6 +95,12 @@ public class EditPost extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        HttpSession session = request.getSession(false);
+        if (session == null || session.getAttribute("user") == null) {
+            response.sendRedirect("user?action=login");
+            return;
+        }
+        model.User user = (model.User) session.getAttribute("user");
         String postIdStr = request.getParameter("postId");
         int postId = Integer.parseInt(postIdStr);
         String title = request.getParameter("title");
@@ -103,8 +108,6 @@ public class EditPost extends HttpServlet {
         String postTypeIdStr = request.getParameter("postTypeId");
         int postTypeId = Integer.parseInt(postTypeIdStr);
         java.sql.Date updateAt = new java.sql.Date(System.currentTimeMillis());
-        HttpSession session = request.getSession();
-        model.User user = (model.User) session.getAttribute("user");
         postDAO postDAO = new postDAO();
 
         try {
