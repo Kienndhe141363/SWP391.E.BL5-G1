@@ -70,17 +70,13 @@ public class EditPost extends HttpServlet {
         postTypeDAO postTypeDAO = new postTypeDAO();
 
         try {
-            // Lấy thông tin bài viết theo ID
             Post post = postDAO.getPostById(postId);
 
-            // Lấy danh sách tất cả các loại bài viết
             List<PostType> postTypes = postTypeDAO.getAllPostTypes();
 
-            // Gán thông tin bài viết và các loại bài viết vào thuộc tính request
             request.setAttribute("post", post);
             request.setAttribute("postTypes", postTypes);
 
-            // Chuyển tiếp đến trang editPost.jsp
             request.getRequestDispatcher("editPost.jsp").forward(request, response);
 
         } catch (Exception e) {

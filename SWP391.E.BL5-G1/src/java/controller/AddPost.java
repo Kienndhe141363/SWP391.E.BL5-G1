@@ -62,8 +62,8 @@ public class AddPost extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-            try {
-            postTypeDAO postTypeDAO = new postTypeDAO();
+        postTypeDAO postTypeDAO = new postTypeDAO();
+        try {
             List<PostType> postTypes = postTypeDAO.getAllPostTypes();
             request.setAttribute("postTypes", postTypes);
             request.getRequestDispatcher("/addPost.jsp").forward(request, response);
@@ -89,7 +89,7 @@ public class AddPost extends HttpServlet {
             String title = request.getParameter("title");
             String content = request.getParameter("content");
             int postTypeId = Integer.parseInt(request.getParameter("postTypeId"));
-            int userId = Integer.parseInt(request.getParameter("userId")); 
+            int userId = Integer.parseInt(request.getParameter("userId"));
 
             Post newPost = new Post();
             newPost.setTitle(title);

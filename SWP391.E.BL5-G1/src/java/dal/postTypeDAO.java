@@ -19,7 +19,7 @@ import java.sql.SQLException;
 public class postTypeDAO extends DBContext{
     public List<PostType> getAllPostTypes() throws Exception {
         List<PostType> postTypes = new ArrayList<>();
-        String sql = "SELECT postTypeId, typeName FROM PostType";
+        String sql = "SELECT id, type FROM PostType";
 
         try (Connection conn = getConnection();
              PreparedStatement ps = conn.prepareStatement(sql);
@@ -27,8 +27,8 @@ public class postTypeDAO extends DBContext{
 
             while (rs.next()) {
                 PostType postType = new PostType(
-                    rs.getInt("postTypeId"),
-                    rs.getString("typeName")
+                    rs.getInt("id"),
+                    rs.getString("type")
                 );
                 postTypes.add(postType);
             }
