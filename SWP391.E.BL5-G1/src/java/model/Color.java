@@ -33,7 +33,8 @@ public class Color {
     public void setColor(String color) {
         this.color = color;
     }
-    
-    
-    
+     @Override
+    public String toString() {
+        return "product_id" + product_id+ " : " + "color"  + color;
+    }
 }

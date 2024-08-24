@@ -529,7 +529,7 @@
                 color: white;
                 background-color: cornflowerblue;
             }
-            
+
             .boldTitle{
                 font-weight: 700;
             }
@@ -566,7 +566,7 @@
                                 <!-- <c:if test="${sessionScope.user.isAdmin}">
                                     <button type="button" data-toggle="modal" data-target="#ModalUpdate${blogId}" class="btn btn-save"  title="Thêm">
                                         <i class="fas fa-edit"></i>Chỉnh sửa nội dung Blog</button>
-                                    </c:if>-->
+                                </c:if>-->
                                 <div class="modal fade" id="ModalUpdate${blogId}" tabindex="-1" role="dialog" aria-hidden="true">
                                     <div class="modal-dialog modal-dialog-centered" role="document">
                                         <div class="modal-content">
@@ -618,10 +618,10 @@
                         <h4 style="text-align: left">Thảo luận đề tài:</h4>
                         <c:forEach items="${CommentData}" var="c">
                             <div style="width: 100%;margin-top: 10px;">
-                                    <h5 class="card-title product-title ${c.userId == idUser ? 'boldTitle' : ''}">Người dùng #${c.userId}</h5>
-                                </div>
+                                <h5 class="card-title product-title ${c.userId == idUser ? 'boldTitle' : ''}">Người dùng #${c.userId}</h5>
+                            </div>
                             <div class="col-md-9 mb-9" style="display: flex; border: 0.5px solid; border-radius: 5px;">
-                                
+
 
                                 <div class="card-body" style="width: 80%; color: black">
                                     <p class="card-text product-price">${c.commentText}</p>
@@ -633,35 +633,34 @@
                                         <a href="blog-comment?action=deleteBlogComment&blog_id=${c.blogId}&comment_id=${c.commentId}" class="btn"><i class="fas fa-trash"></i></a>
 
                                     </div>
-                                        <div class="modal fade" id="ModalEditComment${c.userId}" tabindex="-1" role="dialog" aria-hidden="true">
-                                    <div class="modal-dialog modal-dialog-centered" role="document">
-                                        <div class="modal-content">
-                                            <div class="modal-body" style="padding:0.5rem 1rem">
-                                                <form id="contact-form2" action="blog-comment?action=updateBlogComment" method="POST">
-                                                    <input type="hidden" name="action" value="addBlog">
-                                                    <div class="row">   
-                                                        <div class="form-group col-md-12">
-                                                            <span class="thong-tin-thanh-toan">
-                                                                <h4 style="color: black">Chỉnh sửa nội dung</h4>
-                                                            </span>
+                                    <div class="modal fade" id="ModalEditComment${c.userId}" tabindex="-1" role="dialog" aria-hidden="true">
+                                        <div class="modal-dialog modal-dialog-centered" role="document">
+                                            <div class="modal-content">
+                                                <div class="modal-body" style="padding:0.5rem 1rem">
+                                                    <form id="contact-form2" action="blog-comment?action=updateBlogComment" method="POST">
+                                                        <input type="hidden" name="action" value="addBlog">
+                                                        <div class="row">   
+                                                            <div class="form-group col-md-12">
+                                                                <span class="thong-tin-thanh-toan">
+                                                                    <h4 style="color: black">Chỉnh sửa nội dung</h4>
+                                                                </span>
+                                                            </div>
                                                         </div>
-                                                    </div>
-                                                    <div class="row" style="padding: 0.5rem 1rem; width:100%">
-                                                        <input style="font-weight: bolder" name="comment_id" readonly type="text" hidden="true" value="${c.commentId}">
-                                                        <input style="font-weight: bolder" name="blog_id" readonly type="text" hidden="true" value="${blogId}">
-                                                        <textarea  style="margin-top: 10px; width:100%" rows="4" cols="50" placeholder="${c.commentText}" name="comment_text" type="text" value="commentText"></textarea>
-                                                    </div>
-                                                    <div style="margin-top: 10px; text-align: center">
-                                                        <button class="btn btn-save" style="background-color: green; color:white" type="submit">Gửi</button>
-                                                        <a class="btn btn-cancel" style="background-color: red; color:white"  data-dismiss="modal">Hủy bỏ</a>
-                                                    </div>
-                                                </form>
+                                                        <div class="row" style="padding: 0.5rem 1rem; width:100%">
+                                                            <input style="font-weight: bolder" name="comment_id" readonly type="text" hidden="true" value="${c.commentId}">
+                                                            <input style="font-weight: bolder" name="blog_id" readonly type="text" hidden="true" value="${blogId}">
+                                                            <textarea  style="margin-top: 10px; width:100%" rows="4" cols="50" placeholder="${c.commentText}" name="comment_text" type="text" value="commentText"></textarea>
+                                                        </div>
+                                                        <div style="margin-top: 10px; text-align: center">
+                                                            <button class="btn btn-save" style="background-color: green; color:white" type="submit">Gửi</button>
+                                                            <a class="btn btn-cancel" style="background-color: red; color:white"  data-dismiss="modal">Hủy bỏ</a>
+                                                        </div>
+                                                    </form>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
-                                </div>
                                 </c:if>
-
                             </div>
                         </c:forEach>
                     </div>
@@ -672,10 +671,11 @@
                     <input type="hidden" name="action" value="addBlogComment">
                     <h3>Góc bình luận</h3>
                     <textarea name="comment_text" rows="4" cols="50" placeholder="Nhập bình luận của bạn"></textarea>
-                    <button type="submit">Gửi bình luận</button>
+                    <c:if test="${not empty sessionScope.user}">
+                        <button type="submit">Gửi bình luận</button>
+                    </c:if>
                 </form>
             </div>
-
         </div>
 
         <%--<jsp:include page="layout/footer.jsp"/>--%>
