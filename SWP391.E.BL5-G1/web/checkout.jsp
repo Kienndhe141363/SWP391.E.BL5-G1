@@ -116,11 +116,6 @@
                                                 <fmt:formatNumber value="${sessionScope.cart.totalMoney}" minFractionDigits="0" maxFractionDigits="2" var="sessionScope_total"/>
                                                 <td>${sessionScope_total}</td>
                                             </tr>
-                                            <tr>
-                                                <th>Giảm giá</th>
-                                                <fmt:formatNumber value="${sessionScope.discountAmount}" minFractionDigits="0" maxFractionDigits="2" var="sessionScope_discount"/>
-                                                <td>${sessionScope_discount}</td>
-                                            </tr>
                                             <tr class="order_total">
                                                 <th>Tổng đơn</th>
                                                 <fmt:formatNumber value="${sessionScope.cart.totalMoney * (1 - sessionScope.discountAmount)}" minFractionDigits="0" maxFractionDigits="2" var="sessionScope_total_after_discount"/>
