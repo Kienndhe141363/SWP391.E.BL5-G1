@@ -71,17 +71,19 @@ public class blogDAO extends DBContext {
             conn = new DBContext().getConnection();
             ps = conn.prepareStatement(sql);
             rs = ps.executeQuery();
-            int blogId = rs.getInt("blog_id");
-            String title = rs.getString("title");
-            String summary = rs.getString("summary");
-            String content = rs.getString("content");
-            java.util.Date createdAt = rs.getTimestamp("created_at");
-            java.util.Date updatedAt = rs.getTimestamp("updated_at");
-            int userId = rs.getInt("user_id");
-            // Lấy đối tượng User
-            String images = rs.getString("images");
-            Blog blog = new Blog(blogId, title, summary, content, createdAt, updatedAt, userId, images);
-            list.add(blog);
+            while (rs.next()) {
+                int blogId = rs.getInt(1);
+                String title = rs.getString(2);
+                String summary = rs.getString(3);
+                String content = rs.getString(4);
+                java.util.Date createdAt = rs.getTimestamp(5);
+                java.util.Date updatedAt = rs.getTimestamp(6);
+                int userId = rs.getInt(7);
+                // Lấy đối tượng User
+                String images = rs.getString(8);
+                Blog blog = new Blog(blogId, title, summary, content, createdAt, updatedAt, userId, images);
+                list.add(blog);
+            }
         } catch (Exception e) {
             e.printStackTrace(); // It's good practice to log the exception
         } finally {

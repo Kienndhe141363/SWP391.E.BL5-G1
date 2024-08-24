@@ -84,15 +84,18 @@ public class Product_Search extends HttpServlet {
             int category_id = product.getCate().getCategory_id();
             List<model.Product> productByCategory = c.getProductByCategory(category_id);
             PrintWriter out = response.getWriter();
-            out.print(productByCategory);            
-            out.print(sizeList);            
+            out.print(productByCategory);
+            out.print(sizeList);
             out.print(colorList);
-
-            HttpSession session = request.getSession();
-            model.User user = (model.User) session.getAttribute("user");
-            int user_id = user.getUser_id();
+            int user_id = 0;
             albumDAO a = new albumDAO();
-            List<Album> album = a.getList(user_id);
+            List<Album> album = null;
+            HttpSession session = request.getSession();
+            if (session.getAttribute("user") != null) {
+                model.User user = (model.User) session.getAttribute("user");
+                user_id = user.getUser_id();
+                album = a.getList(user_id);
+            }
             commentRatingDAO crDAO = new commentRatingDAO();
             List<model.Comment> comments = null;
             List<model.Comment> comments1 = null;
@@ -174,7 +177,6 @@ public class Product_Search extends HttpServlet {
             String commentText = request.getParameter("comment");
 
 //             Call DAO method to add rating
-
             commentRatingDAO dao = new commentRatingDAO();
             if (dao.hasUserCommented(productId, userId)) {
                 HttpSession session = request.getSession();
@@ -222,7 +224,7 @@ public class Product_Search extends HttpServlet {
             String product_img = request.getParameter("product_img");
             String product_id = request.getParameter("product_id");
             c.addProductAlbum(_id, product_id, product_name, price, product_img);
-                request.getRequestDispatcher("product-detail.jsp").forward(request, response);
+            request.getRequestDispatcher("product-detail.jsp").forward(request, response);
             return;
         }
 

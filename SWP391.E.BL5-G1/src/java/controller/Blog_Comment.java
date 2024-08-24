@@ -59,8 +59,7 @@ public class Blog_Comment extends HttpServlet {
         String action = request.getParameter("action");
         String page = "";
         HttpSession session = request.getSession();
-        model.User user = (model.User) session.getAttribute("user");
-        int user_id = user.getUser_id();
+
         String blog_id = request.getParameter("blog_id");
         int idBlog = 3;
         if (blog_id != null) {
@@ -72,6 +71,8 @@ public class Blog_Comment extends HttpServlet {
             if (action.equalsIgnoreCase("addBlogComment")) {
 //                String comment_id = request.getParameter("comment_id");
 //                Long commentId = Long.valueOf(comment_id);
+                model.User user = (model.User) session.getAttribute("user");
+                int user_id = user.getUser_id();
                 String comment_text = request.getParameter("comment_text");
                 Date currentDate = new Date();
                 blogDAO c = new blogDAO();
@@ -92,6 +93,8 @@ public class Blog_Comment extends HttpServlet {
                 String summary = request.getParameter("summary");
                 Date currentDate = new Date();
                 blogDAO c = new blogDAO();
+                model.User user = (model.User) session.getAttribute("user");
+                int user_id = user.getUser_id();
                 c.updateBlog(idBlog, title, summary, content, currentDate, currentDate, user_id, "images/blog" + blog_id);
                 request.getRequestDispatcher("blog_user.jsp").forward(request, response);
                 response.sendRedirect("blog_userblog");
@@ -99,6 +102,8 @@ public class Blog_Comment extends HttpServlet {
             } else if (action.equalsIgnoreCase("updateBlogComment")) {
                 String comment_id = request.getParameter("comment_id");
                 Long commentId = Long.valueOf(comment_id);
+                model.User user = (model.User) session.getAttribute("user");
+                int user_id = user.getUser_id();
                 String comment_text = request.getParameter("comment_text");
                 Long userId = Long.valueOf(user_id);
                 Date currentDate = new Date();
@@ -107,6 +112,11 @@ public class Blog_Comment extends HttpServlet {
                 response.sendRedirect("blog-comment?action=blogdetail&blog_id=" + blog_id);
                 return;
             } else if (action.equalsIgnoreCase("blogdetail")) {
+                int user_id = 0;
+                if (session.getAttribute("user") != null) {
+                    model.User user = (model.User) session.getAttribute("user");
+                    user_id = user.getUser_id();
+                }
                 blogDAO c = new blogDAO();
                 List<model.Blog> blog = c.getBlogsByBlogId(idBlog);
                 List<BlogCmt> blogcomment = c.getListBlogComment(idBlog);
@@ -120,8 +130,12 @@ public class Blog_Comment extends HttpServlet {
             }
         } else {
             if (action == null) {
+                int user_id = 0;
+                if (session.getAttribute("user") != null) {
+                    model.User user = (model.User) session.getAttribute("user");
+                    user_id = user.getUser_id();
+                }
                 blogDAO c = new blogDAO();
-
                 List<model.Blog> blog = c.getBlogsByBlogId(idBlog);
                 List<BlogCmt> blogcomment = c.getListBlogComment(idBlog);
                 request.setAttribute("BlogData", blog);
