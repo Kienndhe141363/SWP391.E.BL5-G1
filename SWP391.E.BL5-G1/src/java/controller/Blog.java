@@ -1,34 +1,44 @@
 /*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
  */
-package admin;
+package controller;
 
-import dal.categoryDAO;
+import dal.albumDAO;
+import dal.billDAO;
+import dal.blogDAO;
 import dal.productDAO;
-import dal.reportDAO;
-import dal.userDAO;
+import model.Product;
+import model.Album;
+import model.User;
 import jakarta.servlet.RequestDispatcher;
 import java.io.IOException;
-import java.io.PrintWriter;
+import java.util.ArrayList;
+import java.util.List;
 import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.MultipartConfig;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
-import java.util.List;
-import model.Category;
-import model.Report;
-import model.User;
+import jakarta.servlet.http.Part;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.io.PrintWriter;
+import java.util.Date;
+import java.util.Objects;
+import model.Product_Active;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
-/**
- *
- * @author admin
- */
-@WebServlet(name = "reportManager", urlPatterns = {"/reportmanager"})
-
-public class ReportManager extends HttpServlet {
+@WebServlet(name = "Blog", urlPatterns = {"/blog_user"})
+public class Blog extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -41,41 +51,39 @@ public class ReportManager extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        PrintWriter out = response.getWriter();
         request.setCharacterEncoding("UTF-8");
         response.setCharacterEncoding("UTF-8");
         response.setContentType("text/html; charset=UTF-8");
+        String action = request.getParameter("action");
         String page = "";
-        try {
-            HttpSession session = request.getSession();
-            User user = (User) session.getAttribute("user");
-            String action = request.getParameter("action");
-            if (user.getIsAdmin().equalsIgnoreCase("true")) {
-                if (action == null) {
-                    userDAO cdao = new userDAO();
-                    reportDAO rdao = new reportDAO();
-                    List<Report> reports = rdao.getAll();
-                    List<User> users = cdao.getUser();
-                    session.setAttribute("Reports", reports);
-                    request.setAttribute("users", users);
-                    page = "admin/report.jsp";
-                } else if (action.equalsIgnoreCase("delete")) {
-                    String id_report = request.getParameter("id_report");
-                    int id = Integer.parseInt(id_report);
-                    reportDAO dao = new reportDAO();
-                    dao.deleteReport(id);
-                    response.sendRedirect("reportmanager");
-                    return;
-                }
+        HttpSession session = request.getSession();
+//        String id = request.getParameter("blog_id");
+//        int blog_id = 1;
+//        if (id == null || id.isEmpty()) {
+//            blogDAO c = new blogDAO();
+//            blog_id = c.getFirstAlbum(user_id);
+//        } else {
+//            album_id = Integer.parseInt(id);
+//        }
+        page = "blog_user.jsp";
+
+        if (action != null) {
+            
+        } else {
+            if (action == null) {
+                blogDAO c = new blogDAO();
+                List<model.Blog> blog = c.getList();
+                request.setAttribute("BlogData", blog);
+                request.getRequestDispatcher("blog_user.jsp").forward(request, response);
+                return;
+
             }
-        } catch (Exception e) {
-            page = "404.jsp";
         }
         RequestDispatcher dd = request.getRequestDispatcher(page);
         dd.forward(request, response);
-
     }
 
-    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
      * Handles the HTTP <code>GET</code> method.
      *
@@ -84,9 +92,12 @@ public class ReportManager extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
+    public int BUFFER_SIZE = 1024 * 1000;
+
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        String action = request.getParameter("action");
         processRequest(request, response);
     }
 

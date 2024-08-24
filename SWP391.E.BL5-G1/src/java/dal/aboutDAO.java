@@ -48,6 +48,7 @@ public class aboutDAO extends DBContext {
         try {
             conn = new DBContext().getConnection();
             ps = conn.prepareStatement(sql);
+            img = "images/" + img;
             ps.setString(1, title);
             ps.setString(2, img);
             ps.setString(3, content);
@@ -83,7 +84,7 @@ public class aboutDAO extends DBContext {
         ps = conn.prepareStatement(sql);
         ps.setString(1, title);
         ps.setString(2, content);
-
+        img = "images/" + img;
         if (!img.isEmpty()) {
             ps.setString(3, img);
             ps.setInt(4, id);

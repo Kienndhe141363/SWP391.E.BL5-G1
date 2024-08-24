@@ -1,6 +1,6 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!doctype html>
 <html class="no-js" lang="en">
 
@@ -190,6 +190,7 @@
                             <div class="dashboard_tab_button">
                                 <ul role="tablist" class="nav flex-column dashboard-list">
                                     <li><a href="#account-details" data-toggle="tab" class="nav-link">Tài khoản của tôi</a></li>
+                                    <li><a href="/album" data-toggle="tab" class="nav-link">Xem BST</a></li>
                                     <li><a href="#edit-profile" data-toggle="tab" class="nav-link">Chỉnh sửa hồ sơ</a></li>
                                     <li><a href="#password" data-toggle="tab" class="nav-link">Đổi mật khẩu</a></li>
                                     <li><a href="#orders" data-toggle="tab" class="nav-link">Đơn hàng</a></li>
@@ -221,7 +222,9 @@
                                                         <td>${b.date}</td>
                                                         <td><span class="success">${b.payment}</span></td>
                                                         <td>${b.address}</td>
-                                                        <td>${b.total}</td>
+                                                        <td><fmt:formatNumber value="${b.total}" minFractionDigits="0" maxFractionDigits="2" var="b_total"/>
+                                                        <span class="current_price">${b_total} VND</span></td>
+                                                        
                                                         <td><a href="user?action=showdetail&bill_id=${b.bill_id}" class="view">view</a></td>
                                                     </tr>
                                                 </c:forEach>

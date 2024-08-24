@@ -58,7 +58,7 @@
                             <h3>Liên hệ</h3>
                             <ul>
                                 <li><i class="fa fa-fax"></i>  Đại học FPT</li>
-                                <li><i class="fa fa-envelope-o"> </i> <a href="mailto:kienndhe141363@fpt.edu.vn">kienndhe141363@fpt.edu.vn</a></li>
+                                <li><i class="fa fa-envelope-o"> </i> <a href="mailto:dungnthe130159@fpt.edu.vn@fpt.edu.vn">dungnthe130159@fpt.edu.vn</a></li>
                                 <li><i class="fa fa-phone"></i> 0979986201</li>                        
                             </ul>             
                         </div> 
@@ -73,9 +73,8 @@
                               
                                 <p>      
                                     <label>  Địa chỉ email</label>
-                                    <input style="font-weight: bolder" name="user_email" readonly type="text" value="${user.user_email}">
+                                    <input style="font-weight: bolder" name="user_email" type="text" value="${user.user_email}">
                                 </p>
-
                                 <p>          
                                     <label>  Tiêu đề</label>
                                     <input name="subject_report" placeholder="Nhập tiêu đề ..." required type="text">
@@ -87,7 +86,7 @@
                                 <input hidden name="user_id" require type="text" value="${user.user_id}">
                                 <br>
                                 <c:if test="${!user.isAdmin == 'True' && !user.isStoreStaff=='True'}">
-                                    <button type="submit">Gửi</button>
+                                    <button onclick="handleSubmit()" type="submit">Gửi</button>
                                 </c:if>
                             </form>
 
@@ -100,7 +99,6 @@
             </div>    
         </div>
         <!--contact area end-->
-
         <!--contact map start-->
         <!--contact map end-->
 
@@ -115,21 +113,29 @@
         <!-- Main JS -->
         <script src="assets/js/main.js"></script>
         <script>
-            function doGet(e) {
-                var email = e.parameter.Email;
-                var subject = e.parameter.Subject;
-                var message = e.parameter.Message;
+            function handleSubmit(e) {
+//              var email = e.parameter.Email;
+//              var subject = e.parameter.Subject;
+//              var message = e.parameter.Message;
+//              const email = document.querySelector('#user_email').value;
+//              const subject = document.querySelector('#subject_report').value;
+//              const message = document.querySelector('#content_report').value;
 
+              const form = document.getElementById('contact-form');
+              const formData = new FormData(form);
+
+        // Lấy dữ liệu từ FormData
+                const email = formData.get('user_email');
+                const subject = formData.get('subject_report');
+                const message = formData.get('content_report');
                 // Tạo nội dung email
                 var emailContent = 'Email: ' + email + '\n\n' + 'Subject: ' + subject + '\n\n' + 'Message: ' + message;
-
                 // Gửi email
                 MailApp.sendEmail({
-                    to: 'kienndhe141363@fpt.edu.vn', // Thay bằng địa chỉ email của bạn
+                    to: 'dungnthe130159@fpt.edu.vn', // Thay bằng địa chỉ email của bạn
                     subject: subject,
                     body: emailContent
                 });
-
                 // Trả về phản hồi
                 return ContentService.createTextOutput('Success');
             }

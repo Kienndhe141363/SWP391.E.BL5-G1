@@ -69,7 +69,7 @@ public class EditAbout extends HttpServlet {
         }
 
         model.User user = (model.User) session.getAttribute("user");
-        if (!user.getIsStoreStaff().equalsIgnoreCase("true")) {
+        if (!user.getIsStoreStaff().equalsIgnoreCase("true")&& !user.getIsAdmin().equalsIgnoreCase("true")) {
             response.sendRedirect("home");
             return;
         }

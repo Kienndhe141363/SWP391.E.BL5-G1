@@ -191,11 +191,11 @@
                                 <input type="hidden" name="action" value="insertproduct">
                                 <div class="form-group col-md-3">
                                     <label class="control-label">Mã sản phẩm </label>
-                                    <input class="form-control" name="product_id" type="text" placeholder="">
+                                    <input class="form-control" name="product_id" type="text" placeholder="" required>
                                 </div>
                                 <div class="form-group col-md-3">
                                     <label for="exampleSelect1" class="control-label">Danh mục</label>
-                                    <select name="category_id" class="form-control" id="exampleSelect1">
+                                    <select name="category_id" class="form-control" id="exampleSelect1" required>
                                         <option>-- Chọn danh mục --</option>
                                         <c:forEach items="${CategoryData}" var="cat">
                                             <option value="${cat.category_id}">${cat.category_name}</option>
@@ -205,19 +205,19 @@
 
                                 <div class="form-group col-md-3">
                                     <label class="control-label">Tên sản phẩm</label>
-                                    <input class="form-control" name="product_name" type="text">
+                                    <input class="form-control" name="product_name" type="text" required>
                                 </div>
                                 <div class="form-group  col-md-3">
                                     <label class="control-label">Giá bán</label>
-                                    <input class="form-control" name="price" type="number" oninput="validateQuantity(this)">
+                                    <input class="form-control" name="price" type="number" oninput="validateQuantity(this)" >
                                 </div>
                                 <div class="form-group col-md-3">
                                     <label class="control-label">Size</label>
-                                    <input class="form-control" name="size" type="text" placeholder="S,L,XL,...">
+                                    <input class="form-control" name="size" type="text" placeholder="S,L,XL,..." required>
                                 </div>
                                 <div class="form-group col-md-3">
                                     <label class="control-label">Màu</label>
-                                    <input class="form-control" placeholder="Blue,Gray,..." name="color" type="text">
+                                    <input class="form-control" placeholder="Blue,Gray,..." name="color" type="text" required>
                                 </div>
                                 <div class="form-group  col-md-3">
                                     <label class="control-label">Số lượng</label>
