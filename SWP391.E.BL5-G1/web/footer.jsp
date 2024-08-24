@@ -60,8 +60,8 @@
                         <h5 class="text-uppercase mb-4">Bản tin</h5>
                         <form>
                             <div class="input-group mb-3">
-                                <input type="email" class="form-control" placeholder="Nhập email của bạn" aria-label="Email" aria-describedby="button-addon2">
-                                <button class="btn btn-outline-light" type="submit" id="button-addon2">Đăng ký</button>
+                                
+                                <a href="about.jsp" class="text-light">Giới thiệu về You&Me</a>
                             </div>
                         </form>
                     </div>
@@ -70,12 +70,12 @@
                     <div class="col-md-3 mb-4">
                         <h5 class="text-uppercase mb-4">Công ty</h5>
                         <ul class="list-unstyled">
-                            <li><a href="about.jsp" class="text-light">Giới thiệu về You&Me</a></li>
+                            
                             <li><a href="https://the31.vn/" class="text-light">THE 31</a></li>
                             <li><a href="https://jobs.routine.vn/" class="text-light">Tuyển dụng</a></li>
-                            <li><a href="/tin-thoi-trang" class="text-light">Tin thời trang</a></li>
+                            
                             <li><a href="https://routine.vn/franchise" class="text-light">Hợp tác nhượng quyền</a></li>
-                            <li><a href="/thong-tin-lien-he" class="text-light">Liên hệ</a></li>
+                            <li><a href="contact" class="text-light">Liên hệ</a></li>
                         </ul>
                     </div>
 

@@ -243,7 +243,7 @@ public class User extends HttpServlet {
                     userDAO dao = new userDAO();
                     if (!dao.checkPassword(user.getUser_id(), currentPassword)) {
                         session.setAttribute("error_dob", "Mật khẩu hiện tại không chính xác.");
-                        response.sendRedirect("user?action=updatepassword");
+                        response.sendRedirect("user?action=myaccount");
                         return;
                     }
 

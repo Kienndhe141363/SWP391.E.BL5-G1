@@ -67,8 +67,8 @@
                                         <tbody>
                                             <c:forEach items="${detail}" var="d">
                                                 <tr>
-                                                    <td class="product_thumb"><a href="product?action=productdetail&product_id=${d.product.product_id}"><img src="${d.product.img}" alt=""></a></td>
-                                                    <td class="product_name"><a href="product?action=productdetail&product_id=${i.product.product_id}">${d.product.product_name}</a></td>
+                                                    <td class="product_thumb"><a href="search?action=productdetail&product_id=${d.product.product_id}"><img src="${d.product.img}" alt=""></a></td>
+                                                    <td class="product_name"><a href="search?action=productdetail&product_id=${d.product.product_id}">${d.product.product_name}</a></td>
                                                     <td class="product-price">${d.size}</td>
                                                     <td class="product-price">${d.color}</td>
                                                     <td class="product_quantity">${d.quantity}</td>

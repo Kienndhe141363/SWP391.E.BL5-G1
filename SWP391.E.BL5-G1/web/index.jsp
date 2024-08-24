@@ -109,33 +109,33 @@
         <!--slider area end-->
 
         <!--banner area start-->
-            <div class="banner_section banner_section_three">
-                <div class="container-fluid">
-                    <div class="row ">
-                        <div class="col-lg-4 col-md-6">
-                            <div class="banner_area">
-                                <div class="banner_thumb">
-                                    <a href="product"><img src="assets/img/bg/banner_fashion1.png" alt="#"></a>
-                                </div>
+        <div class="banner_section banner_section_three">
+            <div class="container-fluid">
+                <div class="row ">
+                    <div class="col-lg-4 col-md-6">
+                        <div class="banner_area">
+                            <div class="banner_thumb">
+                                <a href="product"><img src="assets/img/bg/banner_fashion1.png" alt="#"></a>
                             </div>
                         </div>
-                        <div class="col-lg-4 col-md-6">
-                            <div class="banner_area">
-                                <div class="banner_thumb">
-                                    <a href="product"><img src="assets/img/bg/banner3.png" alt="#"></a>
-                                </div>
+                    </div>
+                    <div class="col-lg-4 col-md-6">
+                        <div class="banner_area">
+                            <div class="banner_thumb">
+                                <a href="product"><img src="assets/img/bg/banner3.png" alt="#"></a>
                             </div>
                         </div>
-                        <div class="col-lg-4 col-md-6">
-                            <div class="banner_area bottom">
-                                <div class="banner_thumb">
-                                    <a href="product"><img src="assets/img/bg/banner_fashion2.png" alt="#"></a>
-                                </div>
+                    </div>
+                    <div class="col-lg-4 col-md-6">
+                        <div class="banner_area bottom">
+                            <div class="banner_thumb">
+                                <a href="product"><img src="assets/img/bg/banner_fashion2.png" alt="#"></a>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
+        </div>
         <section class="banner_section banner_section_three">
             <div class="container-fluid">
                 <div class="row ">
@@ -310,61 +310,95 @@
             </div>
         </section>
 
+        <section class="product_section womens_product bottom">
+            <div class="container">
+                <div class="row">   
+                    <div class="col-12">
+                        <div class="section_title">
+                            <h2>Sản phẩm mới</h2>
+                            <p>Sản phẩm thời trang mới</p>
+                        </div>
+                    </div> 
+                </div>    
+                <div class="product_area"> 
+                    <div class="row">
+                        <div class="product_carousel product_three_column4 owl-carousel">
+                            <c:forEach items="${newProducts}" var="newProducts">
+                                <div class="col-lg-3">
+                                    <div class="single_product">
+                                        <div class="product_thumb">
+                                            <a class="primary_img" href="search?action=productdetail&product_id=${newProducts.product_id}"><img src="${newProducts.img}" width="10px;" alt=""></a>
+                                            <div class="quick_button">
+                                                <a href="search?action=productdetail&product_id=${newProducts.product_id}" title="quick_view">Xem sản phẩm</a>
+                                            </div>
+                                        </div>
+                                        <div class="product_content">
+                                            <h3><a href="search?action=productdetail&product_id=${newProducts.product_id}">${newProducts.product_name}</a></h3>
+                                            <span class="current_price">${newProducts.product_price}đ</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </c:forEach>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
 
 
-     
-    
 
-    <!--product section area end-->
-    <!--footer area start-->
-    <jsp:include page="footer.jsp"/>
-    <!--footer area end-->
-    <!-- JS
-    ============================================ -->
 
-    <!-- Plugins JS -->
-    <script src="assets/js/plugins.js"></script>
+        <!--product section area end-->
+        <!--footer area start-->
+        <jsp:include page="footer.jsp"/>
+        <!--footer area end-->
+        <!-- JS
+        ============================================ -->
 
-    <!-- Main JS -->
-    <script src="assets/js/main.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <script>
-        function showNotification(message, isSuccess) {
-            Swal.fire({
-                title: isSuccess ? 'Thành công!' : 'Lỗi!',
-                text: message,
-                icon: isSuccess ? 'success' : 'error',
-                toast: true,
-                position: 'top-end',
-                showConfirmButton: false,
-                timer: 1000,
-                timerProgressBar: true,
-                didOpen: (toast) => {
-                    toast.addEventListener('mouseenter', Swal.stopTimer)
-                    toast.addEventListener('mouseleave', Swal.resumeTimer)
+        <!-- Plugins JS -->
+        <script src="assets/js/plugins.js"></script>
+
+        <!-- Main JS -->
+        <script src="assets/js/main.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+        <script>
+            function showNotification(message, isSuccess) {
+                Swal.fire({
+                    title: isSuccess ? 'Thành công!' : 'Lỗi!',
+                    text: message,
+                    icon: isSuccess ? 'success' : 'error',
+                    toast: true,
+                    position: 'top-end',
+                    showConfirmButton: false,
+                    timer: 1000,
+                    timerProgressBar: true,
+                    didOpen: (toast) => {
+                        toast.addEventListener('mouseenter', Swal.stopTimer)
+                        toast.addEventListener('mouseleave', Swal.resumeTimer)
+                    }
+                });
+            }
+
+            // Kiểm tra và hiển thị thông báo khi trang được tải
+            document.addEventListener('DOMContentLoaded', function () {
+                var loginMessage = "${sessionScope.loginMessage}";
+                var logoutMessage = "${sessionScope.logoutMessage}";
+                var errorMessage = "${sessionScope.errorMessage}";
+
+                if (loginMessage) {
+                    showNotification(loginMessage, true);
+            <% session.removeAttribute("loginMessage"); %>
+                }
+                if (logoutMessage) {
+
+                    showNotification(logoutMessage, true);
+            <% session.removeAttribute("logoutMessage"); %>
+                } else if (errorMessage) {
+                    showNotification(errorMessage, false);
+            <% session.removeAttribute("errorMessage"); %>
                 }
             });
-        }
-
-// Kiểm tra và hiển thị thông báo khi trang được tải
-        document.addEventListener('DOMContentLoaded', function () {
-            var loginMessage = "${sessionScope.loginMessage}";
-            var logoutMessage = "${sessionScope.logoutMessage}";
-            var errorMessage = "${sessionScope.errorMessage}";
-
-            if (loginMessage) {
-                showNotification(loginMessage, true);
-        <% session.removeAttribute("loginMessage"); %>
-            }  if (logoutMessage) {
-           
-                showNotification(logoutMessage, true);
-        <% session.removeAttribute("logoutMessage"); %>
-            } else if (errorMessage) {
-                showNotification(errorMessage, false);
-        <% session.removeAttribute("errorMessage"); %>
-            }
-        });
-    </script>
-</body>
+        </script>
+    </body>
 
 </html>
