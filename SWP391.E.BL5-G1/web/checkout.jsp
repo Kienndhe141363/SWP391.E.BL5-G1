@@ -102,7 +102,8 @@ x<%@page contentType="text/html" pageEncoding="UTF-8"%>
                                                     <td> ${i.product.product_name} <strong> × ${i.quantity}</strong></td>
                                                     <td> ${i.size}</td>
                                                     <td> ${i.color}</td>
-                                                    <td> ${i.product.product_price * i.quantity }</td>
+                                                    <fmt:formatNumber value="${i.product.product_price * i.quantity }" minFractionDigits="0" maxFractionDigits="2" var="sessionScope_total_quantity"/>
+                                                    <td> ${sessionScope_total_quantity}</td>
                                                 </tr>
                                             </c:forEach>
                                         </tbody>
@@ -110,7 +111,8 @@ x<%@page contentType="text/html" pageEncoding="UTF-8"%>
                                             <tfoot>
                                                 <tr>
                                                     <th>Tổng giá</th>
-                                                    <td>${sessionScope.total}</td>
+                                                    <fmt:formatNumber value="${sessionScope.total}" minFractionDigits="0" maxFractionDigits="2" var="sessionScope_total"/>
+                                                    <td>${sessionScope_total}</td>
                                                 </tr>
                                                 <tr>
                                                     <th>Phí ship</th>
@@ -118,7 +120,8 @@ x<%@page contentType="text/html" pageEncoding="UTF-8"%>
                                                 </tr>
                                                 <tr class="order_total">
                                                     <th>Tổng đơn</th>
-                                                    <td><strong>${sessionScope.total + 0}</strong></td>
+                                                    <fmt:formatNumber value="${sessionScope.total + 0}" minFractionDigits="0" maxFractionDigits="2" var="sessionScope_total_0"/>
+                                                    <td><strong>${sessionScope_total_0}</strong></td>
                                                 </tr>
                                             </tfoot>
                                         </c:if>

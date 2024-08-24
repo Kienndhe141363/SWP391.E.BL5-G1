@@ -283,15 +283,17 @@
                                                         <td class="product_remove"><a href="cart?action=deletecart&product_id=${i.product.product_id}">Delete</a></td>
                                                         <td class="product_thumb"><a href="product?action=productdetail&product_id=${i.product.product_id}"><img src="${i.product.img}" alt=""></a></td>
                                                         <td class="product_name"><a href="product?action=productdetail&product_id=${i.product.product_id}">${i.product.product_name}</a></td>
-                                                        <td class="product-price"><fmt:formatNumber pattern="##########" value="${i.product.product_price}" /></td>
+                                                         <fmt:formatNumber value="${i.product.product_price}" minFractionDigits="0" maxFractionDigits="2" var="i_product_product_price"/>
+                                                        <td class="product-price">${i_product_product_price}</td>
                                                         <td class="product-price">${i.size}</td>
                                                         <td class="product-price">${i.color}</td>
                                                         <td class="product_quantity">
                                                             <input name="quantity" min="1" max="100" value="${i.quantity}" type="number" 
                                                                    onchange="updateQuantity('${i.product.product_id}', this.value, ${i.product.product_price})">
                                                         </td>
+                                                        <fmt:formatNumber value="${i.product.product_price * i.quantity}" minFractionDigits="0" maxFractionDigits="2" var="i_product_product_price_quantity"/>
                                                         <td class="product_total" id="total_${i.product.product_id}">
-                                                            <fmt:formatNumber pattern="##########" value="${i.product.product_price * i.quantity}" /> VNĐ
+                                                            ${i_product_product_price_quantity} VNĐ
                                                         </td>
                                                     </tr>
                                                 </c:forEach>
@@ -314,7 +316,8 @@
                                                 <div class="coupon_inner">
                                                     <div class="cart_subtotal">
                                                         <p>Tổng đơn hàng</p>
-                                                        <p class="cart_amount" id="subtotal"><fmt:formatNumber pattern="##########" value="${sessionScope.total}" /> VNĐ</p>
+                                                        <fmt:formatNumber value="${sessionScope.total}" minFractionDigits="0" maxFractionDigits="2" var="sessionScope_total"/>
+                                                        <p class="cart_amount" id="subtotal">${sessionScope_total} VNĐ</p>
                                                     </div>
                                                     <div class="cart_subtotal ">
                                                         <p>Phí vận chuyển </p>
@@ -322,7 +325,8 @@
                                                     </div>
                                                     <div class="cart_subtotal">
                                                         <p>Tổng tiền</p>
-                                                        <p class="cart_amount" id="total"><fmt:formatNumber pattern="##########" value="${sessionScope.total + 0}" /> VNĐ</p>
+                                                        <fmt:formatNumber value="${sessionScope.total + 0}" minFractionDigits="0" maxFractionDigits="2" var="sessionScope_total_0"/>
+                                                        <p class="cart_amount" id="total">${sessionScope_total_0} VNĐ</p>
                                                     </div>
                                                     <div class="checkout_btn">
                                                         <a href="checkout">Thanh toán</a>

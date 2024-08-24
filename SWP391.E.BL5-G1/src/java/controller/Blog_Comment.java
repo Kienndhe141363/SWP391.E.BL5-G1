@@ -93,8 +93,8 @@ public class Blog_Comment extends HttpServlet {
                 Date currentDate = new Date();
                 blogDAO c = new blogDAO();
                 c.updateBlog(idBlog, title, summary, content, currentDate, currentDate, user_id, "images/blog" + blog_id);
-                request.getRequestDispatcher("blog.jsp").forward(request, response);
-                response.sendRedirect("blog");
+                request.getRequestDispatcher("blog_user.jsp").forward(request, response);
+                response.sendRedirect("blog_userblog");
                 return;
             } else if (action.equalsIgnoreCase("updateBlogComment")) {
                 String comment_id = request.getParameter("comment_id");

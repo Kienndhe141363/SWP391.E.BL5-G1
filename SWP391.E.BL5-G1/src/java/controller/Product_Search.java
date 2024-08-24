@@ -152,21 +152,20 @@ public class Product_Search extends HttpServlet {
                 numberOfComments5 = comments5.size();
                 request.setAttribute("numberOfComments5", numberOfComments5);
             }
+            List<model.Comment> commentss = crDAO.getCommentsByProductId(product_id);
             double averageRating = crDAO.getAverageRatingForProduct(product_id);
             request.setAttribute("ProductData", product);
             request.setAttribute("SizeData", sizeList);
             request.setAttribute("ColorData", colorList);
             request.setAttribute("ProductByCategory", productByCategory);
-            request.setAttribute("comments", comments);
+            request.setAttribute("comments", commentss);
             request.setAttribute("numberOfComments", numberOfComments);
             request.setAttribute("averageRating", averageRating);
             request.setAttribute("user_comment", user_comment);
             request.setAttribute("comment_filter", ratingCmt);
             request.setAttribute("haveCmt", haveCmt);
             request.setAttribute("AlbumData", album);
-
             request.getRequestDispatcher("product-details.jsp").forward(request, response);
-
         } else if (action.equalsIgnoreCase("addComment")) {
             String productId = request.getParameter("product_id");
             String userId = request.getParameter("user_id");  // Retrieve userId from session
@@ -175,6 +174,7 @@ public class Product_Search extends HttpServlet {
             String commentText = request.getParameter("comment");
 
 //             Call DAO method to add rating
+
             commentRatingDAO dao = new commentRatingDAO();
             if (dao.hasUserCommented(productId, userId)) {
                 HttpSession session = request.getSession();

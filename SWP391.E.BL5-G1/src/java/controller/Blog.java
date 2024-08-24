@@ -37,7 +37,7 @@ import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
-@WebServlet(name = "Blog", urlPatterns = {"/blog"})
+@WebServlet(name = "Blog", urlPatterns = {"/blog_user"})
 public class Blog extends HttpServlet {
 
     /**
@@ -68,7 +68,7 @@ public class Blog extends HttpServlet {
 //        } else {
 //            album_id = Integer.parseInt(id);
 //        }
-        page = "blog.jsp";
+        page = "blog_user.jsp";
 
         if (action != null) {
             if (action.equalsIgnoreCase("addBlog")) {
@@ -79,13 +79,13 @@ public class Blog extends HttpServlet {
                 Date currentDate = new Date();
                 blogDAO c = new blogDAO();
                 c.addBlog(title, summary, content,currentDate,currentDate,user_id, "images/blog" + blog_id);
-                response.sendRedirect("blog");
+                response.sendRedirect("blog_user");
                 return;
             } else if (action.equalsIgnoreCase("deleteBlog")) {
                 String blog_id = request.getParameter("blog_id");
                 blogDAO c = new blogDAO();
                 c.BlogDelete(blog_id);
-                response.sendRedirect("blog");
+                response.sendRedirect("blog_user");
                 return;
             } 
 //            else if (action.equalsIgnoreCase("filter")) {
@@ -108,7 +108,7 @@ public class Blog extends HttpServlet {
                 blogDAO c = new blogDAO();
                 List<model.Blog> blog = c.getList();
                 request.setAttribute("BlogData", blog);
-                request.getRequestDispatcher("blog.jsp").forward(request, response);
+                request.getRequestDispatcher("blog_user.jsp").forward(request, response);
                 return;
 
             }
