@@ -1,4 +1,5 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html>
     <head>
@@ -396,7 +397,8 @@
                                     <h1>${ProductData.product_name}</h1>
                                     <div class="product_price">
                                         <label >Giá tiền: </label>
-                                        <span class="current_price">${ProductData.product_price} VNĐ</span>
+                                        <fmt:formatNumber value="${ProductData.product_price != null ? ProductData.product_price : 0}" minFractionDigits="0" maxFractionDigits="2" var="formattedPrice"/>
+                                        <span class="current_price">${formattedPrice} VNĐ</span>
                                     </div>
                                     <div class="product_desc">
                                         <h4>Đánh giá trung bình: 
@@ -483,7 +485,7 @@
         <!--product details end-->
         <!-- Form for adding rating -->
 
-<!--        <div class="form-container">
+        <div class="form-container">
             <form action="search" method="POST">
                 <input type="hidden" name="action" value="addComment">
                 <input type="hidden" name="product_id" value="${ProductData.product_id}">
@@ -501,7 +503,7 @@
                 <textarea name="comment" rows="4" cols="50" placeholder="Nhập bình luận của bạn"></textarea>
                 <button type="submit">Gửi bình luận</button>
             </form>
-        </div>-->
+        </div>
 
 
 

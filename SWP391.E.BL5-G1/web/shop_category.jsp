@@ -1,5 +1,6 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html lang="vi">
     <head>
@@ -115,7 +116,7 @@
 
     </head>
     <body>
-        <%--<jsp:include page="layout/menu.jsp"/>--%>
+        <jsp:include page="menu.jsp"/>
         <!--Offcanvas menu area start-->
         <div class="off_canvars_overlay"></div>
 
@@ -217,7 +218,8 @@
                                             <img src="${p.img}" class="card-img-top product-img" alt="${p.product_name}">
                                             <div class="card-body">
                                                 <h5 class="card-title product-title">${p.product_name}</h5>
-                                                <p class="card-text product-price">${p.product_price} VNĐ</p>
+                                                <fmt:formatNumber value="${p.product_price}" minFractionDigits="0" maxFractionDigits="2" var="formattedPricep"/>
+                                                <p class="card-text product-price">${formattedPricep} VNĐ</p>
                                                 <a href="search?action=productdetail&product_id=${p.product_id}" class="btn btn-primary btn-sm">Xem chi tiết</a>
                                             </div>
                                         </div>
@@ -247,7 +249,7 @@
             </div>
         </div>
 
-        <%--<jsp:include page="layout/footer.jsp"/>--%>
+        <jsp:include page="footer.jsp"/>
 
         <script src="assets/js/plugins.js"></script>
 

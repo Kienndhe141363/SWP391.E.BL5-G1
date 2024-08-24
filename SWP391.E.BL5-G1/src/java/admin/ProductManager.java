@@ -89,7 +89,7 @@ public class ProductManager extends HttpServlet {
                 String product_describe = request.getParameter("describe");
                 String active = request.getParameter("permission");
                 int quantity = Integer.parseInt(product_quantity);
-                Float price = Float.parseFloat(product_price);
+                Float price = Float.valueOf(product_price);
                 int cid = Integer.parseInt(category_id);
                 productDAO dao = new productDAO();
                 Category cate = new Category(cid);
@@ -140,6 +140,9 @@ public class ProductManager extends HttpServlet {
                 //lỗi do các căp key bị null
                 int quantity            = Integer.parseInt(product_quantity);
                 if(quantity < 0) quantity = 1;
+                if (product_price != null) {
+                    product_price = product_price.replaceAll(",", ""); // Remove commas
+                }
                 Float price = Float.valueOf(product_price);
                 int cid = Integer.parseInt(category_id);
                 productDAO dao = new productDAO();
