@@ -5,6 +5,7 @@
 package controller;
 
 import dal.billDAO;
+import dal.couponDAO;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -21,94 +22,63 @@ import model.CheckBill;
  */
 @WebServlet(name = "Checkout", urlPatterns = {"/checkout"})
 public class Checkout extends HttpServlet {
-
-    /**
-     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
-     * methods.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
+    
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         request.setCharacterEncoding("UTF-8");
         response.setCharacterEncoding("UTF-8");
         response.setContentType("text/html; charset=UTF-8");
         try {
-
             HttpSession session = request.getSession(true);
-            model.Cart cart = null;
-            String payment = null;
-            billDAO dao = new billDAO();
+            model.Cart cart = (model.Cart) session.getAttribute("cart");
             String payment_method = request.getParameter("payment_method");
-            //check card
-            Object o = session.getAttribute("cart");
-            if (o != null) {
-                cart = (model.Cart) o;
-            } else {
-                cart = new model.Cart();
-            }
-            model.User acc = null;
-            Object u = session.getAttribute("user");
-            if (o != null) {
-                if (u != null) {
-                    String address = request.getParameter("address");
-                    String phone = request.getParameter("phone");
-                    if (payment_method.equals("momo")) {
-                        payment = "MOMO";
-                    }
-                    if (payment_method.equals("vnpay")) {
-                        payment = "VNPAY";
-                    }
-                    if (payment_method.equals("cod")) {
-                        payment = "COD";
-                    }
-                    int phonenumber = Integer.parseInt(phone);
-                    acc = (model.User) u;
-                    //create bill
-                    CheckBill bill = createBill(acc, cart, payment, address, Integer.toString(phonenumber));
-                    if (payment_method.equals("cod")) {
-                        acc = (model.User) u;
-                        dao.addOrder(acc, cart, payment, address, phonenumber);
-                        session.removeAttribute("cart");
-                        session.setAttribute("size", 0);
-                        request.getSession().setAttribute("orderSuccessMessage", "Đơn hàng của bạn đã được đặt thành công!");
-                        response.sendRedirect("home");
-                    }
-                    if (payment_method.equals("vnpay")) {
-                        int total;
-                        total = (int) Math.round(bill.getCart().getTotalMoney());
+            String couponCode = request.getParameter("coupon_code");
 
-                        request.getSession().setAttribute("pendingBill", bill);
+            model.User acc = (model.User) session.getAttribute("user");
+            if (acc != null) {
+                String address = request.getParameter("address");
+                String phone = request.getParameter("phone");
+                String payment = payment_method.equals("vnpay") ? "VNPAY" : "COD";
 
-                        request.setAttribute("total", total);
-                        request.setAttribute("bill", bill);
-                        request.setAttribute("billId", dao.GetLastId() + 1);
-                        request.getRequestDispatcher("VN_Pay/vnpay_pay.jsp").forward(request, response);
-                    }
+                double discount = applyCoupon(couponCode);
+                double totalAmount = cart.getTotalMoney();
+                double discountedTotal = totalAmount * (1 - discount);
 
-                } else {
-                    response.sendRedirect("user?action=login");
-                }
-            } else {
-                if (payment_method.equals("momo")) {
-                    model.Bill bill = dao.getBill();
-                    int total = Math.round(bill.getTotal());
+                CheckBill bill = createBill(acc, cart, payment, address, phone);
+                bill.setTotalAmount(discountedTotal);
+                bill.setCouponCode(couponCode);
+                billDAO dao = new billDAO();
+                if (payment_method.equals("cod")) {
+                    dao.addOrder(acc, cart, payment, address, Integer.parseInt(phone));
+                    session.removeAttribute("cart");
+                    session.setAttribute("size", 0);
+                    request.getSession().setAttribute("orderSuccessMessage", "Đơn hàng của bạn đã được đặt thành công!");
+                    response.sendRedirect("home");
+                } else if (payment_method.equals("vnpay")) {
+                    int total = (int) Math.round(discountedTotal);
+                    request.getSession().setAttribute("pendingBill", bill);
                     request.setAttribute("total", total);
                     request.setAttribute("bill", bill);
-                    request.getRequestDispatcher("qrcode.jsp").forward(request, response);
+                    request.setAttribute("billId", dao.GetLastId() + 1);
+                    request.getRequestDispatcher("VN_Pay/vnpay_pay.jsp").forward(request, response);
                 }
-                if (payment_method.equals("cod")) {
-                    response.sendRedirect("home");
-                }
+            } else {
+                response.sendRedirect("user?action=login");
             }
         } catch (Exception e) {
             request.getRequestDispatcher("404.jsp").forward(request, response);
         }
     }
 
+    private double applyCoupon(String couponCode) throws Exception {
+        couponDAO couponDAO = new couponDAO();
+        model.Coupon coupon = couponDAO.getCouponByCode(couponCode);
+        if (coupon != null) {
+            return coupon.getDiscountAmount();
+        }
+        return 0;
+    }
+    
     private CheckBill createBill(model.User u, model.Cart c, String pay, String add, String phone) {
         CheckBill bill = new CheckBill();
         bill.setUser(u);
@@ -118,7 +88,6 @@ public class Checkout extends HttpServlet {
         bill.setPhone(phone);
         return bill;
     }
-    
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
