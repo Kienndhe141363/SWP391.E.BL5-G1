@@ -26,7 +26,7 @@
 
     </head>
 
-    <body onload="time()" class="app sidebar-mini rtl">
+    <body  class="app sidebar-mini rtl">
         <!-- Navbar-->
         <header class="app-header">
             <!-- Sidebar toggle button--><a class="app-sidebar__toggle" href="#" data-toggle="sidebar"
@@ -57,6 +57,7 @@
                 <li><a class="app-menu__item" href="categorymanager"><i class='app-menu__icon bx bxs-category'></i><span class="app-menu__label">Quản lý danh mục</span></a></li>
                 <li><a class="app-menu__item" href="productmanager"><i class='app-menu__icon bx bx-purchase-tag-alt'></i><span class="app-menu__label">Quản lý sản phẩm</span></a></li>
                 <li><a class="app-menu__item" href="ordermanager"><i class='app-menu__icon bx bx-task'></i><span class="app-menu__label">Quản lý đơn hàng</span></a></li>
+                <li><a class="app-menu__item" href="blogmanager"><i class='app-menu__icon bx bx-task'></i><span class="app-menu__label">Quản lý blog</span></a></li>
 
                 <!-- Conditionally Display Menu Items -->
                 <c:if test="${sessionScope.user.isAdmin}">
@@ -94,9 +95,12 @@
                                 <label for="userRoleFilter"></label>
                                 <select class="form-control" id="userRoleFilter">
                                     <option value="">Tất cả</option>
-                                    <option value="ADMIN" <c:if test="${param.userRoleFilter == 'ADMIN'}">selected</c:if>>Quản trị viên</option>
+<!--                                    <option value="ADMIN" <c:if test="${param.userRoleFilter == 'ADMIN'}">selected</c:if>>Quản trị viên</option>
                                     <option value="STORE_STAFF" <c:if test="${param.userRoleFilter == 'STORE_STAFF'}">selected</c:if>>Nhân viên cửa hàng</option>
-                                    <option value="USER" <c:if test="${param.userRoleFilter == 'USER'}">selected</c:if>>Khách hàng</option>
+                                    <option value="USER" <c:if test="${param.userRoleFilter == 'USER'}">selected</c:if>>Khách hàng</option>-->
+                                    <option value="ADMIN">Quản trị viên</option>
+                                    <option value="STORE_STAFF">Nhân viên cửa hàng</option>
+                                    <option value="USER">Khách hàng</option>
                                     </select>
                                 </div>
 
@@ -272,6 +276,7 @@
 
 
             $(document).ready(function () {
+                time();
                 $('#sampleTable').DataTable();
 
                 // Event delegation for delete button
