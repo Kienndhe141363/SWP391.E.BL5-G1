@@ -66,8 +66,7 @@
                     <div class="col-lg-6 col-md-12">
                         <div class="contact_message form">
                             <h3>Gửi thông tin phản hồi</h3> 
-
-                            <form id="contact-form" method="POST" action="contact">
+                            <form action="contact" method="post">
                                 <p style="color: red; align-content: center;">
                                     ${requestScope.msgc}
                                 </p>
@@ -90,8 +89,10 @@
                                 <c:if test="${!user.isAdmin == 'True' && !user.isStoreStaff=='True'}">
                                     <button type="submit">Gửi</button>
                                 </c:if>
-                            </form>    
+                            </form>
 
+                ${msgc}
+                 ${requestScope.msgc}
 
                         </div> 
                     </div>
@@ -124,7 +125,7 @@
 
                 // Gửi email
                 MailApp.sendEmail({
-                    to: 'dtran4673@gmail.com', // Thay bằng địa chỉ email của bạn
+                    to: 'kienndhe141363@fpt.edu.vn', // Thay bằng địa chỉ email của bạn
                     subject: subject,
                     body: emailContent
                 });

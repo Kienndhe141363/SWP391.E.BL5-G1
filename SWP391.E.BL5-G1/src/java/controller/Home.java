@@ -38,8 +38,8 @@ public class Home extends HttpServlet {
 //        String action = request.getParameter("action");
         productDAO c = new productDAO();
         List<model.Product> product = c.getTop10Product();
-        List<model.Product> product1 = c.getTrendProduct();
-        List<model.Product> newProducts = c.getNewProducts(8);
+        List<model.Product> product1 = c.getTrendProduct();        
+        List<model.Product> newProducts = c.getNewProduct();
         request.setAttribute("top10", product);
         request.setAttribute("topTrend", product1);
         request.setAttribute("newProducts", newProducts);

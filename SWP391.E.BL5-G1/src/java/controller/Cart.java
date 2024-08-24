@@ -37,6 +37,12 @@ public class Cart extends HttpServlet {
             throws ServletException, IOException {
         HttpSession session = request.getSession(true);
         String action = request.getParameter("action");
+        model.User user = (model.User) session.getAttribute("user");
+        if (user != null && ("TRUE".equalsIgnoreCase(user.getIsAdmin()) || "TRUE".equalsIgnoreCase(user.getIsStoreStaff()))) {
+            session.setAttribute("errorMessage", "Quản trị viên và nhân viên cửa hàng không thể thêm hoặc mua sản phẩm.");
+            request.getRequestDispatcher("search?action=productdetail&product_id=" + request.getParameter("product_id")).forward(request, response);
+            return;
+        }
         model.Cart cart = null;
         Object o = session.getAttribute("cart");
 

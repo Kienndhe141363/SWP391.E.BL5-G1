@@ -19,7 +19,7 @@ import jakarta.servlet.http.HttpServletResponse;
  *
  * @author Admin
  */
-@WebServlet(name="Contact", urlPatterns={"/contact"})
+@WebServlet(name = "Contact", urlPatterns = {"/contact"})
 public class Contact extends HttpServlet {
    
     /** 
@@ -57,7 +57,7 @@ public class Contact extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
-        processRequest(request, response);
+        request.getRequestDispatcher("contact.jsp").forward(request, response);
     } 
 
     /** 
