@@ -23,13 +23,12 @@ public class postDAO extends DBContext {
         List<Post> posts = new ArrayList<>();
         String sql = "SELECT p.id AS postId, p.title, p.content, p.created_at AS createAt, "
                 + "p.updated_at AS updateAt, p.posttype_id AS postTypeId, p.user_id AS userid, "
-                + "u.user_name AS user_name "
+                + "u.user_name AS user_name, pt.type AS typeName "
                 + "FROM [SU24_BL5_SWP391_G1].[dbo].[post] p "
-                + "JOIN [SU24_BL5_SWP391_G1].[dbo].[users] u ON p.user_id = u.user_id"; 
+                + "JOIN [SU24_BL5_SWP391_G1].[dbo].[users] u ON p.user_id = u.user_id "
+                + "JOIN [SU24_BL5_SWP391_G1].[dbo].[posttype] pt ON p.posttype_id = pt.id";
 
-        try (Connection conn = getConnection(); 
-                PreparedStatement ps = conn.prepareStatement(sql); 
-                ResultSet rs = ps.executeQuery()) {
+        try (Connection conn = getConnection(); PreparedStatement ps = conn.prepareStatement(sql); ResultSet rs = ps.executeQuery()) {
 
             while (rs.next()) {
                 Post post = new Post(
@@ -40,7 +39,8 @@ public class postDAO extends DBContext {
                         rs.getInt("userid"),
                         rs.getDate("createAt"),
                         rs.getDate("updateAt"),
-                        rs.getString("user_name")
+                        rs.getString("user_name"),
+                        rs.getString("typeName")
                 );
                 posts.add(post);
             }

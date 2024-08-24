@@ -20,8 +20,9 @@ public class Post {
     private int postTypeId;
     private int userid;
     private String username;
+    private String type;
 
-    public Post(int postId, String title, String content, int postTypeId, int userid, Date creDate, Date upDate, String username) {
+    public Post(int postId, String title, String content, int postTypeId, int userid, Date creDate, Date upDate, String username, String type) {
         this.postId = postId;
         this.title = title;
         this.content = content;
@@ -30,8 +31,9 @@ public class Post {
         this.createAt = creDate;
         this.updateAt = upDate;
         this.username = username;
+        this.type = type;
     }
-    
+
     public Post(int postId, String title, String content, int postTypeId, int userid, Date creDate, Date upDate) {
         this.postId = postId;
         this.title = title;
@@ -43,6 +45,14 @@ public class Post {
     }
 
     public Post() {
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
     }
 
     public String getUsername() {
