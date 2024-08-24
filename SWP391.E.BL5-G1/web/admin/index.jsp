@@ -62,7 +62,7 @@
                     <li><a class="app-menu__item" href="aboutmanager"><i class='app-menu__icon bx bx-receipt'></i><span class="app-menu__label">Quản lý trang giới thiệu</span></a></li>
                     <li><a class="app-menu__item" href="commentmanager"><i class='app-menu__icon bx bx-receipt'></i><span class="app-menu__label">Quản lý bình luận</span></a></li>
                     <li><a class="app-menu__item" href="saleoff"><i class='app-menu__icon bx bx-receipt'></i><span class="app-menu__label">Quản lý sale</span></a></li>
-                </c:if>
+                            </c:if>
             </ul>
         </aside>
         <main class="app-content">
@@ -266,7 +266,7 @@
 
         }
     </script>
-       <script type="text/javascript">
+    <script type="text/javascript">
         // Function to update statistics based on checkbox selection
         function updateStatistics() {
             // Get the checkbox elements
@@ -283,25 +283,25 @@
 
             // Update the statistics based on checkbox selection
             if (customerCheckbox.checked) {
-                customerInfo.textContent = "${requestScope.user} khách hàng";
+                   customerInfo.textContent = "${requestScope.user} khách hàng";
             } else {
                 customerInfo.textContent = "";
             }
 
             if (productCheckbox.checked) {
-                productInfo.textContent = "${requestScope.product} sản phẩm";
+                   productInfo.textContent = "${requestScope.product} sản phẩm";
             } else {
                 productInfo.textContent = "";
             }
 
             if (orderCheckbox.checked) {
-                orderInfo.textContent = "${requestScope.bill} đơn hàng";
+                   orderInfo.textContent = "${requestScope.bill} đơn hàng";
             } else {
                 orderInfo.textContent = "";
             }
 
             if (outOfStockCheckbox.checked) {
-                outOfStockInfo.textContent = "${requestScope.low} sản phẩm";
+                   outOfStockInfo.textContent = "${requestScope.low} sản phẩm";
             } else {
                 outOfStockInfo.textContent = "";
             }
@@ -329,7 +329,7 @@
         }
     </script>
 
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script>
         function showNotification(message, isSuccess) {
             Swal.fire({
@@ -352,12 +352,11 @@
         document.addEventListener('DOMContentLoaded', function () {
             var message1 = "${sessionScope.message1}";
             var message2 = "${sessionScope.message2}";
-            
-           if (message1) {
+
+            if (message1) {
                 showNotification(message1, true);
         <% session.removeAttribute("message1"); %>
-            }
-             else if (message2) {
+            } else if (message2) {
                 showNotification(message2, false);
         <% session.removeAttribute("message2"); %>
             }
