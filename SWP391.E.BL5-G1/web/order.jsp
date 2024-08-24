@@ -6,6 +6,7 @@
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -60,6 +61,7 @@
                 <li><a class="app-menu__item" href="categorymanager"><i class='app-menu__icon bx bxs-category'></i><span class="app-menu__label">Quản lý danh mục</span></a></li>
                 <li><a class="app-menu__item" href="productmanager"><i class='app-menu__icon bx bx-purchase-tag-alt'></i><span class="app-menu__label">Quản lý sản phẩm</span></a></li>
                 <li><a class="app-menu__item" href="ordermanager"><i class='app-menu__icon bx bx-task'></i><span class="app-menu__label">Quản lý đơn hàng</span></a></li>
+                <li><a class="app-menu__item" href="blogmanager"><i class='app-menu__icon bx bx-task'></i><span class="app-menu__label">Quản lý blog</span></a></li>
 
                 <!-- Conditionally Display Menu Items -->
                 <c:if test="${sessionScope.user.isAdmin}">
@@ -96,7 +98,6 @@
                                 <option value="">Tất cả</option>
                                 <option value="COD">COD</option>
                                 <option value="VNPAY">VNPAY</option>
-                                <option value="MOMO">MOMO</option>
                                 <!-- Add more options as needed -->
                             </select>
                         </div>
@@ -121,7 +122,7 @@
                                         <td>(+84)${b.phone}</td>
                                         <td>${b.address}</td>
                                         <td>${b.date}</td>
-                                        <td>${b.total}</td>
+                                        <td><fmt:formatNumber value="${b.total}" minFractionDigits="0" maxFractionDigits="2"/></td>
                                         <td><span class="badge bg-success">${b.payment}</span></td>                                  
                                         <td><a style=" color: white;background-color: red; padding: 5px;border-radius: 5px;" href="ordermanager?action=showdetail&bill_id=${b.bill_id}"><i class="fa"></i>Hiển thị đơn hàng</a></td>
                                     </tr>
