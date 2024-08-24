@@ -74,39 +74,33 @@ public class Product_Search extends HttpServlet {
             int category_id = product.getCate().getCategory_id();
             List<model.Product> productByCategory = c.getProductByCategory(category_id);
             PrintWriter out = response.getWriter();
-            out.print(productByCategory);            
-            out.print(sizeList);            
-            out.print(colorList);
-
-
-//            commentRatingDAO crDAO = new commentRatingDAO();
-//            List<model.Comment> comments = crDAO.getCommentsByProductId(product_id);
-//            double averageRating = crDAO.getAverageRatingForProduct(product_id);
-//            request.setAttribute("ProductData", product);
-//            request.setAttribute("SizeData", sizeList);
-//            request.setAttribute("ColorData", colorList);
-//            request.setAttribute("ProductByCategory", productByCategory);
-//            request.setAttribute("comments", comments);
-//            request.setAttribute("averageRating", averageRating);
-//            request.getRequestDispatcher("product-details.jsp").forward(request, response);
-//        } else if (action.equalsIgnoreCase("addComment")) {
-//            String productId = request.getParameter("product_id");
-//            String userId = request.getParameter("user_id");  // Retrieve userId from session
-//            String userName = request.getParameter("user_name");  // Retrieve userId from session
-//            int rating = Integer.parseInt(request.getParameter("rating"));
-//            String commentText = request.getParameter("comment");
-//
-//            //Call DAO method to add rating
-//            commentRatingDAO dao = new commentRatingDAO();
-//            if (dao.hasUserCommented(productId, userId)) {
-//                HttpSession session = request.getSession();
-//                session.setAttribute("errorMessage", "Bạn đã đánh giá và bình luận cho sản phẩm này rồi.");
-//            } else {
-//                dao.addComment(productId, userId, commentText, rating, userName);
-//                HttpSession session = request.getSession();
-//                session.setAttribute("successMessage", "Hãy tiến hành mua sản phẩm để được đánh giá và bình luận");
-//            }
-//            response.sendRedirect("search?action=productdetail&product_id=" + productId);
+            commentRatingDAO crDAO = new commentRatingDAO();
+            List<model.Comment> comments = crDAO.getCommentsByProductId(product_id);
+            double averageRating = crDAO.getAverageRatingForProduct(product_id);
+            request.setAttribute("ProductData", product);
+            request.setAttribute("SizeData", sizeList);
+            request.setAttribute("ColorData", colorList);
+            request.setAttribute("ProductByCategory", productByCategory);
+            request.setAttribute("comments", comments);
+            request.setAttribute("averageRating", averageRating);
+            request.getRequestDispatcher("product-details.jsp").forward(request, response);
+        } else if (action.equalsIgnoreCase("addComment")) {
+            String productId = request.getParameter("product_id");
+            String userId = request.getParameter("user_id");  // Retrieve userId from session
+            String userName = request.getParameter("user_name");  // Retrieve userId from session
+            int rating = Integer.parseInt(request.getParameter("rating"));
+            String commentText = request.getParameter("comment");
+            //Call DAO method to add rating
+            commentRatingDAO dao = new commentRatingDAO();
+            if (dao.hasUserCommented(productId, userId)) {
+                HttpSession session = request.getSession();
+                session.setAttribute("errorMessage", "Bạn đã đánh giá và bình luận cho sản phẩm này rồi.");
+            } else {
+                dao.addComment(productId, userId, commentText, rating, userName);
+                HttpSession session = request.getSession();
+                session.setAttribute("successMessage", "Hãy tiến hành mua sản phẩm để được đánh giá và bình luận");
+            }
+            response.sendRedirect("search?action=productdetail&product_id=" + productId);
         }
 
         if (action.equals("sort")) {
