@@ -1,7 +1,7 @@
 <%-- 
     Document   : addPost
     Created on : Aug 23, 2024, 2:26:35 PM
-    Author     : Putaa
+    Author     : ThangNPHE151263
 --%>
 
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
@@ -43,23 +43,38 @@
             border: 1px solid #ddd;
             border-radius: 4px;
         }
+        .button-container {
+            text-align: center;
+            margin-top: 20px;
+        }
         button {
-            width: 100%;
             padding: 10px;
-            background-color: #1877f2;
-            color: #fff;
             border: none;
             border-radius: 4px;
             cursor: pointer;
+            font-size: 16px;
+            color: #fff;
+            margin: 5px;
         }
-        button:hover {
+        .submit-btn {
+            background-color: #1877f2;
+            width: auto;
+        }
+        .submit-btn:hover {
             background-color: #145dbf;
+        }
+        .cancel-btn {
+            background-color: #ccc;
+            width: auto;
+        }
+        .cancel-btn:hover {
+            background-color: #999;
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <h2>Add Post</h2>
+        <h2>Thêm bài viết</h2>
         <form action="addPost" method="post">
             <label for="title">Title:</label>
             <input type="text" id="title" name="title" required>
@@ -74,7 +89,10 @@
                 </c:forEach>
             </select>
 
-            <button type="submit">Add Post</button>
+            <div class="button-container">
+                <button type="submit" class="submit-btn">Thêm bài viết</button>
+                <button type="button" class="cancel-btn" onclick="window.location.href='listPosts'">Hủy</button>
+            </div>
         </form>
     </div>
 </body>

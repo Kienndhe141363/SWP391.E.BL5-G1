@@ -21,7 +21,7 @@ import model.PostType;
 
 /**
  *
- * @author Putaa
+ * @author ThangNPHE151263
  */
 @WebServlet(name = "AddPost", urlPatterns = {"/addPost"})
 public class AddPost extends HttpServlet {

@@ -20,7 +20,7 @@ import model.PostType;
 
 /**
  *
- * @author Putaa
+ * @author ThangNPHE151263
  */
 @WebServlet(name = "EditPost", urlPatterns = {"/editPost"})
 public class EditPost extends HttpServlet {

@@ -15,7 +15,7 @@ import java.io.PrintWriter;
 
 /**
  *
- * @author Putaa
+ * @author ThangNPHE151263
  */
 @WebServlet(name = "DeletePost", urlPatterns = {"/deletePost"})
 public class DeletePost extends HttpServlet {
