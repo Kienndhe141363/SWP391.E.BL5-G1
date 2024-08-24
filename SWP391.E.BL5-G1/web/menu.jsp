@@ -174,7 +174,7 @@
                     <div class="col-lg-4">
                         <div class="cart_area">
                             <div class="cart_link">
-                                <c:if test="${!user.isAdmin == 'True' && !user.isStoreStaff=='True'}">
+                                <c:if test="${!user.isAdmin == 'True' || !user.isStoreStaff=='True'}">
                                     <a href="cart?action=showcart"><i class="fa fa-shopping-basket"></i>${sessionScope.size} Giỏ hàng</a>
                                 </c:if>
                             </div>

@@ -339,8 +339,8 @@
                                         </div>
                                         <div class="product_content">
                                             <fmt:formatNumber value="${newProducts.product_price}" minFractionDigits="0" maxFractionDigits="2" var="newProducts_product_price"/>
-                                            
-                                            
+
+
                                             <h3><a href="search?action=productdetail&product_id=${newProducts.product_id}">${newProducts.product_name}</a></h3>
                                             <span class="current_price">${newProducts_product_price} VND</span>
                                         </div>
@@ -404,22 +404,6 @@
                 } else if (errorMessage) {
                     showNotification(errorMessage, false);
             <% session.removeAttribute("errorMessage"); %>
-    <!-- Main JS -->
-    <script src="https://static.elfsight.com/platform/platform.js" data-use-service-core defer></script>
-    <script>
-        function showNotification(message, isSuccess) {
-            Swal.fire({
-                title: isSuccess ? 'Thành công!' : 'Lỗi!',
-                text: message,
-                icon: isSuccess ? 'success' : 'error',
-                toast: true,
-                position: 'top-end',
-                showConfirmButton: false,
-                timer: 1000,
-                timerProgressBar: true,
-                didOpen: (toast) => {
-                    toast.addEventListener('mouseenter', Swal.stopTimer)
-                    toast.addEventListener('mouseleave', Swal.resumeTimer)
                 }
             });
         </script>
