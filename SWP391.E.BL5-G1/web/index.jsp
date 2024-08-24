@@ -309,6 +309,8 @@
                 </div>
             </div>
         </section>
+        <div class="elfsight-app-94027198-7458-4351-8ca9-9bf86706a713" data-elfsight-app-lazy></div>
+
 
         <section class="product_section womens_product bottom">
             <div class="container">
@@ -396,6 +398,22 @@
                 } else if (errorMessage) {
                     showNotification(errorMessage, false);
             <% session.removeAttribute("errorMessage"); %>
+    <!-- Main JS -->
+    <script src="https://static.elfsight.com/platform/platform.js" data-use-service-core defer></script>
+    <script>
+        function showNotification(message, isSuccess) {
+            Swal.fire({
+                title: isSuccess ? 'Thành công!' : 'Lỗi!',
+                text: message,
+                icon: isSuccess ? 'success' : 'error',
+                toast: true,
+                position: 'top-end',
+                showConfirmButton: false,
+                timer: 1000,
+                timerProgressBar: true,
+                didOpen: (toast) => {
+                    toast.addEventListener('mouseenter', Swal.stopTimer)
+                    toast.addEventListener('mouseleave', Swal.resumeTimer)
                 }
             });
         </script>

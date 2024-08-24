@@ -1,6 +1,5 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html lang="vi">
     <head>
@@ -116,7 +115,7 @@
 
     </head>
     <body>
-        <jsp:include page="menu.jsp"/>
+        <%--<jsp:include page="layout/menu.jsp"/>--%>
         <!--Offcanvas menu area start-->
         <div class="off_canvars_overlay"></div>
 
@@ -134,57 +133,10 @@
                     <div class="sidebar mb-4">
                         <h2><i class="fas fa-th-list mr-2"></i>Danh mục</h2>
                         <ul>
-                            <li><a href="product">TẤT CẢ</a></li>
-                                <c:forEach items="${CategoryData}" var="c">
-                                <li><a href="search?action=listByCategory&category_id=${c.category_id}">${c.category_name}</a></li>
+                            <c:forEach items="${AlbumData}" var="c">
+                                <li><a href="album?action=filter&album_id=${c.album_id}">${c.album_name}</a></li>
                                 </c:forEach>
                         </ul>
-
-                        <h2 class="mt-4"><i class="fas fa-money-bill mr-2"></i>Giá</h2>
-                        <form action="search?action=searchByPrice" method="POST">
-                            <div class="form-check">
-                                <input class="form-check-input" type="checkbox" name="price" value="0" id="price1">
-                                <label class="form-check-label" for="price1">Dưới 50.000Vnđ</label>
-                            </div>
-                            <div class="form-check">
-                                <input class="form-check-input" type="checkbox" name="price" value="1" id="price2">
-                                <label class="form-check-label" for="price2">Từ 50.000Vnđ - 200.000Vnđ</label>
-                            </div>
-                            <div class="form-check">
-                                <input class="form-check-input" type="checkbox" name="price" value="2" id="price3">
-                                <label class="form-check-label" for="price3">Từ 200.000Vnđ - 500.000Vnđ</label>
-                            </div>
-                            <div class="form-check">
-                                <input class="form-check-input" type="checkbox" name="price" value="3" id="price4">
-                                <label class="form-check-label" for="price4">Từ 500.000 Vnđ - 1.000.000 Vnđ</label>
-                            </div>
-                            <div class="form-check">
-                                <input class="form-check-input" type="checkbox" name="price" value="4" id="price5">
-                                <label class="form-check-label" for="price5">1 triệu Vnđ trở lên</label>
-                            </div>
-                            <button type="submit" class="btn btn-primary btn-sm mt-3">Tìm kiếm</button>
-                        </form>
-
-                        <h2 class="mt-4"><i class="fas fa-palette mr-2"></i>Màu Sắc</h2>
-                        <form action="search?action=SearchByColor" method="POST">
-                            <div class="form-check">
-                                <input class="form-check-input" type="checkbox" name="colors" value="0" id="color1">
-                                <label class="form-check-label" for="color1">Đỏ</label>
-                            </div>
-                            <div class="form-check">
-                                <input class="form-check-input" type="checkbox" name="colors" value="1" id="color2">
-                                <label class="form-check-label" for="color2">Xanh</label>
-                            </div>
-                            <div class="form-check">
-                                <input class="form-check-input" type="checkbox" name="colors" value="2" id="color3">
-                                <label class="form-check-label" for="color3">Trắng</label>
-                            </div>
-                            <div class="form-check">
-                                <input class="form-check-input" type="checkbox" name="colors" value="3" id="color4">
-                                <label class="form-check-label" for="color4">Đen</label>
-                            </div>
-                            <button type="submit" class="btn btn-primary btn-sm mt-3">Lọc</button>
-                        </form>
                     </div>
                 </div>
 
@@ -192,15 +144,56 @@
                     <h1 class="mb-4">Sản phẩm</h1>
                     <div class="d-flex justify-content-between align-items-center mb-4">
                         <p class="mb-0">Hiển thị ${ProductData.size()} sản phẩm</p>
+                        <!--                        <div class="dropdown">
+                                                    <button class="btn btn-outline-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                        Sắp xếp
+                                                    </button>
+                                                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                                        <a class="dropdown-item" href="search?action=sort&type=low">Giá từ thấp đến cao</a>
+                                                        <a class="dropdown-item" href="search?action=sort&type=high">Giá từ cao xuống thấp</a>
+                                                        <a class="dropdown-item" href="search?action=sort&type=a-z">A-Z</a>
+                                                    </div>
+                                                </div>-->
                         <div class="dropdown">
-                            <button class="btn btn-outline-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                Sắp xếp
-                            </button>
-                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                <a class="dropdown-item" href="search?action=sort&type=low">Giá từ thấp đến cao</a>
-                                <a class="dropdown-item" href="search?action=sort&type=high">Giá từ cao xuống thấp</a>
-                                <a class="dropdown-item" href="search?action=sort&type=a-z">A-Z</a>
+                            <button type="button" data-toggle="modal" data-target="#Modal${album_id}" class="btn btn-save"  title="Thêm">
+                                <i class="fas fa-plus"></i>Thêm Album</button>
+                            <div class="modal fade" id="Modal${album_id}" tabindex="-1" role="dialog" aria-hidden="true">
+                                <div class="modal-dialog modal-dialog-centered" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-body" style="padding:0.5rem 1rem">
+                                            <form id="contact-form2" action="album" method="POST">
+                                                <input type="hidden" name="action" value="addAlbum">
+                                                <div class="row">   
+                                                    <div class="form-group col-md-12">
+                                                        <span class="thong-tin-thanh-toan">
+                                                            <h4>Thêm mới BST</h4>
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                                <div class="row" style="padding: 0.5rem 1rem; width:100%">
+                                                    <input style="font-weight: bolder" name="user_id" readonly type="text" hidden="true">
+                                                    Tên Album:
+                                                    <input style="font-weight: bolder; margin-bottom: 10px" name="album_name"  type="text">
+                                                    Nội dung mô tả:
+                                                    <textarea  style="margin-top: 10px; width:100%" rows="4" cols="50" name="album_description" type="text"></textarea>
+
+                                                </div>
+                                                <div style="margin-top: 10px; text-align: center">
+                                                    <button class="btn btn-save" style="background-color: green; color:white" type="submit">Gửi</button>
+                                                    <a class="btn btn-cancel" style="background-color: red; color:white"  data-dismiss="modal">Hủy bỏ</a>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
+<!--                        <button value="${album_id}" class="btn btn-trash btn-sm trash" style="background-color:red; color: white" >
+                        <i class="fas fa-trash"></i>
+                    </button>-->
+                            <%--<c:if test="${album_id}">--%>
+                                <a class="btn btn-cancel" href="album?action=deleteAlbum&album_id=${album_id}" style="background-color: red; color:white"  data-dismiss="modal"><i class="fas fa-trash"></i></a>
+                                <%--</c:if>--%>
+
                         </div>
                     </div>
                     <div class="row">
@@ -208,7 +201,7 @@
                             <c:when test="${empty ProductData}">
                                 <div class="col-12 text-center">
                                     <img src="assets/img/logo/no-products-found.jpg" alt="No products found" class="img-fluid mb-3" style="max-width: 200px;">
-                                    <p class="lead">Không có sản phẩm nào được tìm thấy</p>
+                                    <p class="lead">Bạn chưa thêm sản phẩm vào BST này</p>
                                 </div>
                             </c:when>
                             <c:otherwise>
@@ -218,9 +211,9 @@
                                             <img src="${p.img}" class="card-img-top product-img" alt="${p.product_name}">
                                             <div class="card-body">
                                                 <h5 class="card-title product-title">${p.product_name}</h5>
-                                                <fmt:formatNumber value="${p.product_price}" minFractionDigits="0" maxFractionDigits="2" var="formattedPricep"/>
-                                                <p class="card-text product-price">${formattedPricep} VNĐ</p>
+                                                <p class="card-text product-price">${p.product_price} VNĐ</p>
                                                 <a href="search?action=productdetail&product_id=${p.product_id}" class="btn btn-primary btn-sm">Xem chi tiết</a>
+                                                <a href="album?action=deleteProduct&product_id=${p.product_id}" class="btn btn-trash btn-sm" style="background-color:red"><i class="fas fa-trash"></i></a>
                                             </div>
                                         </div>
                                     </div>
@@ -247,17 +240,36 @@
                     </nav>
                 </div>
             </div>
-                        <div class="elfsight-app-94027198-7458-4351-8ca9-9bf86706a713" data-elfsight-app-lazy></div>
+            <div class="elfsight-app-94027198-7458-4351-8ca9-9bf86706a713" data-elfsight-app-lazy></div>
 
         </div>
 
-        <jsp:include page="footer.jsp"/>
+        <%--<jsp:include page="layout/footer.jsp"/>--%>
 
         <script src="assets/js/plugins.js"></script>
 
         <!-- Main JS -->
         <script src="assets/js/main.js"></script>
         <script src="https://static.elfsight.com/platform/platform.js" data-use-service-core defer></script>
-
+        <script>
+            jQuery(document).ready(function () {
+                // Event delegation for delete buttons
+                jQuery(document).on('click', '.aaa', function () {
+                    var id = $(this).attr("value");
+                    swal({
+                        title: "Cảnh báo",
+                        text: "Bạn có chắc chắn là muốn xóa phản hồi này?",
+                        buttons: ["Hủy bỏ", "Đồng ý"],
+                    }).then((willDelete) => {
+                        if (willDelete) {
+                            window.location = "album?action=deleteAlbum&product_id=" + id;
+                            swal("Đã xóa thành công!", {
+                                icon: "success",
+                            });
+                        }
+                    });
+                });
+            });
+        </script>
     </body>
 </html>

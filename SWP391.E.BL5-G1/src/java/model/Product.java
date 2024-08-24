@@ -44,6 +44,13 @@ public class Product {
         this.img = img;
     }
     
+    public Product(String product_id , String product_name, Float product_price, String img) {
+        this.product_id = product_id;
+        this.product_name = product_name;
+        this.product_price = product_price;
+        this.img = img;
+    }
+    
     public Product(String product_id, String product_name, String img) {
         this.product_id = product_id;
         this.product_name = product_name;

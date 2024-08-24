@@ -26,7 +26,7 @@
         <!-- Main Wrapper Start -->
         <!--Offcanvas menu area start-->
         <div class="off_canvars_overlay"></div>
-        <jsp:include page="menu.jsp"/>
+        <jsp:include page="layout/menu.jsp"/>
         <!--breadcrumbs area start-->
         <div class="breadcrumbs_area other_bread">
             <div class="container">   
@@ -62,8 +62,9 @@
                                                 <th class="product-price">Màu</th>
                                                 <th class="product_quantity">Số lượng</th>
                                                 <th class="product_total">Đơn giá</th>
+                                                <th class="product_total">Đánh giá</th>
                                             </tr>
-                                        </thead>
+                                        </thead>    
                                         <tbody>
                                             <c:forEach items="${detail}" var="d">
                                                 <tr>
@@ -73,6 +74,7 @@
                                                     <td class="product-price">${d.color}</td>
                                                     <td class="product_quantity">${d.quantity}</td>
                                                     <td class="product_total"> <fmt:formatNumber pattern="##########" value="${d.price}"/></td>
+                                                    <td> <a class="btn btn-primary btn-sm edit"  href="search?action=productdetail&product_id=${d.product.product_id}&comment=true" type="button" title="Sửa"><i class="fas fa-edit"></i></a></td>
                                                 </tr>
                                             </c:forEach>
                                         </tbody>
@@ -82,21 +84,24 @@
                         </div>
                     </div>
                 </form> 
+                <div class="elfsight-app-94027198-7458-4351-8ca9-9bf86706a713" data-elfsight-app-lazy></div>
             </div>     
         </div>
         <!-- shopping cart area end -->
 
         <!--footer area start-->
-        <jsp:include page="footer.jsp"/>
+        <jsp:include page="layout/footer.jsp"/>
         <!--footer area end-->
 
-        <!-- J
+        <!-- JS
         ============================================ -->
 
 
-        
-        
-
+        <!--map js code here-->
+        <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAdWLY_Y6FL7QGW5vcO3zajUEsrKfQPNzI"></script>
+        <script  src="https://www.google.com/jsapi"></script>
+        <script src="assets/js/map.js"></script>
+        <script src="https://static.elfsight.com/platform/platform.js" data-use-service-core defer></script>
 
         <!-- Plugins JS -->
         <script src="assets/js/plugins.js"></script>

@@ -20,11 +20,24 @@ public class Blog {
     private Date updated_at;
     private User user;
     private String images;
+    private int user_id;
+
 
     public Blog() {
     }
 
     public Blog(int blog_id, String title, String summary, String content, Date created_at, Date updated_at, User user, String images) {
+        this.blog_id = blog_id;
+        this.title = title;
+        this.summary = summary;
+        this.content = content;
+        this.created_at = created_at;
+        this.updated_at = updated_at;
+        this.user = user;
+        this.images = images;
+    }
+    
+    public Blog(int blog_id, String title, String summary, String content, Date created_at, Date updated_at, int user_id, String images) {
         this.blog_id = blog_id;
         this.title = title;
         this.summary = summary;
@@ -98,5 +111,12 @@ public class Blog {
     public void setImages(String images) {
         this.images = images;
     }
-}
+    
+     public int getUser_id() {
+        return user_id;
+    }
 
+    public void setUser_id(int user_id) {
+        this.user_id = user_id;
+    }
+}
