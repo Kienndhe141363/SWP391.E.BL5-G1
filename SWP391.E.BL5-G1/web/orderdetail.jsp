@@ -2,6 +2,7 @@
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -103,7 +104,7 @@
                                             <td>${d.size}</td>
                                             <td>${d.color}</td>
                                             <td>${d.quantity}</td>
-                                            <td>${d.price}</td>
+                                             <td><fmt:formatNumber value="${d.price}" minFractionDigits="0" maxFractionDigits="2"/></td>
                                         </tr>
                                     </c:forEach>
                                 </tbody>
