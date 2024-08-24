@@ -28,8 +28,7 @@
                 display: flex;
                 align-items: center;
                 justify-content: center;
-                min-height: 100vh; /* Full height of the viewport */
-
+                min-height: 43%;
             }
 
             .account_form {

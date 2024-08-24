@@ -31,7 +31,7 @@
                         <h2>Quên Mật Khẩu</h2>
                         <form action="fpass" method="POST">
                             <p style="color: red; align-content: center;">
-                                <b> ${sessionScope.msg}</b>
+                                <b> ${sessionScope.msg_err}</b>
                             </p>
                             <p>
                             <p style="color:red" ><b>${requestScope.Recaptcha}</b></p>
