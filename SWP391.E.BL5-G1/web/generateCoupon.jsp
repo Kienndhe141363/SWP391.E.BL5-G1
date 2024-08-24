@@ -113,7 +113,7 @@
             <br />
 
             <input type="submit" value="Generate Coupon" />
-            <a href="couponmsanager?action=list" class="btn btn-back">Back to List</a>
+            <a href="couponmanager?action=list" class="btn btn-back">Back to List</a>
         </form>
 
     </body>

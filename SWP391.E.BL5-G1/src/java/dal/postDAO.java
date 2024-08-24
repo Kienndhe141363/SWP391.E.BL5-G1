@@ -24,9 +24,9 @@ public class postDAO extends DBContext {
         String sql = "SELECT p.id AS postId, p.title, p.content, p.created_at AS createAt, "
                 + "p.updated_at AS updateAt, p.posttype_id AS postTypeId, p.user_id AS userid, "
                 + "u.user_name AS user_name, pt.type AS typeName "
-                + "FROM [SU24_BL5_SWP391_G1].[dbo].[post] p "
-                + "JOIN [SU24_BL5_SWP391_G1].[dbo].[users] u ON p.user_id = u.user_id "
-                + "JOIN [SU24_BL5_SWP391_G1].[dbo].[posttype] pt ON p.posttype_id = pt.id";
+                + "FROM [dbo].[post] p "
+                + "JOIN [dbo].[users] u ON p.user_id = u.user_id "
+                + "JOIN [dbo].[posttype] pt ON p.posttype_id = pt.id";
 
         try (Connection conn = getConnection(); PreparedStatement ps = conn.prepareStatement(sql); ResultSet rs = ps.executeQuery()) {
 
@@ -54,7 +54,7 @@ public class postDAO extends DBContext {
     public Post getPostById(int postId) throws Exception {
         Post post = null;
         String sql = "SELECT p.id AS postId, p.title, p.content, p.created_at AS createAt, p.updated_at AS updateAt, p.posttype_id AS postTypeId, p.user_id AS userid "
-                + "FROM [SU24_BL5_SWP391_G1].[dbo].[post] p "
+                + "FROM [dbo].[post] p "
                 + "WHERE p.id = ?";
 
         try (Connection conn = getConnection(); PreparedStatement ps = conn.prepareStatement(sql)) {
@@ -81,7 +81,7 @@ public class postDAO extends DBContext {
 
     // Method to add a new post
     public void addPost(Post post) throws Exception {
-        String sql = "INSERT INTO [SU24_BL5_SWP391_G1].[dbo].[post] (title, content, created_at, updated_at, user_id, posttype_id) VALUES (?, ?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO [dbo].[post] (title, content, created_at, updated_at, user_id, posttype_id) VALUES (?, ?, ?, ?, ?, ?)";
 
         try (Connection conn = getConnection(); PreparedStatement ps = conn.prepareStatement(sql)) {
 
@@ -100,7 +100,7 @@ public class postDAO extends DBContext {
 
     // Method to update a post
     public void updatePost(Post post) throws Exception {
-        String sql = "UPDATE [SU24_BL5_SWP391_G1].[dbo].[post] SET title = ?, content = ?, updated_at = ?, posttype_id = ? WHERE id = ?";
+        String sql = "UPDATE [dbo].[post] SET title = ?, content = ?, updated_at = ?, posttype_id = ? WHERE id = ?";
 
         try (Connection conn = getConnection(); PreparedStatement ps = conn.prepareStatement(sql)) {
 
@@ -118,7 +118,7 @@ public class postDAO extends DBContext {
 
     // Method to delete a post by ID
     public void deletePost(int postId) throws Exception {
-        String sql = "DELETE FROM [SU24_BL5_SWP391_G1].[dbo].[post] WHERE id = ?";
+        String sql = "DELETE FROM [dbo].[post] WHERE id = ?";
 
         try (Connection conn = getConnection(); PreparedStatement ps = conn.prepareStatement(sql)) {
 
