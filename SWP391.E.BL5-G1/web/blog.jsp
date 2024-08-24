@@ -59,7 +59,7 @@
                 <li><a class="app-menu__item" href="categorymanager"><i class='app-menu__icon bx bxs-category'></i><span class="app-menu__label">Quản lý danh mục</span></a></li>
                 <li><a class="app-menu__item" href="productmanager"><i class='app-menu__icon bx bx-purchase-tag-alt'></i><span class="app-menu__label">Quản lý sản phẩm</span></a></li>
                 <li><a class="app-menu__item" href="ordermanager"><i class='app-menu__icon bx bx-task'></i><span class="app-menu__label">Quản lý đơn hàng</span></a></li>
-
+                <li><a class="app-menu__item" href="blogmanager"><i class='app-menu__icon bx bx-task'></i><span class="app-menu__label">Quản lý blog</span></a></li>
                 <!-- Conditionally Display Menu Items -->
                 <c:if test="${sessionScope.user.isAdmin}">
                     <li><a class="app-menu__item" href="customermanager"><i class='app-menu__icon bx bx-user-voice'></i><span class="app-menu__label">Quản lý khách hàng</span></a></li>
@@ -69,7 +69,7 @@
                     <li><a class="app-menu__item" href="couponmanager"><i class='app-menu__icon bx bx-receipt'></i><span class="app-menu__label">Quản lý coupon</span></a></li>
                     <li><a class="app-menu__item" href="blogmanager"><i class='app-menu__icon bx bx-task'></i><span class="app-menu__label">Quản lý blog</span></a></li>
 
-                            </c:if>
+                </c:if>
             </ul>
         </aside>
         <main class="app-content">
@@ -148,29 +148,29 @@
         <!-- Data table plugin-->
         <script type="text/javascript" src="admin/js/plugins/jquery.dataTables.min.js"></script>
         <script type="text/javascript" src="admin/js/plugins/dataTables.bootstrap.min.js"></script>
-        
-        <script>
-               $(document).ready(function () {
-                $('#sampleTable').DataTable();
 
-                // Event delegation for delete button
-                jQuery(document).on("click", ".trash", function () {
-                    swal({
-                        title: "Cảnh báo",
-                        text: "Bạn có chắc chắn muốn xóa blog này?",
-                        buttons: ["Hủy bỏ", "Đồng ý"],
-                    }).then((willDelete) => {
-                        if (willDelete) {
-                            var blogId = $(this).val();
-                            window.location = "blogmanager?action=delete&blog_id="  + $(this).attr("value");
-                            // Optionally show a success message after deletion
-                            swal("Đã xóa thành công!", {
-                                icon: "success",
-                            });
-                        }
-                    });
+        <script>
+        $(document).ready(function () {
+            $('#sampleTable').DataTable();
+
+            // Event delegation for delete button
+            jQuery(document).on("click", ".trash", function () {
+                swal({
+                    title: "Cảnh báo",
+                    text: "Bạn có chắc chắn muốn xóa blog này?",
+                    buttons: ["Hủy bỏ", "Đồng ý"],
+                }).then((willDelete) => {
+                    if (willDelete) {
+                        var blogId = $(this).val();
+                        window.location = "blogmanager?action=delete&blog_id=" + $(this).attr("value");
+                        // Optionally show a success message after deletion
+                        swal("Đã xóa thành công!", {
+                            icon: "success",
+                        });
+                    }
                 });
             });
+        });
 
         </script>
     </body>

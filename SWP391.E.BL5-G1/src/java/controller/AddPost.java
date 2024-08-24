@@ -97,13 +97,8 @@ public class AddPost extends HttpServlet {
             String title = request.getParameter("title");
             String content = request.getParameter("content");
             int postTypeId = Integer.parseInt(request.getParameter("postTypeId"));
-<<<<<<< HEAD
             Date creAt = new java.sql.Date(System.currentTimeMillis());
             Date upAt = new java.sql.Date(System.currentTimeMillis());
-=======
-            int userId = Integer.parseInt(request.getParameter("userId"));
-
->>>>>>> 071aa024a747e4020b2b8fa1120ae60971fc3dfa
             Post newPost = new Post();
             newPost.setTitle(title);
             newPost.setContent(content);

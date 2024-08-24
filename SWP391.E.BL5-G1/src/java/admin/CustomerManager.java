@@ -65,9 +65,23 @@ public class CustomerManager  extends HttpServlet {
         request.setCharacterEncoding("UTF-8");
         response.setCharacterEncoding("UTF-8");
         response.setContentType("text/html; charset=UTF-8");
-        String page = "";
+      
         HttpSession session = request.getSession();
         User user = (User) session.getAttribute("user");
+         if (user == null) {
+            response.sendRedirect("user?action=login");
+            return;
+        }
+        if (user.getIsAdmin() == null || !Boolean.parseBoolean(user.getIsAdmin())) {    //Nếu ko phải admin
+            if (user.getIsStoreStaff() != null && Boolean.parseBoolean(user.getIsStoreStaff())) {  //Nếu là Store Staff
+                response.sendRedirect("dashboard");
+                return;
+            }
+            //Role còn lại: Client
+            response.sendRedirect("home");
+            return;
+        }
+        String page = "customer.jsp";
         String action = request.getParameter("action");
 
         if (null == action) {

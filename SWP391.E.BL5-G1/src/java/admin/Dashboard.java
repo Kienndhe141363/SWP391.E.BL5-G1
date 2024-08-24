@@ -39,82 +39,11 @@ public class Dashboard extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
-  protected void processRequest(HttpServletRequest request, HttpServletResponse response)
+    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
 
-        try {
-           HttpSession session = request.getSession();
-                productDAO dao = new productDAO();
-                billDAO bdao = new billDAO();
-                categoryDAO cdao = new categoryDAO();
-                userDAO udao = new userDAO();
-                //pie chart
-                List<Category> categoryList = cdao.getCategoryCounts();
-                request.setAttribute("categoryList", categoryList);
-                List<Bill> billbyday = bdao.getBillByDay();
-                List<Double> paidList = new ArrayList<>();
-                List<Double> unpaidList = new ArrayList<>();
-                List<Date> dateList = new ArrayList<>();
-
-                for (Bill bill : billbyday) {
-                    double totalPaid = bdao.getTotalPaidByDate(bill.getDate());
-                    double totalUnpaid = bdao.getTotalUnpaidByDate(bill.getDate());
-                    paidList.add(totalPaid);
-                    unpaidList.add(totalUnpaid);
-                    dateList.add(bill.getDate());
-                }
-                
-                
-                String startDate = request.getParameter("startDate");
-                String endDate = request.getParameter("endDate");
-                String message1 = null;
-                String message2 = null;
-                if (startDate != null && endDate != null) {  // Chỉ xử lý khi có tìm kiếm
-    if (startDate.isEmpty()) {
-        message2 = "Chưa chọn ngày bắt đầu";
-        session.setAttribute("message2", message2);
-    }
-    if (endDate.isEmpty()) {
-        message2 = "Chưa chọn ngày kết thúc";
-        session.setAttribute("message2", message2);
-    }
-    if(startDate.isEmpty() &&endDate.isEmpty() ){
-        message2 = "Chọn ngày bắt đầu và kết thúc";
-        session.setAttribute("message2", message2);
-    }
-    List<Bill> bills = bdao.getBillBetweenDates(startDate, endDate);
-    if (bills != null && !bills.isEmpty()) {
-        
-        message1 = "Tìm kiếm thành công từ " + startDate + " đến " + endDate;
-        session.setAttribute("message1", message1);
-    }
-   else {
-       
-       message2 = "Không có đơn hàng " + startDate + " đến " + endDate;
-       session.setAttribute("message2", message2);
-   }
-    request.setAttribute("bills", bills);
-}
-
-                int count = dao.CountProduct();
-                int countuser = udao.CountUser();
-                int countbill = bdao.CountBill();
-                int countproductlow = dao.CountProductLow();
-//            List<Bill> billbyday = bdao.getBillByDay();
-                request.setAttribute("product", count);
-                request.setAttribute("user", countuser);
-                request.setAttribute("bill", countbill);
-                request.setAttribute("low", countproductlow);
-                request.setAttribute("billbyday", billbyday);
-                
-
-                List<Object[]> monthlyTotals = bdao.getTotalBillAmountByMonth();
-                request.setAttribute("monthlyTotals", monthlyTotals);
-                request.getRequestDispatcher("dashboard.jsp").forward(request, response);
-        } catch (Exception e) {
-            response.sendRedirect("404.jsp");
-        }
+      
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -129,9 +58,76 @@ public class Dashboard extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
-    }
+          try {
+            HttpSession session = request.getSession();
+            User user = (User) session.getAttribute("user");
+            if (user == null) {
+                response.sendRedirect("user?action=login");
+                return;
+            }
+            if ((user.getIsAdmin() == null || !Boolean.parseBoolean(user.getIsAdmin()))
+                    && (user.getIsStoreStaff() == null || !Boolean.parseBoolean(user.getIsStoreStaff()))) {    //Nếu ko phải admin và Store Staff
+                //Role còn lại: Client
+                response.sendRedirect("home");
+                return;
+            }
+            
+            productDAO dao = new productDAO();
+            billDAO bdao = new billDAO();
+            categoryDAO cdao = new categoryDAO();
+            userDAO udao = new userDAO();
+            //pie chart
+            List<Category> categoryList = cdao.getCategoryCounts();
+            request.setAttribute("categoryList", categoryList);
 
+
+            String startDate = request.getParameter("startDate");
+            String endDate = request.getParameter("endDate");
+            String message1 = null;
+            String message2 = null;
+            if (startDate != null && endDate != null) {  // Chỉ xử lý khi có tìm kiếm
+                if (startDate.isEmpty()) {
+                    message2 = "Chưa chọn ngày bắt đầu";
+                    session.setAttribute("message2", message2);
+                }
+                if (endDate.isEmpty()) {
+                    message2 = "Chưa chọn ngày kết thúc";
+                    session.setAttribute("message2", message2);
+                }
+                if (startDate.isEmpty() && endDate.isEmpty()) {
+                    message2 = "Chọn ngày bắt đầu và kết thúc";
+                    session.setAttribute("message2", message2);
+                }
+                List<Bill> bills = bdao.getBillBetweenDates(startDate, endDate);
+                if (bills != null && !bills.isEmpty()) {
+
+                    message1 = "Tìm kiếm thành công từ " + startDate + " đến " + endDate;
+                    session.setAttribute("message1", message1);
+                } else {
+
+                    message2 = "Không có đơn hàng " + startDate + " đến " + endDate;
+                    session.setAttribute("message2", message2);
+                }
+                request.setAttribute("bills", bills);
+            }
+
+            int count = dao.CountProduct();
+            int countuser = udao.CountUser();
+            int countbill = bdao.CountBill();
+            int countproductlow = dao.CountProductLow();
+            request.setAttribute("product", count);
+            request.setAttribute("user", countuser);
+            request.setAttribute("bill", countbill);
+            request.setAttribute("low", countproductlow);
+
+            List<Object[]> monthlyTotals = bdao.getTotalBillAmountByMonth();
+            request.setAttribute("monthlyTotals", monthlyTotals);
+            request.getRequestDispatcher("dashboard.jsp").forward(request, response);
+        } catch (Exception e) {
+            response.sendRedirect("404.jsp");
+        }
+         
+    }
     /**
      * Handles the HTTP <code>POST</code> method.
      *

@@ -92,7 +92,7 @@ public class ForgotPass extends HttpServlet {
             }
         } else {
             String msg = "Email không tồn tại!";
-            session.setAttribute("msg", msg);
+            session.setAttribute("msg_err", msg);
             response.sendRedirect("forgotpass.jsp");
         }
     }

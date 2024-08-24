@@ -36,38 +36,7 @@ public class OrderManager extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        request.setCharacterEncoding("UTF-8");
-        response.setCharacterEncoding("UTF-8");
-        response.setContentType("text/html; charset=UTF-8");
-        String page = "";
-        try {
-            HttpSession session = request.getSession();
-            User user = (User) session.getAttribute("user");
-            String action = request.getParameter("action");
-            billDAO dao = new billDAO();
-
-            if (action == null) {
-                String paymentFilter = request.getParameter("paymentFilter");
-                List<Bill> bill = dao.getBillInfo(paymentFilter);
-              
-                request.setAttribute("bill", bill);
-                page = "order.jsp";
-
-            } else if (action.equals("showdetail")) {
-                String bill_id = request.getParameter("bill_id");
-                int id = Integer.parseInt(bill_id);
-                List<BillDetail> detail = dao.getDetail(id);
-                request.setAttribute("detail", detail);
-                page = "orderdetail.jsp";
-
-            }
-
-        } catch (Exception e) {
-            page = "404.jsp";
-
-        }
-        RequestDispatcher dd = request.getRequestDispatcher(page);
-        dd.forward(request, response);
+       
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -82,7 +51,42 @@ public class OrderManager extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+           HttpSession session = request.getSession();
+    User user = (User) session.getAttribute("user");
+
+    if (user == null) {
+        response.sendRedirect("user?action=login");
+        return;
+    }
+
+    if ((user.getIsAdmin() == null || !Boolean.parseBoolean(user.getIsAdmin())) 
+     && (user.getIsStoreStaff() == null || !Boolean.parseBoolean(user.getIsStoreStaff()))) {
+        response.sendRedirect("home");
+        return;
+    }
+
+    String page = "order.jsp";
+    String action = request.getParameter("action");
+    billDAO dao = new billDAO();
+
+    if (action == null) {
+        String paymentFilter = request.getParameter("paymentFilter");
+        List<Bill> bill = dao.getBillInfo(paymentFilter);
+        request.setAttribute("bill", bill);
+        page = "order.jsp";
+
+    } else if (action.equals("showdetail")) {
+        String bill_id = request.getParameter("bill_id");
+        int id = Integer.parseInt(bill_id);
+        List<BillDetail> detail = dao.getDetail(id);
+        request.setAttribute("detail", detail);
+        page = "orderdetail.jsp";
+    }
+
+    RequestDispatcher dd = request.getRequestDispatcher(page);
+    dd.forward(request, response);
+       
+       
     }
 
     /**
@@ -96,7 +100,8 @@ public class OrderManager extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+         processRequest(request, response);
+       
     }
 
     /**

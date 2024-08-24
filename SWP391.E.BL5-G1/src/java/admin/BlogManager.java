@@ -75,22 +75,29 @@ public class BlogManager extends HttpServlet {
 
         HttpSession session = request.getSession();
         User user = (User) session.getAttribute("user");
-        if (user == null || !Boolean.parseBoolean(user.getIsAdmin())) {
-            response.sendRedirect("dashboard");
+        if (user == null) {
+            response.sendRedirect("user?action=login");
+            return;
+        }
+        if ((user.getIsAdmin() == null || !Boolean.parseBoolean(user.getIsAdmin()) && (user.getIsStoreStaff() == null || !Boolean.parseBoolean(user.getIsStoreStaff())))) {    //Nếu ko phải admin
+            if (user.getIsStoreStaff() != null && Boolean.parseBoolean(user.getIsStoreStaff())) {  //Nếu là Store Staff
+                response.sendRedirect("dashboard");
+                return;
+            }
+            //Role còn lại: Client
+            response.sendRedirect("home");
             return;
         }
 
-        request.setCharacterEncoding("UTF-8");
-        response.setCharacterEncoding("UTF-8");
-        response.setContentType("text/html; charset=UTF-8");
-        String page = "blog.jsp";
+        String page = "blog.jsp";   
         String action = request.getParameter("action");
 
-        if (null != action && !action.isBlank()) {
+        if ( action != null && !action.isBlank()) {
             switch (action) {
                 case "insert" -> {
                     page = "blogadd.jsp";
-                    break;
+                    request.getRequestDispatcher(page).forward(request, response);
+                    return;
                 }
                 case "delete" -> {
                     String blog_id = request.getParameter("blog_id");
@@ -124,14 +131,19 @@ public class BlogManager extends HttpServlet {
 
         HttpSession session = request.getSession();
         User user = (User) session.getAttribute("user");
-        if (user == null || !Boolean.parseBoolean(user.getIsAdmin())) {
-            response.sendRedirect("dashboard");
+        if (user == null) {
+            response.sendRedirect("user?action=login");
             return;
         }
-
-        request.setCharacterEncoding("UTF-8");
-        response.setCharacterEncoding("UTF-8");
-        response.setContentType("text/html; charset=UTF-8");
+        if (user.getIsAdmin() == null || !Boolean.parseBoolean(user.getIsAdmin())) {    //Nếu ko phải admin
+            if (user.getIsStoreStaff() != null && Boolean.parseBoolean(user.getIsStoreStaff())) {  //Nếu là Store Staff
+                response.sendRedirect("dashboard");
+                return;
+            }
+            //Role còn lại: Client
+            response.sendRedirect("home");
+            return;
+        }
         String page = "blog.jsp";
         String action = request.getParameter("action");
 
@@ -142,14 +154,6 @@ public class BlogManager extends HttpServlet {
                     String summary = request.getParameter("summary");
                     String content = request.getParameter("content");
                     String images = "images/" + request.getParameter("images");
-                    System.out.println(images +"------");
-                    //Lấy ảnh
-//                    Collection<Part> parts = request.getParts();
-//                    Optional<Part> imageObject = parts.stream().filter(i -> i.getName().equalsIgnoreCase("images")).findFirst();
-//                    if (imageObject.isPresent()) {
-//                        imageObject.get().write("D:\\SWP391_Block5\\SWP_PROJECT\\SWP391.E.BL5-G1\\SWP391.E.BL5-G1\\web\\admin\\images\\" + imageObject.get().getSubmittedFileName());
-//                        images = imageObject.get().getSubmittedFileName();
-//                    }
 
                     new blogDAO().insertBlog(new Blog(0, title, summary, content, new Date(), null, user, images));
                     response.sendRedirect("blogmanager");
@@ -168,16 +172,7 @@ public class BlogManager extends HttpServlet {
                     String summary = request.getParameter("summary");
                     String content = request.getParameter("content");
                     String images = "images/" + request.getParameter("images");
-                    System.out.println(images +"*******");
-                    
-                    //Lấy ảnh
-//                    Collection<Part> parts = request.getParts();
-//                    Optional<Part> imageObject = parts.stream().filter(i -> i.getName().equalsIgnoreCase("images")).findFirst();
-//                    if (imageObject.isPresent()) {
-//                        imageObject.get().write("D:\\SWP391_Block5\\SWP_PROJECT\\SWP391.E.BL5-G1\\SWP391.E.BL5-G1\\web\\admin\\images\\" + imageObject.get().getSubmittedFileName());
-//                        images = imageObject.get().getSubmittedFileName();
-//                    }
-                    
+
                     int blog_id = Integer.parseInt(request.getParameter("blog_id"));
                     Blog blog = new blogDAO().getBlogByID(blog_id);
                     blog.setTitle(title);
@@ -211,4 +206,3 @@ public class BlogManager extends HttpServlet {
     }// </editor-fold>
 
 }
-

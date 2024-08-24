@@ -73,10 +73,6 @@ public class EditPost extends HttpServlet {
             Post post = postDAO.getPostById(postId);
 
             List<PostType> postTypes = postTypeDAO.getAllPostTypes();
-<<<<<<< HEAD
-=======
-
->>>>>>> 071aa024a747e4020b2b8fa1120ae60971fc3dfa
             request.setAttribute("post", post);
             request.setAttribute("postTypes", postTypes);
 
