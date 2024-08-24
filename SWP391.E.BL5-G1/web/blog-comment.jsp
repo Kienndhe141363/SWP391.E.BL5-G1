@@ -667,6 +667,7 @@
                     </div>
                 </div>
             </c:if>
+            <c:if test="${sessionScope.user}">
             <div class="form-container" style="margin-top: 10px">
                 <form action="blog-comment?action=addBlogComment&blog_id=${blogId}" method="POST">
                     <input type="hidden" name="action" value="addBlogComment">
@@ -675,6 +676,7 @@
                     <button type="submit">Gửi bình luận</button>
                 </form>
             </div>
+            </c:if>
 
         </div>
 
