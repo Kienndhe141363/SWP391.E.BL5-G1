@@ -21,7 +21,7 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            min-height: 100vh; /* Full height of the viewport */
+            min-height: 42%; /* Full height of the viewport */
         }
 
         .account_form {
@@ -99,6 +99,10 @@
                     <p>   
                         <label>Nhập lại mật khẩu <span></span></label>
                         <input type="password" name="re_pass" placeholder="Nhập lại mật khẩu">
+                          <% session.removeAttribute("error_match"); %>
+               
+<!--                    showNotification(msg, false);
+                        error_match-->
                     </p>
 
                     <div class="login_submit">
@@ -156,6 +160,8 @@
 
                 if (msg) {
                     showNotification(msg, false);
+                } else if (error_rePass) {
+                    showNotification(error_rePass, false);
                 } else if (error_exist) {
                     showNotification(error_exist, false);
                 } else if (error_ban) {

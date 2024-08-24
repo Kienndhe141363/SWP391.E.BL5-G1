@@ -171,7 +171,7 @@ public class User extends HttpServlet {
 
             String passwordRegex = "^(?=.*[A-Z])(?=.*\\d)[A-Za-z\\d]{6,}$";
             if (!pass.matches(passwordRegex)) {
-                session.setAttribute("error_match", "Mật khẩu phải có ít nhất 6 ký tự, bao gồm ít nhất một chữ cái viết hoa và một chữ số");
+                session.setAttribute("error_ban", "Mật khẩu phải có ít nhất 6 ký tự, bao gồm ít nhất một chữ cái viết hoa và một chữ số");
                 request.getRequestDispatcher("register.jsp").forward(request, response);
                 return;
             }
