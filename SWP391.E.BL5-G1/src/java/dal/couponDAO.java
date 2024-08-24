@@ -119,6 +119,15 @@ public class couponDAO extends DBContext {
         }
         return coupon;
     }
+    public void updateCouponUsage(Coupon coupon) throws Exception {
+        String sql = "UPDATE Coupon SET UsageLimit = ? WHERE CouponId = ?";
+        try (Connection conn = getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setInt(1, coupon.getUsageLimit()); 
+            ps.setInt(2, coupon.getCouponId()); 
+            ps.executeUpdate();
+        }
+    }
 
     private void closeResources() {
         try {
