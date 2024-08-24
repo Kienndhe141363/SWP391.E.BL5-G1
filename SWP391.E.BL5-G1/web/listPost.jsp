@@ -39,12 +39,12 @@
             }
             .post-user {
                 font-weight: bold;
-                margin-right: auto; 
+                margin-right: auto;
             }
             .post-actions {
                 display: flex;
                 align-items: center;
-                gap: 10px; 
+                gap: 10px;
             }
             .post-actions a {
                 display: inline-flex;
@@ -52,14 +52,14 @@
                 height: 24px;
                 text-align: center;
                 line-height: 24px;
-                color: #007bff; 
+                color: #007bff;
                 font-size: 16px;
                 text-decoration: none;
-                background-color: transparent; 
-                border: none; 
+                background-color: transparent;
+                border: none;
             }
             .post-actions a:hover {
-                color: #0056b3; 
+                color: #0056b3;
             }
             .post-time {
                 margin-left: 10px;
@@ -121,13 +121,15 @@
                     <div class="post-content">
                         <p>${post.content}</p>
                     </div>
-                    <div class="post-actions">
-                        <a href="editPost?postId=${post.postId}" class="button">Edit</a>
-                        <a href="deletePost?postId=${post.postId}" class="button" onclick="return confirm('Are you sure you want to delete this post?');">Delete</a>
-                    </div>
                 </div>
             </c:forEach>
         </div>
-    </div>
-</body>
+    </body>
+    <jsp:include page="footer.jsp"/>
+
+    <!-- Plugins JS -->
+    <script src="assets/js/plugins.js"></script>
+
+    <!-- Main JS -->
+    <script src="assets/js/main.js"></script>
 </html>
