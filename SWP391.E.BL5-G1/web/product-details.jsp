@@ -347,7 +347,13 @@
             text-decoration: none;
         }
 
+        .highlight {
+            color: gold; /* Or any other style you want to apply */
+        }
 
+        .btn .highlight{
+            color: gold;
+        }
 
     </style>
     <body>
@@ -442,9 +448,17 @@
                                         <button class="button button-secondary" type="button" onclick="setActionAndSubmit('buynow')">Mua ngay</button>
                                     </div>
                                 </div>
+                            </form> 
 
+                            <c:if test="${not empty AlbumData}">
+                                <div  class="product_variant quantity" style="width: 100%">
+                                    <div class="product-buttons">
+                                        <button type="button" data-toggle="modal" data-target="#ModalAddAlbum${ProductData.product_id}" class="button" title="Thêm">Thêm vào Album</button>
 
-                            </form>
+                                    </div>
+                                </div>
+                            </c:if>
+
                         </div>
                     </div>
                     <ul class="features-list">
@@ -485,212 +499,276 @@
         </div>
         <!--product details end-->
         <!-- Form for adding rating -->
-
-        <div class="form-container">
-            <form action="search" method="POST">
-                <input type="hidden" name="action" value="addComment">
-                <input type="hidden" name="product_id" value="${ProductData.product_id}">
-                <input type="hidden" name="user_id" value="${user.user_id}">                
-                <input type="hidden" name="user_name" value="${user.user_name}">  
-                <h3>Đánh giá sản phẩm</h3>
-                <select name="rating" id="star-rating">
-
-                    <option value="1">1&#9733;</option>
-                    <option value="2">2&#9733;&#9733;</option>
-                    <option value="3">3&#9733;&#9733;&#9733;</option>
-                    <option value="4">4&#9733;&#9733;&#9733;&#9733;</option>
-                    <option value="5">5&#9733;&#9733;&#9733;&#9733;&#9733;</option>
-                </select>
-                <textarea name="comment" rows="4" cols="50" placeholder="Nhập bình luận của bạn"></textarea>
-                <button type="submit">Gửi bình luận</button>
-            </form>
-        </div>
-
-
-
-<!--    <c:if test="${not empty comments}">
-        <div class="product_reviews">
-            <h3>Đánh giá và Bình luận</h3>
-            <h5>Bình luận:</h5>
-            <c:forEach items="${comments}" var="c">
-                <div class="comment">
-                    <p>Bởi: ${c.user_name}</p>
-                    <p>Đánh giá: ${c.rating}&#9733</p>
-                    <p>Ngày: <fmt:formatDate value="${c.createdAt}" pattern="dd/MM/yyyy"/></p>
-                    <p>${c.comment}</p>
+        <c:if test="${haveCmt}">
+            <div class="product_reviews">
+                <h3>Đánh giá và Bình luận</h3>
+                <div class="dropdown" style="width: 100%; text-align: right;">            
+                    <a class="${comment_filter == '6' ? 'highlight' : ''}" style="margin-right: 10px;" href="search?action=productdetail&product_id=${ProductData.product_id}">
+                        Tất cả (${numberOfComments})
+                    </a>
+                    <a class="${comment_filter == '1' ? 'highlight' : ''}" style="margin-right: 10px;" href="search?action=productdetail&product_id=${ProductData.product_id}&comment_filter=1">
+                        1&#9733; (${numberOfComments1})
+                    </a>
+                    <a class="${comment_filter == '2' ? 'highlight' : ''}" style="margin-right: 10px;" href="search?action=productdetail&product_id=${ProductData.product_id}&comment_filter=2">
+                        2&#9733;&#9733; (${numberOfComments2})
+                    </a>
+                    <a class="${comment_filter == '3' ? 'highlight' : ''}" style="margin-right: 10px;" href="search?action=productdetail&product_id=${ProductData.product_id}&comment_filter=3">
+                        3&#9733;&#9733;&#9733; (${numberOfComments3})
+                    </a>
+                    <a class="${comment_filter == '4' ? 'highlight' : ''}" style="margin-right: 10px;" href="search?action=productdetail&product_id=${ProductData.product_id}&comment_filter=4">
+                        4&#9733;&#9733;&#9733;&#9733; (${numberOfComments4})
+                    </a>
+                    <a class="${comment_filter == '5' ? 'highlight' : ''}" style="margin-right: 10px;" href="search?action=productdetail&product_id=${ProductData.product_id}&comment_filter=5">
+                        5&#9733;&#9733;&#9733;&#9733;&#9733; (${numberOfComments5})
+                    </a>
                 </div>
-            </c:forEach>
-        </div>
-    </c:if>-->
+                <h5>Bình luận:</h5>
+                <c:forEach items="${comments}" var="c">
+                    <div class="comment" style="position: relative; display: flex">
+                        <div style="width: 90%; text-align: left">
+                            <p>Bởi: ${c.user_name}</p> 
+                            <p>Đánh giá: ${c.rating}&#9733</p>
+                            <p>Ngày: <fmt:formatDate value="${c.createdAt}" pattern="dd/MM/yyyy"/></p>
+                            <p>${c.comment}</p>
+                        </div>
+                        <c:if test="${c.user_name == user.user_name}">
+                            <div style="width:10%; text-align: right; display: flex;">
+                                <button class="btn btn-primary btn-sm edit" style="margin-right: 10px;  max-height: 34px; background-color: green" type="button" data-toggle="modal" data-target="#ModalEditComment${c.user_name}" class="edit-icon" title="Chỉnh sửa">
+                                    <i class="fas fa-edit"></i></button>
+                                <button class="btn btn-primary btn-sm trash" style="max-height: 34px; background-color: red" type="button" title="xóa" value="${c.id}">
+                                    <i class="fas fa-trash"></i></button>
+                            </div>
 
-
-
-    <!--product section area start-->
-    <section class="product_section related_product">
-        <div class="container">
-            <div class="row">
-                <div class="col-12">
-                    <div class="section_title">
-                        <h2>Sản phẩm tương tự</h2>
+                        </c:if>
                     </div>
-                </div>
+
+                </c:forEach>
             </div>
-            <div class="product_area">
-                <div class="row">
-                    <div class="product_carousel product_three_column4 owl-carousel">
-                        <c:forEach items="${ProductByCategory}" var="pc">
-                            <div class="col-lg-3">
-                                <div class="single_product">
-                                    <div class="product_thumb">
-                                        <a class="primary_img" href="product?action=productdetail&product_id=${pc.product_id}"><img src="${pc.img}" alt=""></a>
-                                    </div>
-                                    <div class="product_content">
-                                        <h3><a href="product?action=productdetail&product_id=${pc.product_id}">${pc.product_name}</a></h3>
-                                        <span class="current_price">${pc.product_price} VNĐ</span>
+            <div class="modal fade" id="ModalEditComment${c.user_name}" tabindex="-1" role="dialog" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered" role="document">
+                    <div class="modal-content">
+                        <div class="modal-body" style="padding:0 1rem">
+                            <form action="search?action=updatecmt&product_id=${ProductData.product_id}" method="POST">
+                                <input type="hidden" name="action" value="updatecmt">
+                                <div class="row">
+                                    <div class="form-group col-md-12">
+                                        <span class="thong-tin-thanh-toan">
+                                            <h5>Chỉnh sửa đánh giá</h5>
+                                        </span>
                                     </div>
                                 </div>
-                            </div>
-                        </c:forEach>
+                                <div class="row" style="padding: 0 1rem">
+                                    <h5>Đánh giá sản phẩm <b>#${ProductData.product_id}</b></h5>
+                                    <!--                                        <select name="rating_filter" id="star-rating">     
+                                                                                <option value="1">1&#9733;</option>
+                                                                                <option value="2">2&#9733;&#9733;</option>
+                                                                                <option value="3">3&#9733;&#9733;&#9733;</option>
+                                                                                <option value="4">4&#9733;&#9733;&#9733;&#9733;</option>
+                                                                                <option value="5">5&#9733;&#9733;&#9733;&#9733;&#9733;</option>
+                                                                            </select>-->
+                                    <input name="idproduct" value="${c.id}" hidden="true">
+                                    <textarea name="comment-update" style="margin-top: 10px" rows="4" cols="50" placeholder="Nhập bình luận của bạn"></textarea>
+                                </div>
+                                <div style="margin-top: 10px; text-align: right">
+                                    <button class="btn btn-save" style="background-color:green" type="submit">Lưu lại</button>
+                                    <a class="btn btn-cancel"  style="background-color:red" data-dismiss="modal" href="#">Hủy bỏ</a>
+                                </div>
+
+                            </form>
+                        </div>
                     </div>
                 </div>
             </div>
+        </c:if>
+        
+        <c:if test="${user_comment}">
+            <div class="form-container">
+                <form action="search?action=addComment&product_id=${ProductData.product_id}" method="POST">
+                    <input type="hidden" name="action" value="addComment">
+                    <input type="hidden" name="product_id" value="${ProductData.product_id}">
+                    <input type="hidden" name="user_id" value="${user.user_id}">                
+                    <input type="hidden" name="user_name" value="${user.user_name}">  
+                    <h3>Đánh giá sản phẩm</h3>
+                    <select name="rating" id="star-rating">
+
+                        <option value="1">1&#9733;</option>
+                        <option value="2">2&#9733;&#9733;</option>
+                        <option value="3">3&#9733;&#9733;&#9733;</option>
+                        <option value="4">4&#9733;&#9733;&#9733;&#9733;</option>
+                        <option value="5">5&#9733;&#9733;&#9733;&#9733;&#9733;</option>
+                    </select>
+                    <textarea name="comment" rows="4" cols="50" placeholder="Nhập bình luận của bạn"></textarea>
+                    <button type="submit">Gửi bình luận</button>
+                </form>
+            </div>
+        </c:if>
+
+        <!--product section area start-->
+        <section class="product_section related_product">
+            <div class="container">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="section_title">
+                            <h2>Sản phẩm tương tự</h2>
+                        </div>
+                    </div>
+                </div>
+                <div class="product_area">
+                    <div class="row">
+                        <div class="product_carousel product_three_column4 owl-carousel">
+                            <c:forEach items="${ProductByCategory}" var="pc">
+                                <div class="col-lg-3">
+                                    <div class="single_product">
+                                        <div class="product_thumb">
+                                            <a class="primary_img" href="product?action=productdetail&product_id=${pc.product_id}"><img src="${pc.img}" alt=""></a>
+                                        </div>
+                                        <div class="product_content">
+                                            <h3><a href="product?action=productdetail&product_id=${pc.product_id}">${pc.product_name}</a></h3>
+                                            <span class="current_price">${pc.product_price} VNĐ</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </c:forEach>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!--product section area end-->
+
+        <!--footer area start-->
+        <jsp:include page="footer.jsp"/>
+        <!--footer area end-->
+
+        <!-- Plugins JS -->
+        <script src="assets/js/plugins.js"></script>
+        <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+        <!-- Main JS -->
+        <script src="assets/js/main.js"></script>
+        <script>
+                                            function setActionAndSubmit(action) {
+                                                document.getElementById('action').value = action;
+                                                document.getElementById('productForm').submit();
+                                            }
+        </script>
+        <div id="size-guide-popup" style="display: none; position: fixed; left: 50%; top: 50%; transform: translate(-50%, -50%); background-color: white; padding: 20px; border: 1px solid black; z-index: 1000;">
+            <h3>Bảng size</h3>
+            <table border="1">
+                <tr>
+                    <th>SIZE</th>
+                    <th>CHIỀU CAO (CM)</th>
+                    <th>CÂN NẶNG (KG)</th>
+                    <th>NGANG VAI</th>
+                    <th>VÒNG NGỰC</th>
+                    <th>VÒNG EO</th>
+                    <th>DÀI TAY</th>
+                    <th>DÀI ÁO</th>
+                </tr>
+                <tr>
+                    <td>S</td>
+                    <td>< 168</td>
+                    <td>< 62</td>
+                    <td>44.5</td>
+                    <td>100</td>
+                    <td>96</td>
+                    <td>19.5</td>
+                    <td>67.5</td>
+                </tr>
+                <tr>
+                    <td>M</td>
+                    <td>169 - 172</td>
+                    <td>63 - 69</td>
+                    <td>46</td>
+                    <td>104</td>
+                    <td>100</td>
+                    <td>21</td>
+                    <td>69</td>
+                </tr>
+                <tr>
+                    <td>L</td>
+                    <td>173 - 176</td>
+                    <td>70 - 76</td>
+                    <td>47.5</td>
+                    <td>108</td>
+                    <td>104</td>
+                    <td>22.5</td>
+                    <td>71</td>
+                </tr>
+                <tr>
+                    <td>XL</td>
+                    <td>177 - 180</td>
+                    <td>77 - 83</td>
+                    <td>49.5</td>
+                    <td>114</td>
+                    <td>110</td>
+                    <td>24</td>
+                    <td>73</td>
+                </tr>
+                <tr>
+                    <td>XXL</td>
+                    <td>> 180</td>
+                    <td>> 83</td>
+                    <td>51.5</td>
+                    <td>120</td>
+                    <td>116</td>
+                    <td>25.5</td>
+                    <td>75</td>
+                </tr>
+            </table>
+            <p>97% khách hàng của chúng tôi đã chọn đúng size theo bảng này</p>
+            <button id="close-popup">Đóng</button>
         </div>
-    </section>
+        <script>
+            // Lấy các phần tử DOM
+            const sizeGuideLink = document.getElementById('size-guide-link');
+            const sizeGuidePopup = document.getElementById('size-guide-popup');
+            const closePopupButton = document.getElementById('close-popup');
 
-    <!--product section area end-->
+            // Khi người dùng nhấp vào liên kết "Hướng dẫn chọn size"
+            sizeGuideLink.addEventListener('click', function (event) {
+                event.preventDefault(); // Ngăn chặn hành động mặc định của liên kết
+                sizeGuidePopup.style.display = 'block'; // Hiển thị popup
+            });
 
-    <!--footer area start-->
-    <jsp:include page="footer.jsp"/>
-    <!--footer area end-->
+            // Khi người dùng nhấp vào nút "Đóng"
+            closePopupButton.addEventListener('click', function () {
+                sizeGuidePopup.style.display = 'none'; // Đóng popup
+            });
+        </script>
+        <script>
+            function showNotification(message, isSuccess) {
+                Swal.fire({
+                    title: isSuccess ? 'Thành công!' : 'Lỗi!',
+                    text: message,
+                    icon: isSuccess ? 'success' : 'error',
+                    toast: true,
+                    position: 'top-end',
+                    showConfirmButton: false,
+                    timer: 6000,
+                    timerProgressBar: true,
+                    didOpen: (toast) => {
+                        toast.addEventListener('mouseenter', Swal.stopTimer)
+                        toast.addEventListener('mouseleave', Swal.resumeTimer)
+                    }
+                });
+            }
 
-    <!-- Plugins JS -->
-    <script src="assets/js/plugins.js"></script>
-    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
-    <!-- Main JS -->
-    <script src="assets/js/main.js"></script>
-    <script>
-                                        function setActionAndSubmit(action) {
-                                            document.getElementById('action').value = action;
-                                            document.getElementById('productForm').submit();
-                                        }
-    </script>
-    <div id="size-guide-popup" style="display: none; position: fixed; left: 50%; top: 50%; transform: translate(-50%, -50%); background-color: white; padding: 20px; border: 1px solid black; z-index: 1000;">
-        <h3>Bảng size</h3>
-        <table border="1">
-            <tr>
-                <th>SIZE</th>
-                <th>CHIỀU CAO (CM)</th>
-                <th>CÂN NẶNG (KG)</th>
-                <th>NGANG VAI</th>
-                <th>VÒNG NGỰC</th>
-                <th>VÒNG EO</th>
-                <th>DÀI TAY</th>
-                <th>DÀI ÁO</th>
-            </tr>
-            <tr>
-                <td>S</td>
-                <td>< 168</td>
-                <td>< 62</td>
-                <td>44.5</td>
-                <td>100</td>
-                <td>96</td>
-                <td>19.5</td>
-                <td>67.5</td>
-            </tr>
-            <tr>
-                <td>M</td>
-                <td>169 - 172</td>
-                <td>63 - 69</td>
-                <td>46</td>
-                <td>104</td>
-                <td>100</td>
-                <td>21</td>
-                <td>69</td>
-            </tr>
-            <tr>
-                <td>L</td>
-                <td>173 - 176</td>
-                <td>70 - 76</td>
-                <td>47.5</td>
-                <td>108</td>
-                <td>104</td>
-                <td>22.5</td>
-                <td>71</td>
-            </tr>
-            <tr>
-                <td>XL</td>
-                <td>177 - 180</td>
-                <td>77 - 83</td>
-                <td>49.5</td>
-                <td>114</td>
-                <td>110</td>
-                <td>24</td>
-                <td>73</td>
-            </tr>
-            <tr>
-                <td>XXL</td>
-                <td>> 180</td>
-                <td>> 83</td>
-                <td>51.5</td>
-                <td>120</td>
-                <td>116</td>
-                <td>25.5</td>
-                <td>75</td>
-            </tr>
-        </table>
-        <p>97% khách hàng của chúng tôi đã chọn đúng size theo bảng này</p>
-        <button id="close-popup">Đóng</button>
-    </div>
-    <script>
-        // Lấy các phần tử DOM
-        const sizeGuideLink = document.getElementById('size-guide-link');
-        const sizeGuidePopup = document.getElementById('size-guide-popup');
-        const closePopupButton = document.getElementById('close-popup');
+            // Kiểm tra và hiển thị thông báo khi trang được tải
+            document.addEventListener('DOMContentLoaded', function () {
+                var successMessage = "${sessionScope.successMessageAdd}";
+                var errorMessage = "${sessionScope.errorMessage}";
 
-        // Khi người dùng nhấp vào liên kết "Hướng dẫn chọn size"
-        sizeGuideLink.addEventListener('click', function (event) {
-            event.preventDefault(); // Ngăn chặn hành động mặc định của liên kết
-            sizeGuidePopup.style.display = 'block'; // Hiển thị popup
-        });
-
-        // Khi người dùng nhấp vào nút "Đóng"
-        closePopupButton.addEventListener('click', function () {
-            sizeGuidePopup.style.display = 'none'; // Đóng popup
-        });
-    </script>
-    <script>
-        function showNotification(message, isSuccess) {
-            Swal.fire({
-                title: isSuccess ? 'Thành công!' : 'Lỗi!',
-                text: message,
-                icon: isSuccess ? 'success' : 'error',
-                toast: true,
-                position: 'top-end',
-                showConfirmButton: false,
-                timer: 6000,
-                timerProgressBar: true,
-                didOpen: (toast) => {
-                    toast.addEventListener('mouseenter', Swal.stopTimer)
-                    toast.addEventListener('mouseleave', Swal.resumeTimer)
+                if (successMessage) {
+                    showNotification(successMessage, true);
+                    // Xóa thông báo khỏi session
+            <% session.removeAttribute("successMessageAdd"); %>
+                } else if (errorMessage) {
+                    showNotification(errorMessage, false);
+                    // Xóa thông báo khỏi session
+            <% session.removeAttribute("errorMessage"); %>
                 }
             });
-        }
-
-// Kiểm tra và hiển thị thông báo khi trang được tải
-        document.addEventListener('DOMContentLoaded', function () {
-            var successMessage = "${sessionScope.successMessageAdd}";
-            var errorMessage = "${sessionScope.errorMessage}";
-
-            if (successMessage) {
-                showNotification(successMessage, true);
-                // Xóa thông báo khỏi session
-        <% session.removeAttribute("successMessageAdd"); %>
-            } else if (errorMessage) {
-                showNotification(errorMessage, false);
-                // Xóa thông báo khỏi session
-        <% session.removeAttribute("errorMessage"); %>
-            }
-        });
-    </script>
-</body>
+        </script>
+    </body>
 </html>
