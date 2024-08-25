@@ -645,6 +645,7 @@
 
 
                             </form> 
+
                                     <c:if test="${not empty AlbumData}">
                                     <div  class="product_variant quantity" style="width: 100%">
                                         <div class="product-buttons">
@@ -748,11 +749,9 @@
                 <button type="submit">Gửi bình luận</button>
             </form>
         </div>
-        </c:if>
-
-
-
-        <c:if test="${haveCmt}">
+                 </c:if>
+                
+                <c:if test="${haveCmt}">
             <div class="product_reviews">
                 <h3>Đánh giá và Bình luận</h3>
                 <div class="dropdown" style="width: 100%; text-align: right;">            
